@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>源(代码)神 启动！ | YMGFC_CN's Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        /* 1. 修改了这里的 body，去掉了静态背景，交给了专门的背景容器 */
+        html, body { 
+            min-height: 100vh;
+            font-family: 'JetBrains Mono', 'PingFang SC', 'Microsoft YaHei', monospace; 
+            overflow-x: hidden; 
+            cursor: url('images/cursor-normal.png'), auto;
+        }
+
+        a, button, [role="button"] {
+            cursor: url('images/cursor-hover.png'), pointer !important;
+        }
+
+        .glass-card {
+            background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); 
+            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
+            transition: all 0.4s ease;
+        }
+        
+        .glass-card:hover {
+            box-shadow: 0 0 20px rgba(255, 183, 197, 0.6);
+            border-color: rgba(255, 183, 197, 0.8);
+            transform: translateY(-5px);
+        }
+
+        .sakura-petal {
+            position: fixed; top: -20px; background-color: #ffb7c5; border-radius: 15px 0 15px 0; 
+            opacity: 0.8; pointer-events: none; z-index: 9999; box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); }
+            100% { transform: translateY(105vh) rotate(360deg) translateX(50px); }
+        }
+        .markdown-body h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; color: #1f2937; }
+        .markdown-body p { margin-bottom: 0.75rem; line-height: 1.6; }
+        .markdown-body code { background-color: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.1); }
+        .markdown-body pre { background-color: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #333; }
+        .markdown-body pre code { background-color: transparent; padding: 0; color: inherit; border: none; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div id="bg-fade-container" class="fixed top-0 left-0 w-full h-full z-[-10]">
+        <div id="bg-a" class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-fixed opacity-100" style="transition: opacity 1.5s ease-in-out; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/bg1.png');"></div>
+        <div id="bg-b" class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-fixed opacity-0" style="transition: opacity 1.5s ease-in-out; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/bg1.png');"></div>
+    </div>
+
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-t-4 border-red-500 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-900">YMGFC_CN's Hidden Space</h1>
+            <div class="space-x-4 text-sm">
+                <a href="index.html" class="text-gray-600 hover:text-red-500 transition">首页</a>
+                <a href="#" class="text-gray-600 hover:text-red-500 transition">关于</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="md:col-span-2 space-y-6">
+            <article class="glass-card p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900">第一篇博客:源(代码)神 启动！</h2>
+                <p class="text-gray-900 text-sm mb-4 border-b border-gray-200/50 pb-4">发布于 2026-03-08</p>
+                
+                <textarea id="markdown-source" style="display:none;">
+卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢？
+
+### 1. 物理与数学的交织 (LaTeX Test)
+在无聊的时候，看看优美的公式也是一种放松（真的吗）。比如经典的薛定谔方程：
+$$i\hbar\frac{\partial}{\partial t} \Psi(\mathbf{r},t) = \left [ -\frac{\hbar^2}{2m}\nabla^2 + V(\mathbf{r},t) \right ] \Psi(\mathbf{r},t)$$
+当然，还有内联公式 $e^{i\pi} + 1 = 0$，这是数学中最纯粹的美。
+
+### 2. 万物皆对象 (Code Test)
+最近刚好在梳理 C++ 的函数封装，顺手写一段优雅的 OOP 示例：
+
+~~~cpp
+#include <iostream>
+#include <string>
+
+class Yumemi {
+private:
+    std::string title;
+    int magicPower;
+
+public:
+    // 构造函数
+    Yumemi(std::string t, int p) : title(t), magicPower(p) {}
+
+    // 完美封装的方法
+    void castSpell() {
+        std::cout << title << ": Science and Magic, perfectly encapsulated!" << std::endl;
+    }
+};
+
+int main() {
+    Yumemi professor("Prof. Okazaki", 9999);
+    professor.castSpell();
+    return 0;
+}
+~~~
+水源社区过于公开，日记过于私密，所以平时的一些想法就放在这里了吧。
+
+以后就在这里记录更多的 Bug、Feature 还有各种天马行空的灵感吧！
+                </textarea>
+                
+                <div id="markdown-output" class="markdown-body text-black"></div>
+            </article>
+        </div>
+
+        <aside class="glass-card p-6 rounded-2xl shadow-sm h-fit">
+            <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden border-4 border-white shadow-inner">
+                <img src="images/avatar.jpg" alt="我的头像" class="w-full h-full object-cover">
+            </div>
+            <h3 class="text-xl font-bold text-center mb-2 text-gray-900">YMGFC_CN</h3>
+            
+            <p id="typing-text" class="text-sm text-gray-900 font-medium text-center px-2 min-h-[20px]"></p>
+
+            <div class="flex justify-center space-x-5 border-t border-gray-200/50 pt-4 mt-4">
+                <a href="https://github.com/Okazaki-Yumemi" target="_blank" class="text-gray-900 hover:text-gray-900 transition-colors transform hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://space.bilibili.com/96828559?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-900 hover:text-pink-400 transition-colors transform hover:scale-110">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.813 4.653h.002c.006 0 .011-.001.017-.001.02 0 .041-.001.061-.001.698 0 1.359.273 1.853.768.494.495.767 1.156.767 1.854v8.428c0 .698-.273 1.359-.767 1.854a2.61 2.61 0 0 1-1.853.767H6.106a2.61 2.61 0 0 1-1.852-.767 2.624 2.624 0 0 1-.768-1.854V7.274c0-.698.274-1.359.768-1.854a2.61 2.61 0 0 1 1.852-.767.073.073 0 0 1 .054.001h.023l-1.087-1.087a.75.75 0 0 1 1.06-1.061l1.838 1.838h8.016l1.838-1.838a.75.75 0 0 1 1.06 1.061l-1.095 1.086zm-11.707 1.5H17.89c.284 0 .556.113.757.314.201.201.314.473.314.757v8.428c0 .284-.113.556-.314.757a1.066 1.066 0 0 1-.757.314H6.106a1.066 1.066 0 0 1-.757-.314A1.069 1.069 0 0 1 5.035 15.7V7.224c0-.284.113-.556.314-.757a1.066 1.066 0 0 1 .757-.314zM8.98 9.938a1 1 0 0 0-1.332 1.492l1.666 1.488a1 1 0 0 0 1.332-1.492L8.98 9.938zm6.372 1.492a1 1 0 0 0-1.332-1.492l-1.666 1.488a1 1 0 0 0 1.332 1.492l1.666-1.488z" /></svg>
+                </a>
+            </div>
+        </aside>
+    </main>
+
+    <div id="music-toggle" class="fixed top-24 right-4 z-50 glass-card rounded-full pr-5 pl-3 py-3 flex items-center space-x-4 cursor-pointer hover:scale-105 transition-transform drop-shadow-lg">
+        <div id="music-disc" class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center animate-[spin_3s_linear_infinite] border-2 border-red-200 shadow-inner">
+            <svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.28l8-1.6v5.434A4.369 4.369 0 0015 11c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"></path></svg>
+        </div>
+        <div class="text-sm font-medium text-gray-900 select-none pr-2">
+            <p class="text-red-500 font-bold text-base">秋鳴りシンフォニー</p>
+            <p class="text-xs text-gray-600 mt-1">点击播放 / 暂停</p>
+        </div>
+        <audio id="bgm-player" loop>
+            <source src="images/bgm.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="fixed bottom-4 left-4 z-40 pointer-events-none">
+        <img src="images/left-pet.gif" alt="左下角装饰" class="w-60 md:w-60 drop-shadow-lg pointer-events-auto hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
+    </div>
+    <div class="fixed bottom-4 right-4 z-40 pointer-events-none">
+        <img src="images/right-pet.gif" alt="右下角装饰" class="w-80 md:w-80 drop-shadow-lg pointer-events-auto hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
+    </div>
+
+    <script>
+        const markdownSource = document.getElementById('markdown-source').value;
+        document.getElementById('markdown-output').innerHTML = marked.parse(markdownSource);
+
+        function createSakura() {
+            const petal = document.createElement('div');
+            petal.className = 'sakura-petal';
+            const size = Math.random() * 10 + 10;
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.left = Math.random() * window.innerWidth + 'px';
+            const fallDuration = Math.random() * 4 + 4;
+            petal.style.animationDuration = fallDuration + 's';
+            document.body.appendChild(petal);
+            setTimeout(() => { petal.remove(); }, fallDuration * 1000);
+        }
+        setInterval(createSakura, 400);
+
+        // 4. 补入打字机特效脚本
+        const textToType = "OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...";
+        const typingElement = document.getElementById('typing-text');
+        let typeIndex = 0;
+        function typeWriter() {
+            if (typingElement && typeIndex < textToType.length) {
+                typingElement.innerHTML = textToType.substring(0, typeIndex + 1) + '<span class="animate-pulse font-bold text-red-500">_</span>';
+                typeIndex++;
+                setTimeout(typeWriter, Math.random() * 100 + 50); 
+            } else if (typingElement) {
+                typingElement.innerHTML = textToType + '<span class="animate-pulse font-bold text-red-500">_</span>';
+            }
+        }
+        setTimeout(typeWriter, 800);
+
+        // 5. 补入高级双缓冲壁纸轮播脚本
+        const backgrounds = [
+            'images/bg1.png',
+            'images/bg2.jpg',
+            'images/bg3.png'
+        ];
+        
+        const bgA = document.getElementById('bg-a');
+        const bgB = document.getElementById('bg-b');
+        let currentBgIndex = 0;
+        let activeLayer = 'A'; 
+
+        function changeBackground() {
+            if (!bgA || !bgB) return;
+
+            currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+            const fullStyle = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${backgrounds[currentBgIndex]}')`;
+
+            if (activeLayer === 'A') {
+                bgB.style.backgroundImage = fullStyle;
+                bgB.style.opacity = '1';
+                bgA.style.opacity = '0';
+                activeLayer = 'B';
+            } else {
+                bgA.style.backgroundImage = fullStyle;
+                bgA.style.opacity = '1';
+                bgB.style.opacity = '0';
+                activeLayer = 'A';
+            }
+        }
+        setInterval(changeBackground, 10000);
+
+        // 🎵 4. 音乐播放器交互逻辑
+        const musicToggle = document.getElementById('music-toggle');
+        const bgmPlayer = document.getElementById('bgm-player');
+        const musicDisc = document.getElementById('music-disc');
+        let isPlaying = false;
+
+        // 初始状态下暂停光盘旋转
+        musicDisc.style.animationPlayState = 'paused';
+
+        musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+                bgmPlayer.pause();
+                musicDisc.style.animationPlayState = 'paused'; // 停止旋转
+                isPlaying = false;
+            } else {
+                bgmPlayer.play();
+                musicDisc.style.animationPlayState = 'running'; // 开始旋转
+                isPlaying = true;
+            }
+        });
+
+        // 🎵 5. 跨页面音乐状态继承 (SessionStorage 魔法)
+        
+        // 1. 页面即将销毁前：保存当前的播放进度和状态
+        window.addEventListener('beforeunload', () => {
+            if (typeof bgmPlayer !== 'undefined' && bgmPlayer) {
+                sessionStorage.setItem('bgmTime', bgmPlayer.currentTime);
+                sessionStorage.setItem('bgmPlaying', isPlaying);
+            }
+        });
+
+        // 2. 新页面加载完成后：立刻读取记忆并恢复
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof bgmPlayer !== 'undefined' && bgmPlayer) {
+                const savedTime = sessionStorage.getItem('bgmTime');
+                const wasPlaying = sessionStorage.getItem('bgmPlaying') === 'true';
+                
+                // 恢复进度条
+                if (savedTime) {
+                    bgmPlayer.currentTime = parseFloat(savedTime);
+                }
+                
+                // 如果上个页面在播放，则尝试接力播放
+                if (wasPlaying) {
+                    // 使用 Promise 捕获浏览器的自动播放限制
+                    bgmPlayer.play().then(() => {
+                        musicDisc.style.animationPlayState = 'running';
+                        isPlaying = true;
+                    }).catch((error) => {
+                        console.warn('【极客提示】现代浏览器拦截了跨页面的自动播放，需要用户再次手动点击播放按钮。', error);
+                        musicDisc.style.animationPlayState = 'paused';
+                        isPlaying = false;
+                    });
+                }
+            }
+        });
+    </script>
+
+    
+</body>
+</html>
