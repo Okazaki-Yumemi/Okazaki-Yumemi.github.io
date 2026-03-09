@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YMGFC_CN's Blog | 个人博客</title>
+    <title>小项目 | YMGFC_CN's Blog</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script>
+        MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+
     <style>
-        /* 为了实现全局、撑满全屏的指针，必须让 html/body 占满高度 */
+        /* 1. 修改了这里的 body，去掉了静态背景，交给了专门的背景容器 */
         html, body { 
             min-height: 100vh;
             font-family: 'JetBrains Mono', 'PingFang SC', 'Microsoft YaHei', monospace; 
-            /* 原来的 body 背景和过渡都被我们删掉了，交给背景 div 桶处理 */
             overflow-x: hidden; 
-            
-            /* 【自定义指针修复版】平常状态下的鼠标指针 */
             cursor: url('images/cursor-normal.png'), auto;
         }
 
-        /* 鼠标放在链接上时的点击态指针 */
         a, button, [role="button"] {
             cursor: url('images/cursor-hover.png'), pointer !important;
         }
 
-        /* 优化毛玻璃特效，使其更剔透 */
         .glass-card {
             background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); 
             border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
-            /* 增加平滑的过渡动画时间 */
             transition: all 0.4s ease;
         }
         
-        /* 鼠标悬停时的绯红/樱花粉灵力光晕 */
         .glass-card:hover {
             box-shadow: 0 0 20px rgba(255, 183, 197, 0.6);
             border-color: rgba(255, 183, 197, 0.8);
             transform: translateY(-5px);
         }
 
-        /* 补回丢失的樱花花瓣实体样式 */
         .sakura-petal {
             position: fixed; top: -20px; background-color: #ffb7c5; border-radius: 15px 0 15px 0; 
             opacity: 0.8; pointer-events: none; z-index: 9999; box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
@@ -49,6 +47,11 @@
             0% { transform: translateY(0) rotate(0deg) translateX(0); }
             100% { transform: translateY(105vh) rotate(360deg) translateX(50px); }
         }
+        .markdown-body h3 { font-size: 1.25rem; font-weight: bold; margin-top: 1rem; margin-bottom: 0.5rem; color: #1f2937; }
+        .markdown-body p { margin-bottom: 0.75rem; line-height: 1.6; }
+        .markdown-body code { background-color: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: 'JetBrains Mono', monospace; border: 1px solid rgba(255,255,255,0.1); }
+        .markdown-body pre { background-color: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; border: 1px solid #333; }
+        .markdown-body pre code { background-color: transparent; padding: 0; color: inherit; border: none; }
     </style>
 </head>
 <body class="text-gray-800">
@@ -70,41 +73,41 @@
 
     <main class="max-w-4xl mx-auto px-4 py-8 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="md:col-span-2 space-y-6">
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2"><a href="post-1.html" class="hover:text-red-500 transition-colors">第一篇博客:源(代码)神 启动！</a></h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-08</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢...</p>
-                <a href="post-1.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center"> 阅读全文 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> </a>
-            </article>
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2"><a href="post-2.html" class="hover:text-red-500 transition-colors">风暴前的安宁？一点小想法</a></h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-08</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">来到大学，感觉似乎并没有经历过什么特别让我印象深刻的事情。每天过得平平淡淡，甚至有些无聊...</p>
-                <a href="post-2.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center"> 阅读全文 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> </a>
-            </article>
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2">
-                    <a href="post-3.html" class="hover:text-red-500 transition-colors">造轮子记录：交大空教室一键查询器</a>
-                </h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-09</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？今天顺手搓了一个轻量级的查询脚本...</p>
-                <a href="post-3.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center">
-                    阅读全文 
-                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </a>
+            <article class="glass-card p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-semibold mb-2 text-gray-900">小小的项目！</h2>
+                <p class="text-gray-900 text-sm mb-4 border-b border-gray-200/50 pb-4">发布于 2026-03-09</p>
+                
+                <textarea id="markdown-source" style="display:none;">
+受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？
+
+当然要用代码解决生活痛点！
+
+今天手搓了一个轻量级的“交大空教室查询器”。
+
+**不过感觉这种。。。自己在转专业的这些人里面没有突出点啊。。**
+
+**啊，忘了提项目网址了，在这里：**
+
+🚀 **在线体验传送门：** <a href="https://sjtu-empty-classroom-radar-1.onrender.com/" target="_blank" class="text-red-500 font-bold hover:underline hover:text-red-600 transition-colors">SJTU 空教室查询助手 (点击直达)</a>
+
+
+
+                </textarea>
+                
+                <div id="markdown-output" class="markdown-body text-black"></div>
             </article>
         </div>
-
-            
 
         <aside class="glass-card p-6 rounded-2xl shadow-sm h-fit">
             <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden border-4 border-white shadow-inner">
                 <img src="images/avatar.jpg" alt="我的头像" class="w-full h-full object-cover">
             </div>
             <h3 class="text-xl font-bold text-center mb-2 text-gray-900">YMGFC_CN</h3>
+            
             <p id="typing-text" class="text-sm text-gray-900 font-medium text-center px-2 min-h-[20px]"></p>
+
             <div class="flex justify-center space-x-5 border-t border-gray-200/50 pt-4 mt-4">
-                <a href="https://github.com/Okazaki-Yumemi" target="_blank" class="text-gray-900 hover:text-black transition-colors transform hover:scale-110">
+                <a href="https://github.com/Okazaki-Yumemi" target="_blank" class="text-gray-900 hover:text-gray-900 transition-colors transform hover:scale-110">
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
                 </a>
                 <a href="https://space.bilibili.com/96828559?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-900 hover:text-pink-400 transition-colors transform hover:scale-110">
@@ -152,7 +155,9 @@
     </div>
 
     <script>
-        // 1. 樱花特效 (物理引擎补全在 <style> 标签里)
+        const markdownSource = document.getElementById('markdown-source').value;
+        document.getElementById('markdown-output').innerHTML = marked.parse(markdownSource);
+
         function createSakura() {
             const petal = document.createElement('div');
             petal.className = 'sakura-petal';
@@ -167,7 +172,7 @@
         }
         setInterval(createSakura, 400);
 
-        // 2. 极客终端打字机特效
+        // 4. 补入打字机特效脚本
         const textToType = "OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...";
         const typingElement = document.getElementById('typing-text');
         let typeIndex = 0;
@@ -182,7 +187,7 @@
         }
         setTimeout(typeWriter, 800);
 
-        // 💡 3. 【终极版】双缓冲 Ping-Pong 壁纸轮播引擎
+        // 5. 补入高级双缓冲壁纸轮播脚本
         const backgrounds = [
             'images/bg1.png',
             'images/bg2.jpg',
@@ -192,32 +197,26 @@
         const bgA = document.getElementById('bg-a');
         const bgB = document.getElementById('bg-b');
         let currentBgIndex = 0;
-        let activeLayer = 'A'; // 记录当前亮起的是哪一层
+        let activeLayer = 'A'; 
 
         function changeBackground() {
             if (!bgA || !bgB) return;
 
-            // 1. 计算下一张图片的索引
             currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
             const fullStyle = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${backgrounds[currentBgIndex]}')`;
 
-            // 2. 极其优雅的 Ping-Pong 切换逻辑，完全没有 Hack，全靠 CSS 丝滑过渡
             if (activeLayer === 'A') {
-                // 当前 A 亮着。我们把新图给 B，然后 B 渐入亮起，A 渐出变暗
                 bgB.style.backgroundImage = fullStyle;
                 bgB.style.opacity = '1';
                 bgA.style.opacity = '0';
                 activeLayer = 'B';
             } else {
-                // 当前 B 亮着。我们把新图给 A，然后 A 渐入亮起，B 渐出变暗
                 bgA.style.backgroundImage = fullStyle;
                 bgA.style.opacity = '1';
                 bgB.style.opacity = '0';
                 activeLayer = 'A';
             }
         }
-
-        // 设定每隔 10秒 优雅切换一次
         setInterval(changeBackground, 10000);
 
         // 🎵 4. 音乐播放器交互逻辑
@@ -277,5 +276,7 @@
             }
         });
     </script>
+
+    
 </body>
 </html>
