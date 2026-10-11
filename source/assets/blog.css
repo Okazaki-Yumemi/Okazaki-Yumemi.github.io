@@ -11,13 +11,6 @@ a, button, summary, input[type='button'] {
 #site-subtitle {
   font-size: 1rem;
 }
-#web_bg .blog-wallpaper {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  transition: opacity 1.5s ease;
-}
 #recent-posts > .recent-post-item,
 #aside-content .card-widget,
 .layout > div:first-child {
@@ -77,6 +70,5 @@ a, button, summary, input[type='button'] {
   .blog-music { padding: 16px 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #web_bg .blog-wallpaper { transition: none; }
   .blog-petal { display: none; }
 }

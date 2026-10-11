@@ -41,30 +41,6 @@
   }
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const background = document.getElementById('web_bg');
-  if (background) {
-    const wallpapers = ['/images/bg1.png', '/images/bg2.jpg', '/images/bg3.png'];
-    const layers = wallpapers.slice(0, 2).map((url, index) => {
-      const layer = document.createElement('div');
-      layer.className = 'blog-wallpaper';
-      layer.style.backgroundImage = `url("${url}")`;
-      layer.style.opacity = index === 0 ? '1' : '0';
-      background.append(layer);
-      return layer;
-    });
-    let current = 0;
-    let active = 0;
-    window.setInterval(() => {
-      if (document.hidden) return;
-      current = (current + 1) % wallpapers.length;
-      const next = 1 - active;
-      layers[next].style.backgroundImage = `url("${wallpapers[current]}")`;
-      layers[next].style.opacity = '1';
-      layers[active].style.opacity = '0';
-      active = next;
-    }, 10000);
-  }
-
   window.setInterval(() => {
     if (document.hidden) return;
     const petal = document.createElement('span');
