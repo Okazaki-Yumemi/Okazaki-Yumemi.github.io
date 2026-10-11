@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CUDA 中文文档：除了翻译，还得让人找得到 | YMGFC_CN's Hidden Space</title><meta name="author" content="YMGFC_CN"><meta name="copyright" content="YMGFC_CN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录 CUDA Programming Guide 简体中文整理项目，以及术语、章节、图片和检索之间的关系。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CUDA 中文文档：除了翻译，还得让人找得到">
+<meta property="og:url" content="https://okazaki-yumemi.github.io/project-cuda-guide.html">
+<meta property="og:site_name" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:description" content="记录 CUDA Programming Guide 简体中文整理项目，以及术语、章节、图片和检索之间的关系。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://okazaki-yumemi.github.io/images/covers/cover-06.webp">
+<meta property="article:published_time" content="2026-10-11T04:11:00.000Z">
+<meta property="article:modified_time" content="2026-10-11T04:11:00.000Z">
+<meta property="article:author" content="YMGFC_CN">
+<meta property="article:tag" content="CUDA">
+<meta property="article:tag" content="文档">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://okazaki-yumemi.github.io/images/covers/cover-06.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "CUDA 中文文档：除了翻译，还得让人找得到",
+  "url": "https://okazaki-yumemi.github.io/project-cuda-guide.html",
+  "image": "https://okazaki-yumemi.github.io/images/covers/cover-06.webp",
+  "datePublished": "2026-10-11T04:11:00.000Z",
+  "dateModified": "2026-10-11T04:11:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "YMGFC_CN",
+      "url": "https://okazaki-yumemi.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/avatar.jpg"><link rel="canonical" href="https://okazaki-yumemi.github.io/project-cuda-guide.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.13.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CUDA 中文文档：除了翻译，还得让人找得到',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/assets/blog.css?v=3"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/images/bg1.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/covers/cover-06.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YMGFC_CN's Hidden Space</span></a><a class="nav-page-title" href="/"><span class="site-name">CUDA 中文文档：除了翻译，还得让人找得到</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">CUDA 中文文档：除了翻译，还得让人找得到</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-11T04:11:00.000Z" title="发表于 2026-10-11 12:11:00">2026-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-11T04:11:00.000Z" title="更新于 2026-10-11 12:11:00">2026-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>有时候，学一个东西的阻力并不完全来自它有多难。</p>
+<p>也可能只是想查的那句话埋得太深，几个术语换着名字出现，刚刚看到的图一翻页又找不着了。尤其是 CUDA 这种文档，随便一个细节都能把人从当前章节拉到另一个章节去。</p>
+<p>所以这份中文整理不只是把英文换成中文。至少我希望它能成为一个查得动、读得下去的入口。</p>
+<h2 id="先把路修通">先把路修通</h2>
+<p>项目围绕 CUDA Programming Guide Release 13.3 整理，内容目录覆盖介绍、编程、进阶、特性、附录与参考。站点使用 VuePress，把章节导航、全文搜索和阅读主题放到同一个地方。</p>
+<p>图也不是装饰。线程层级、执行方式和内存关系，靠一大段文字去解释往往很费劲。保留官方文档中的相关图示，让它们和说明出现在一起，读的时候才能少一点来回翻找。</p>
+<p>不过，排得好看不等于翻得准确。这两件事不能互相代替。</p>
+<h2 id="最容易偷懒的地方，反而最该认真">最容易偷懒的地方，反而最该认真</h2>
+<p>术语需要稳定。一个词在前面这样译，到了后面又换一种说法，读者很容易把它当成两个概念。代码、API 名称和限定条件也不能为了中文顺口就顺手改掉。</p>
+<p>尤其是那些“仅当”“可能”“必须”。省掉一个，句子好像更干净了，意思却可能变了。</p>
+<p>因此，中文稿的作用是降低阅读门槛，而不是替官方原文作最终解释。遇到涉及行为保证、平台限制或版本差异的地方，还是应当回到对应版本的 NVIDIA 文档核对。</p>
+<h2 id="一份能继续维护的笔记">一份能继续维护的笔记</h2>
+<p>仓库提供了文档开发和构建入口。把内容放在可维护的目录里，比留下一份很长、很难定位的文件更适合后续纠错。</p>
+<p>现在的记录以仓库注明的版本为准，不把它称为永远最新，也不承诺翻译没有错误。这是非官方中文整理。</p>
+<p>学东西已经够累了。能少迷一次路，也算有一点用。</p>
+<h2 id="来源">来源</h2>
+<p><a href="https://okazaki-yumemi.github.io/CUDA_PROGRAMMING_GUIDE_simplified-Chinese/">中文站点</a> · <a target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi/CUDA_PROGRAMMING_GUIDE_simplified-Chinese">项目与版本说明</a> · <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-programming-guide/">NVIDIA 官方文档</a></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CUDA/">CUDA</a><a class="post-meta__tags" href="/tags/%E6%96%87%E6%A1%A3/">文档</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/project-minivim.html" title="MiniVim：原来光标后面有这么多事情"><img class="cover" src="/images/covers/cover-04.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">MiniVim：原来光标后面有这么多事情</div></div><div class="info-2"><div class="info-item-1">平时用编辑器，输入、删除、移动光标，都自然得像呼吸。自己去写的时候才发现，这些东西并不会自动发生。 一个退格键应该删掉什么？行首按下去会怎样？光标到了屏幕外面，是移动窗口，还是让它消失？问题都不大，但每一个都得有人回答。 MiniVim 就是这样一个项目。它来自交大 CS1958-01 的课程框架，我的仓库是课程上游的 fork，使用 C++17。这里记一下它的结构，不把教学框架也算成自己从零设计的东西。 不只是把字放到屏幕上 项目把事情分给了 Buffer、Window、Command、Renderer、Editor 和 Terminal。文本本身、可见区域、命令、显示和终端交互，分别有各自的位置。 这个拆分挺重要。屏幕上的第几行，不一定是文件里的第几行；修改了缓冲区，也不等于终端已经把修改画出来了。如果全都混在一起，一个光标问题就很容易牵出一串别的问题。 仓库里的 Buffer.cpp 和 Editor.cpp 已经有具体实现，可以沿着“按键进入编辑器，再作用到缓冲区”的路径去看。比起直接盯着最终画面，这样更容易定位一件事到底应该在哪一层发生。 同一个按键，也未必是同一件事 ...</div></div></div></a><a class="pagination-related" href="/project-desktop-manager.html" title="DesktopManager：桌面上的东西，能不能各归各位"><img class="cover" src="/images/covers/cover-07.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">DesktopManager：桌面上的东西，能不能各归各位</div></div><div class="info-2"><div class="info-item-1">桌面上有文件，有快捷方式，也有一些暂时不想处理的东西。 它们待在那里很方便，但方便久了，就会变成另一种不方便。要找的时候得扫一遍；想整理的时候，又担心改动原来的位置之后，之前的路径和习惯都乱了。 DesktopManager 把“整理”先做成了一个单独的层。至少不必为了给文件分组，就马上把文件搬来搬去。 整理关系，不急着整理磁盘 虚拟集合保存的是文件与集合的关联，而不是把原文件实际移动到新目录。桌面索引负责发现和记录对象，集合负责提供另一个观察方式。 这样做并不意味着磁盘从此就不需要整理了。它只是把“我现在想把这些东西看作一组”和“我要改变它们的实际位置”分开。 这个区别很小，却能少一点顾虑。 界面后面也要分层 项目使用 Tauri 2、Rust、Svelte 5 / TypeScript 和 SQLite。界面经过统一的调用入口进入 Tauri commands，继续交给领域逻辑和存储层；SQL 留在存储模块中，Windows 桌面相关行为则放在专门的适配模块。 看起来绕了几层，但每层有自己的职责。界面不需要知道一条查询怎么写，数据库也不应该决定一个按钮长什么样。 仓库还记录了...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能"><img class="cover" src="/images/covers/cover-06.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">AI Infrastructure Seminars：从写 kernel 到解释性能</div></div><div class="info-2"><div class="info-item-1">写出一个 kernel，和写出一个快的 kernel，中间隔着挺多事情。 更麻烦的是，那个“快”还得是真的快，不能只是计时的时候少等了一会。 PKU-Ai-Infra 记录了 LCPU / PKU AI Infrastructure Seminars 的学习过程，涉及 CUDA、Triton、TileLang、GPU 内存层次、Tensor Core、流水线与推理。课程资料和个人实现的来源关系，仓库里也作了区分。 正确性先行的优化流程 仓库给出的学习流程很明确：理解计算、建立参考实现、检查正确性，再分析线程与内存映射，最后测量和优化。assignment01/kernels/ 中可以看到向量加法、softmax、矩阵乘法以及 TileLang 相关文件；对应测试目录把计算结果与实现细节分开组织。 对于 kernel，不能只看代码行数。数据是否合并访问、共享内存是否复用、寄存器使用是否挤压并行度，以及同步发生在什么位置，都会影响最终执行方式。优化时需要先解释瓶颈，再判断修改是否针对这个瓶颈。 测量也是实现的一部分 GPU 执行是异步的。仓库 README 特别讨论了预热、同步、重复...</div></div></div></a><a class="pagination-related" href="/course-sjtu-hpc.html" title="SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚"><img class="cover" src="/images/covers/cover-12.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚</div></div><div class="info-2"><div class="info-item-1">提起 HPC，很容易先想到 GPU、并行和各种性能数字。 但程序还没成功编译出来的时候，这些东西暂时都离得挺远。工具链不明白，连问题发生在哪一步都说不清楚。 SJTUHPC2026 保存了学习与准备中的 Shell 练习、C/C++ 程序、Makefile、CMake 示例、CUDA 文件和 Python 构建测试脚本，笔记则记录工具、网络、编译和语言。这次先从它们怎样接起来说起。 编译不是一个黑盒按钮 编译笔记把预处理、生成汇编、汇编成目标文件和链接拆开观察。这样做的价值，是能把不同类型的错误放回对应阶段：头文件和宏的问题、语言规则的问题，以及符号与库的问题，并不发生在同一个地方。 课程练习中同时出现单文件构建与多文件组织。随着程序拆成多个模块，编译参数、依赖关系和链接目标都需要显式管理，构建文件也因此成为项目的一部分。 从主机程序走向 GPU 公开的 class06 目录包含 C++、CUDA 与 Python 文件。这提供了一个观察接口的入口：主机端如何组织调用，设备端怎样实现计算，测试脚本怎样把构建与检查串起来。 这份总结不会只凭文件扩展名就推断已经实现某个高性能算法，也...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">YMGFC_CN</div><div class="author-info-description">OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E8%B7%AF%E4%BF%AE%E9%80%9A"><span class="toc-number">1.</span> <span class="toc-text">先把路修通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%AE%B9%E6%98%93%E5%81%B7%E6%87%92%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%8C%E5%8F%8D%E8%80%8C%E6%9C%80%E8%AF%A5%E8%AE%A4%E7%9C%9F"><span class="toc-number">2.</span> <span class="toc-text">最容易偷懒的地方，反而最该认真</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BB%BD%E8%83%BD%E7%BB%A7%E7%BB%AD%E7%BB%B4%E6%8A%A4%E7%9A%84%E7%AC%94%E8%AE%B0"><span class="toc-number">3.</span> <span class="toc-text">一份能继续维护的笔记</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90"><span class="toc-number">4.</span> <span class="toc-text">来源</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写完《桃花幽香》之后，花还会再开吗"/></a><div class="content"><a class="title" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗">写完《桃花幽香》之后，花还会再开吗</a><time datetime="2026-10-11T04:25:00.000Z" title="发表于 2026-10-11 12:25:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"><img src="/images/covers/cover-02.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"/></a><div class="content"><a class="title" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我">《幻想乡回访日志》：热闹就在眼前，却不一定属于我</a><time datetime="2026-10-11T04:24:00.000Z" title="发表于 2026-10-11 12:24:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门"><img src="/images/covers/cover-05.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="未定名接力稿：给被世界扔掉的东西留一扇门"/></a><div class="content"><a class="title" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门">未定名接力稿：给被世界扔掉的东西留一扇门</a><time datetime="2026-10-11T04:23:00.000Z" title="发表于 2026-10-11 12:23:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS336 学习总结：把语言模型的整条链路串起来"/></a><div class="content"><a class="title" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来">CS336 学习总结：把语言模型的整条链路串起来</a><time datetime="2026-10-11T04:22:00.000Z" title="发表于 2026-10-11 12:22:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能"><img src="/images/covers/cover-06.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Infrastructure Seminars：从写 kernel 到解释性能"/></a><div class="content"><a class="title" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能">AI Infrastructure Seminars：从写 kernel 到解释性能</a><time datetime="2026-10-11T04:21:00.000Z" title="发表于 2026-10-11 12:21:00">2026-10-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By YMGFC_CN</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script src="/assets/blog.js?v=2" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
