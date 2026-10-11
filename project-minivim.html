@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MiniVim：原来光标后面有这么多事情 | YMGFC_CN's Hidden Space</title><meta name="author" content="YMGFC_CN"><meta name="copyright" content="YMGFC_CN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从文本缓冲区、模式切换到终端渲染，记录 MiniVim 里一个按键怎样变成一次编辑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MiniVim：原来光标后面有这么多事情">
+<meta property="og:url" content="https://okazaki-yumemi.github.io/project-minivim.html">
+<meta property="og:site_name" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:description" content="从文本缓冲区、模式切换到终端渲染，记录 MiniVim 里一个按键怎样变成一次编辑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://okazaki-yumemi.github.io/images/covers/cover-04.webp">
+<meta property="article:published_time" content="2026-10-11T04:12:00.000Z">
+<meta property="article:modified_time" content="2026-10-11T04:12:00.000Z">
+<meta property="article:author" content="YMGFC_CN">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="编辑器">
+<meta property="article:tag" content="课程项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://okazaki-yumemi.github.io/images/covers/cover-04.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "MiniVim：原来光标后面有这么多事情",
+  "url": "https://okazaki-yumemi.github.io/project-minivim.html",
+  "image": "https://okazaki-yumemi.github.io/images/covers/cover-04.webp",
+  "datePublished": "2026-10-11T04:12:00.000Z",
+  "dateModified": "2026-10-11T04:12:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "YMGFC_CN",
+      "url": "https://okazaki-yumemi.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/avatar.jpg"><link rel="canonical" href="https://okazaki-yumemi.github.io/project-minivim.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.13.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MiniVim：原来光标后面有这么多事情',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/assets/blog.css?v=3"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/images/bg1.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/covers/cover-04.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YMGFC_CN's Hidden Space</span></a><a class="nav-page-title" href="/"><span class="site-name">MiniVim：原来光标后面有这么多事情</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">MiniVim：原来光标后面有这么多事情</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-11T04:12:00.000Z" title="发表于 2026-10-11 12:12:00">2026-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-11T04:12:00.000Z" title="更新于 2026-10-11 12:12:00">2026-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>平时用编辑器，输入、删除、移动光标，都自然得像呼吸。自己去写的时候才发现，这些东西并不会自动发生。</p>
+<p>一个退格键应该删掉什么？行首按下去会怎样？光标到了屏幕外面，是移动窗口，还是让它消失？问题都不大，但每一个都得有人回答。</p>
+<p>MiniVim 就是这样一个项目。它来自交大 CS1958-01 的课程框架，我的仓库是课程上游的 fork，使用 C++17。这里记一下它的结构，不把教学框架也算成自己从零设计的东西。</p>
+<h2 id="不只是把字放到屏幕上">不只是把字放到屏幕上</h2>
+<p>项目把事情分给了 <code>Buffer</code>、<code>Window</code>、<code>Command</code>、<code>Renderer</code>、<code>Editor</code> 和 <code>Terminal</code>。文本本身、可见区域、命令、显示和终端交互，分别有各自的位置。</p>
+<p>这个拆分挺重要。屏幕上的第几行，不一定是文件里的第几行；修改了缓冲区，也不等于终端已经把修改画出来了。如果全都混在一起，一个光标问题就很容易牵出一串别的问题。</p>
+<p>仓库里的 <code>Buffer.cpp</code> 和 <code>Editor.cpp</code> 已经有具体实现，可以沿着“按键进入编辑器，再作用到缓冲区”的路径去看。比起直接盯着最终画面，这样更容易定位一件事到底应该在哪一层发生。</p>
+<h2 id="同一个按键，也未必是同一件事">同一个按键，也未必是同一件事</h2>
+<p>Normal、Insert 和命令行模式让按键有了不同含义。输入字母，有时是在写字，有时是在下命令。模式不是给界面换一个标签，而是决定输入如何被解释。</p>
+<p>我觉得这种项目有意思的地方，就是逼着人把平时省略掉的前提重新写出来。文件有内容、光标有位置、窗口有范围，操作之后这些状态还得彼此一致。</p>
+<p>否则看起来只错了一个字符，实际上是整套坐标没对上。</p>
+<h2 id="先把基本动作说清楚">先把基本动作说清楚</h2>
+<p>课程提供了基础要求、进阶说明以及终端测试相关工具。能编译和能正确编辑文件是两回事；跑过几个顺手的操作，也不能代表所有边界都对了。</p>
+<p>这篇先记录模块之间的关系，没有重新跑完整套课程测试，也不在这里宣称进阶功能全部完成。以后回头看，至少还能记得那个小小的光标，后面到底站着哪些东西。</p>
+<h2 id="来源">来源</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi/MiniVim">项目仓库</a> · <a target="_blank" rel="noopener" href="https://github.com/SJTUJohnClass/MiniVim">课程框架</a> · <a target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi/MiniVim/tree/main/src">源码</a></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/%E8%AF%BE%E7%A8%8B%E9%A1%B9%E7%9B%AE/">课程项目</a><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">编辑器</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/course-cs189.html" title="CS189/289A 资料整理：给机器学习补上理论阅读入口"><img class="cover" src="/images/covers/cover-10.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">CS189/289A 资料整理：给机器学习补上理论阅读入口</div></div><div class="info-2"><div class="info-item-1">能把模型跑起来之后，仍然会有一些问题绕回来：为什么这样定义目标？为什么这个假设成立？换一份数据，它还会不会成立？ 所以这里也留下一个偏理论的阅读入口。CS189/289A Spring 2024 这份仓库，是从 cy-Yin 的课程资料仓库 fork 而来，包含 Discussion、考试材料和作业解答。 先叠一个很必要的甲：上游 README 里的“我的解答”指的是原作者，不能因为我点了 fork，就变成我自己的完成记录。 为什么保留这样的资料入口 在学习机器学习实现之后，还需要回到模型假设、目标函数和理论条件。课程资料可以作为补充阅读入口，帮助把一个实验中的具体选择放回更一般的问题中考虑。 使用作业解答时，可以先独立写出问题与推理，再对照已有答案检查差异。否则，看到熟悉的公式很容易产生“已经理解”的错觉，却无法解释它在什么假设下成立。 数据与材料需要分开核对 上游说明部分数据较大，不能只依赖仓库里的文件集合；相关数据和空白作业包另有来源。因此，阅读代码之前应先核对题目版本、数据格式和材料出处，避免把缺失数据当作实现问题。 这里不复制上游整份解答，也不把资料收藏写成已经完成六次...</div></div></div></a><a class="pagination-related" href="/project-cuda-guide.html" title="CUDA 中文文档：除了翻译，还得让人找得到"><img class="cover" src="/images/covers/cover-06.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">CUDA 中文文档：除了翻译，还得让人找得到</div></div><div class="info-2"><div class="info-item-1">有时候，学一个东西的阻力并不完全来自它有多难。 也可能只是想查的那句话埋得太深，几个术语换着名字出现，刚刚看到的图一翻页又找不着了。尤其是 CUDA 这种文档，随便一个细节都能把人从当前章节拉到另一个章节去。 所以这份中文整理不只是把英文换成中文。至少我希望它能成为一个查得动、读得下去的入口。 先把路修通 项目围绕 CUDA Programming Guide Release 13.3 整理，内容目录覆盖介绍、编程、进阶、特性、附录与参考。站点使用 VuePress，把章节导航、全文搜索和阅读主题放到同一个地方。 图也不是装饰。线程层级、执行方式和内存关系，靠一大段文字去解释往往很费劲。保留官方文档中的相关图示，让它们和说明出现在一起，读的时候才能少一点来回翻找。 不过，排得好看不等于翻得准确。这两件事不能互相代替。 最容易偷懒的地方，反而最该认真 术语需要稳定。一个词在前面这样译，到了后面又换一种说法，读者很容易把它当成两个概念。代码、API 名称和限定条件也不能为了中文顺口就顺手改掉。 尤其是那些“仅当”“可能”“必须”。省掉一个，句子好像更干净了，意思却可能变了。 因此，中...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post-1.html" title="第一篇博客:源(代码)神 启动！"><img class="cover" src="/images/bg1.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-08</div><div class="info-item-2">第一篇博客:源(代码)神 启动！</div></div><div class="info-2"><div class="info-item-1">卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢？ 1. 物理与数学的交织 (LaTeX Test) 在无聊的时候，看看优美的公式也是一种放松（真的吗）。比如经典的薛定谔方程： iℏ∂∂tΨ(r,t)=[−ℏ22m∇2+V(r,t)]Ψ(r,t)当然，还有内联公式 eiπ+1=0，这是数学中最纯粹的美。 2. 万物皆对象 (Code Test) 最近刚好在梳理 C++ 的函数封装，顺手写一段优雅的 OOP 示例： 1234567891011121314151617181920212223#include &lt;iostream&gt;#include &lt;string&gt;class Yumemi &#123;private:    std::string title;    int magicPower;public:    // 构造函数    Yumemi(std::string t, int p) : title(t), magicPower(p) &#123;&#125;...</div></div></div></a><a class="pagination-related" href="/course-stlite.html" title="STLite 数据结构作业：把容器接口落到内存与迭代器"><img class="cover" src="/images/covers/cover-11.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">STLite 数据结构作业：把容器接口落到内存与迭代器</div></div><div class="info-2"><div class="info-item-1">用 vector 的时候，push_back 就是一行。自己去实现的时候，这一行会突然长出一大堆前提。 还有空间吗？对象构造了吗？抛异常之后，已经做了一半的事情怎么算？ STLite 是 ACM 班 CS1951 数据结构课程的作业框架，要求实现 vector、deque、priority_queue 和 map，还包括迭代器行为与复杂度要求。我的仓库是课程仓库的 fork，教学接口和测试来自上游，个人实现与笔记则另看。 接口背后是具体的数据组织 容器名字很熟悉，但真正实现时，随机访问、插入、删除和迭代器都依赖底层结构。一个接口看起来简单，不代表它在所有存储方式下都能满足要求。 deque/notes.md 记录了一个具体选择：使用分块数组和逻辑下标，把元素位置映射到块号与块内偏移。这样可以把访问、迭代和移动操作放在同一套坐标体系下考虑。 分配内存与构造对象是两件事 笔记还讨论了不要求元素具有默认构造函数的情况。块负责申请原始内存，容器负责在需要的位置构造元素，并在删除、清空或析构时销毁活对象。把这些职责混在一起，容易造成额外构造、遗漏析构或异常路径上的资源问题。 迭代器同样需要...</div></div></div></a><a class="pagination-related" href="/course-cpp-sjtu.html" title="交大 C++ 基础课：从第一个程序开始建立习惯"><img class="cover" src="/images/covers/cover-04.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">交大 C++ 基础课：从第一个程序开始建立习惯</div></div><div class="info-2"><div class="info-item-1">Hello World 很短，但它也得先被编译出来，才会出现在屏幕上。 学到后面，基础很容易被当成已经会了的东西。可真出了问题，还是要回来检查输入、类型、编译和链接。 Cpp_SJTU 目前留下的公开课堂记录不多，主要是 Hello World、课堂练习和输入输出示例。这篇就从这些小程序写起，不把它扩成一个实际上还没有留下来的完整课程总结。 小程序也有完整的执行链 第一份 main.cpp 使用 std::cout 输出 Hello World，同目录还有 Makefile。即使程序只有几行，它也需要经过源文件、编译、生成可执行程序和运行这一条链路。理解这些环节，可以减少以后遇到构建问题时的混淆。 输入输出练习则提醒我注意接口语义。公开的 cin.get.cpp 文件虽然名字包含 get，实际代码使用的是 std::cin &gt;&gt; a &gt;&gt; b &gt;&gt; c，不能仅凭文件名就说它演示了 cin.get()。阅读代码时，具体表达式比名称更可靠。 从示例中提炼可复用的检查 对于一个小程序，可以依次确认输入假设、类型选择、输出格式和退出行为。随着练习增加，...</div></div></div></a><a class="pagination-related" href="/course-sjtu-hpc.html" title="SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚"><img class="cover" src="/images/covers/cover-12.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚</div></div><div class="info-2"><div class="info-item-1">提起 HPC，很容易先想到 GPU、并行和各种性能数字。 但程序还没成功编译出来的时候，这些东西暂时都离得挺远。工具链不明白，连问题发生在哪一步都说不清楚。 SJTUHPC2026 保存了学习与准备中的 Shell 练习、C/C++ 程序、Makefile、CMake 示例、CUDA 文件和 Python 构建测试脚本，笔记则记录工具、网络、编译和语言。这次先从它们怎样接起来说起。 编译不是一个黑盒按钮 编译笔记把预处理、生成汇编、汇编成目标文件和链接拆开观察。这样做的价值，是能把不同类型的错误放回对应阶段：头文件和宏的问题、语言规则的问题，以及符号与库的问题，并不发生在同一个地方。 课程练习中同时出现单文件构建与多文件组织。随着程序拆成多个模块，编译参数、依赖关系和链接目标都需要显式管理，构建文件也因此成为项目的一部分。 从主机程序走向 GPU 公开的 class06 目录包含 C++、CUDA 与 Python 文件。这提供了一个观察接口的入口：主机端如何组织调用，设备端怎样实现计算，测试脚本怎样把构建与检查串起来。 这份总结不会只凭文件扩展名就推断已经实现某个高性能算法，也...</div></div></div></a><a class="pagination-related" href="/project-anti-fraud.html" title="别点那个链接！把反诈题目变成一次对话"><img class="cover" src="/images/covers/cover-11.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">别点那个链接！把反诈题目变成一次对话</div></div><div class="info-2"><div class="info-item-1">“不要点陌生链接”当然是对的。 但现实中的消息不一定会把“陌生”写在脸上。它可能看起来像奖学金通知，可能是一个急着让你付款的人，也可能只是车旁边一张不太起眼的二维码。 《别点那个链接！》是人工智能导论的课程大作业。想做的事情，是把一句正确但有点远的提醒，放进一次具体的选择里。 不先告诉你标准答案 项目设计了奖学金诈骗短信、陌生人催促付款和可疑自行车二维码三个模拟场景。用户需要在对话与操作中作出选择，而不是一进页面就看到一张写满正确答案的宣传图。 前端使用 HTML、CSS 和 JavaScript。离线模拟模式可以演示交互，实时模式则由 Flask 后端连接兼容 OpenAI 格式的 API。这里的场景都是模拟，不需要把真实诈骗消息和个人账号当作演示材料。 做完以后，还能回头看 项目保留交互轨迹，围绕信息来源核验、资金边界、未知入口和紧迫感等方面整理风险复盘，并提供行动清单与 Markdown 报告导出。 相比直接告诉人“你的防骗能力是几分”，我觉得能指出某一步为什么值得停一下，更有实际意义。因为下一次遇到的消息，未必长得和题目一样。 不过这些维度是教学项目中的反馈设计，不是经过...</div></div></div></a><a class="pagination-related" href="/course-acmoj.html" title="ACMOJ 作业整理：接口约束与对象生命周期"><img class="cover" src="/images/covers/cover-09.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">ACMOJ 作业整理：接口约束与对象生命周期</div></div><div class="info-2"><div class="info-item-1">有些题的麻烦，不是“不知道怎么写”，而是“知道的那个写法，这次不许用”。 另一些题，则把问题藏在对象什么时候结束生命里。 ACMOJ-John-26Spring 按 Homework 和题号保存 C++ 作业。这里选两个具体例子回看：一个是受限操作下的逻辑构造，一个是离开作用域时才执行的动作。只看代码能说明的部分，不根据题号猜成绩。 在约束中组合逻辑 Homework1/2354/ans.hpp 先定义了一个只有两个输入同时为真时才返回假的函数，再用它组合出逻辑与和逻辑非。题目注释对可用操作作了限制，因此重点不仅是结果正确，还包括实现是否遵守给定接口与操作集合。 这种练习有助于把逻辑表达式拆成更小的构造。一个熟悉的操作，在不允许直接使用时，需要重新解释它由哪些基本行为组成。 用生命周期组织清理动作 Homework2/1048/DeferClass.hpp 使用 std::function&lt;void()&gt; 保存动作，析构时从容器尾部逐个取出并执行。实现还禁用了复制构造与复制赋值，避免把同一组退出动作无意间复制给另一个对象。 它把“离开作用域时做什么”放进对象生命周期。...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">YMGFC_CN</div><div class="author-info-description">OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AA%E6%98%AF%E6%8A%8A%E5%AD%97%E6%94%BE%E5%88%B0%E5%B1%8F%E5%B9%95%E4%B8%8A"><span class="toc-number">1.</span> <span class="toc-text">不只是把字放到屏幕上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E6%8C%89%E9%94%AE%EF%BC%8C%E4%B9%9F%E6%9C%AA%E5%BF%85%E6%98%AF%E5%90%8C%E4%B8%80%E4%BB%B6%E4%BA%8B"><span class="toc-number">2.</span> <span class="toc-text">同一个按键，也未必是同一件事</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E6%8A%8A%E5%9F%BA%E6%9C%AC%E5%8A%A8%E4%BD%9C%E8%AF%B4%E6%B8%85%E6%A5%9A"><span class="toc-number">3.</span> <span class="toc-text">先把基本动作说清楚</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90"><span class="toc-number">4.</span> <span class="toc-text">来源</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写完《桃花幽香》之后，花还会再开吗"/></a><div class="content"><a class="title" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗">写完《桃花幽香》之后，花还会再开吗</a><time datetime="2026-10-11T04:25:00.000Z" title="发表于 2026-10-11 12:25:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"><img src="/images/covers/cover-02.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"/></a><div class="content"><a class="title" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我">《幻想乡回访日志》：热闹就在眼前，却不一定属于我</a><time datetime="2026-10-11T04:24:00.000Z" title="发表于 2026-10-11 12:24:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门"><img src="/images/covers/cover-05.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="未定名接力稿：给被世界扔掉的东西留一扇门"/></a><div class="content"><a class="title" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门">未定名接力稿：给被世界扔掉的东西留一扇门</a><time datetime="2026-10-11T04:23:00.000Z" title="发表于 2026-10-11 12:23:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS336 学习总结：把语言模型的整条链路串起来"/></a><div class="content"><a class="title" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来">CS336 学习总结：把语言模型的整条链路串起来</a><time datetime="2026-10-11T04:22:00.000Z" title="发表于 2026-10-11 12:22:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能"><img src="/images/covers/cover-06.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Infrastructure Seminars：从写 kernel 到解释性能"/></a><div class="content"><a class="title" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能">AI Infrastructure Seminars：从写 kernel 到解释性能</a><time datetime="2026-10-11T04:21:00.000Z" title="发表于 2026-10-11 12:21:00">2026-10-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By YMGFC_CN</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script src="/assets/blog.js?v=2" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
