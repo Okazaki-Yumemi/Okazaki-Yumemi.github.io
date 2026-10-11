@@ -6,9 +6,15 @@ import { load } from 'cheerio';
 const root = path.resolve(import.meta.dirname, '..');
 const output = path.join(root, 'public');
 const expected = ['index.html', 'post-1.html', 'post-2.html', 'post-3.html', 'archives/index.html',
-  'tags/index.html', 'categories/index.html', 'about/index.html', 'projects/index.html', '404.html', 'search.xml'];
+  'tags/index.html', 'categories/index.html', 'about/index.html', 'projects/index.html',
+  'courses/index.html', 'writing/index.html', '404.html', 'search.xml'];
 for (const file of expected) assert((await stat(path.join(output, file))).size > 0, `Missing ${file}`);
-for (const name of await readdir(path.join(root, 'images'))) {
+assert.equal(await stat(path.join(output, 'project-sjtu-monitor.html')).catch(() => null), null, 'Removed article must not be generated');
+const wallpaperCss = await readFile(path.join(output, 'assets/blog.css'), 'utf8');
+assert.match(wallpaperCss, /#page-header\s*\{[^}]*background-image:\s*none\s*!important/s, 'Headers must share the site wallpaper layer');
+assert.match(wallpaperCss, /#page-header\s*\{[^}]*background-color:\s*transparent\s*!important/s, 'Headers must reveal the site wallpaper');
+const approvedImages = JSON.parse(await readFile(path.join(root, 'public-images.json'), 'utf8'));
+for (const name of approvedImages) {
   assert((await readFile(path.join(output, 'images', name))).equals(await readFile(path.join(root, 'images', name))), `Asset changed: ${name}`);
 }
 const posts = await Promise.all([1, 2, 3].map(i => readFile(path.join(output, `post-${i}.html`), 'utf8')));
@@ -17,7 +23,15 @@ assert.match(posts[0], /Science and Magic, perfectly encapsulated!/, 'Code block
 assert.match(posts[1], /Ich hätte das Dunkel ertragen können/, 'Unicode content missing');
 assert.match(posts[2], /https:\/\/sjtu-empty-classroom-radar-1.onrender.com\//, 'Project link missing');
 const search = await readFile(path.join(output, 'search.xml'), 'utf8');
-assert.equal((search.match(/<entry>/g) || []).length, 3, 'Search must include all three posts');
+const sourcePosts = (await readdir(path.join(root, 'source/_posts'))).filter(name => name.endsWith('.md'));
+assert.equal((search.match(/<entry>/g) || []).length, sourcePosts.length, 'Search must include every post');
+const allowedRepositories = JSON.parse(await readFile(path.join(root, 'public-sources.json'), 'utf8'));
+for (const name of sourcePosts) {
+  const source = await readFile(path.join(root, 'source/_posts', name), 'utf8');
+  for (const match of source.matchAll(/https:\/\/github\.com\/Okazaki-Yumemi\/([A-Za-z0-9_.-]+)/g)) {
+    assert(allowedRepositories.includes(match[1]), `Unapproved repository reference in ${name}`);
+  }
+}
 
 let pages = 0;
 async function inspect(directory) {
@@ -38,4 +52,4 @@ async function inspect(directory) {
   }
 }
 await inspect(output);
-console.log(`Verified ${pages} pages, 3 posts, original assets, code, math, search and all local links.`);
+console.log(`Verified ${pages} pages, ${sourcePosts.length} posts, approved assets and public sources, code, math, search and all local links.`);

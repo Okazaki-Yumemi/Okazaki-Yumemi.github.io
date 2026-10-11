@@ -6,7 +6,8 @@ const path = require('node:path');
 // Keep the original asset URLs and a single authoritative copy of each file.
 hexo.extend.generator.register('original-images', function () {
   const directory = path.join(hexo.base_dir, 'images');
-  return fs.readdirSync(directory).map(name => ({
+  const approved = JSON.parse(fs.readFileSync(path.join(hexo.base_dir, 'public-images.json'), 'utf8'));
+  return approved.map(name => ({
     path: `images/${name}`,
     data: () => fs.createReadStream(path.join(directory, name))
   }));

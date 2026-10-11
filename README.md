@@ -19,7 +19,7 @@ npm run server
 - 独立页面：`source/about/`、`source/projects/` 等。
 - 站点配置：`_config.yml`。
 - 主题覆盖配置：`_config.butterfly.yml`，主题通过 npm 安装，不直接修改 `node_modules`。
-- 原有图片、GIF、光标和音乐：`images/`；Hexo 生成器将它们复制到站点，原地址不变。
+- 图片、GIF、光标和音乐：`images/`；只有 `public-images.json` 明确列出的素材才会生成到站点。新增原图在本地保留，文章使用 `images/covers/` 中去除元数据、压缩后的 WebP 副本。
 - 自定义样式和交互：`source/assets/`。
 - 图标字体与图片缩放库：由 `scripts/static-assets.js` 从锁定的 npm 依赖生成并本地托管，许可证随构建输出保留。
 
@@ -31,17 +31,22 @@ npm run server
 npm run clean
 npm run publish:root
 npm run check
-git add .
-git commit -m "更新博客"
-git push origin main
 ```
 
-`public/` 是忽略的临时构建目录。`publish:root` 将 `public-files.json` 中列出的站点输出同步至仓库根目录并创建 `.nojekyll`，兼容现有 GitHub Pages 的 **main / (root)** 发布方式。根目录的 HTML、`css/`、`js/`、`assets/` 等是生成文件，请编辑 `source/` 后重新构建。
+提交前逐项核对 `git status` 与暂存内容，不使用不加区分的 `git add .`：本地图片原件和未授权资料不应提交。文章需要核稿时，仅运行 `npm run build` 与 `npm run check` 生成本地预览；核稿通过后再同步根目录、commit 和 push。
+
+`public/` 是忽略的临时构建目录。`publish:root` 将构建产物（图片保留在原目录）及 `public-files.json` 中列出的站点输出同步至仓库根目录并创建 `.nojekyll`，兼容现有 GitHub Pages 的 **main / (root)** 发布方式。根目录的 HTML、`css/`、`js/`、`assets/` 等是生成文件，请编辑 `source/` 后重新构建。
+
+## 公开资料边界
+
+2026-10-11 新增的课程与项目文章只取材于无需登录即可访问的 GitHub 公开仓库；文章结尾列出公开来源。`public-sources.json` 列出核实过的公开仓库名，构建检查会拒绝文章中指向其他本人仓库的链接。这个检查不能替代写作时的内容核对；私有仓库、账号配置、真实票码和个人识别信息不得作为文章素材。
+
+三篇文学随笔另以作者明确指定的三份原稿为材料，不上传原稿文件或全文。未定名 PDF 为多人署名接力稿，随笔主要讨论署名 YMG 的第四章，不将整部作品归为个人独作。
 
 GitHub Actions 会在推送 main 后安装锁定依赖、构建、检查，并保存 `hexo-site` 构建产物。GitHub Pages 按现有 main 根目录方式发布已提交的静态输出，因此每次更新文章后需运行 `npm run publish:root` 再提交。
 
 网站地址：https://okazaki-yumemi.github.io/
 
-音乐位于侧栏，通过原生播放器手动播放；跨页面恢复会受浏览器自动播放策略限制。首页横幅和页面背景使用同一张固定壁纸，不自动轮播。移动端隐藏两侧 GIF 装饰，减少阅读遮挡；系统减少动态效果时关闭樱花。
+音乐位于侧栏，通过原生播放器手动播放；跨页面恢复会受浏览器自动播放策略限制。所有页面的页头透明，统一透出同一个固定壁纸层，不再把文章封面用作独立页头背景，也不自动轮播。文章封面仍用于列表与推荐。移动端隐藏两侧 GIF 装饰，减少阅读遮挡；系统减少动态效果时关闭樱花。
 
 依赖安装时 `npm audit` 报告 15 项上游问题（4 moderate、11 high）；`npm audit fix` 未能在当前兼容范围内消除。发布站点是静态文件，Node.js 依赖仅用于本地构建、预览和 CI，后续升级时应复核这些告警。

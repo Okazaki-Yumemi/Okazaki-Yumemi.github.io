@@ -11,6 +11,24 @@ a, button, summary, input[type='button'] {
 #site-subtitle {
   font-size: 1rem;
 }
+/* One fixed wallpaper beneath both header and content on every page. */
+#web_bg {
+  opacity: 1 !important;
+  animation: none !important;
+}
+#page-header {
+  background-image: none !important;
+  background-color: transparent !important;
+}
+#page-header:not(.not-top-img)::before {
+  background-color: transparent !important;
+}
+#web_bg::before {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, .35);
+  content: '';
+}
 #recent-posts > .recent-post-item,
 #aside-content .card-widget,
 .layout > div:first-child {

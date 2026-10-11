@@ -3,7 +3,9 @@ menu:
   归档: /archives/ || fas fa-archive
   标签: /tags/ || fas fa-tags
   分类: /categories/ || fas fa-folder-open
+  课程: /courses/ || fas fa-book
   项目: /projects/ || fas fa-code
+  文字: /writing/ || fas fa-pen
   关于: /about/ || fas fa-user
 social:
   fab fa-github: https://github.com/Okazaki-Yumemi || GitHub
@@ -83,7 +85,7 @@ footer:
   custom_text:
 inject:
   head:
-    - <link rel="stylesheet" href="/assets/blog.css?v=2">
+    - <link rel="stylesheet" href="/assets/blog.css?v=3">
   bottom:
     - <script src="/assets/blog.js?v=2" defer></script>
 CDN:
