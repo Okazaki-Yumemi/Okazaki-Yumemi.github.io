@@ -1,0 +1,5 @@
+*.html linguist-generated=true whitespace=-blank-at-eol
+css/** linguist-generated=true
+js/** linguist-generated=true
+assets/** linguist-generated=true
+search.xml linguist-generated=true

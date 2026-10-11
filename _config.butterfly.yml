@@ -1,0 +1,95 @@
+menu:
+  首页: / || fas fa-home
+  归档: /archives/ || fas fa-archive
+  标签: /tags/ || fas fa-tags
+  分类: /categories/ || fas fa-folder-open
+  项目: /projects/ || fas fa-code
+  关于: /about/ || fas fa-user
+social:
+  fab fa-github: https://github.com/Okazaki-Yumemi || GitHub
+  fab fa-bilibili: https://space.bilibili.com/96828559 || Bilibili
+avatar:
+  img: /images/avatar.jpg
+  effect: false
+favicon: /images/avatar.jpg
+index_img: /images/bg1.png
+default_top_img: /images/bg2.jpg
+archive_img: /images/bg3.png
+background: /images/bg1.png
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  default_cover:
+    - /images/bg1.png
+    - /images/bg2.jpg
+    - /images/bg3.png
+subtitle:
+  enable: true
+  effect: false
+  sub:
+    - OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: true
+  position: right
+  card_author:
+    enable: true
+    description: OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...
+    button:
+      enable: true
+      icon: fab fa-github
+      text: GitHub
+      link: https://github.com/Okazaki-Yumemi
+  card_announcement:
+    enable: false
+search:
+  use: local_search
+  local_search:
+    preload: false
+    top_n_per_article: 1
+    unescape: false
+math:
+  use:
+  per_page: true
+  hide_scrollbar: false
+  mathjax:
+    enableMenu: true
+    tags: none
+darkmode:
+  enable: true
+  button: true
+  autoChangeMode: false
+  start: 6
+  end: 18
+busuanzi:
+  site_uv: false
+  site_pv: false
+  page_pv: false
+share:
+  use: false
+post_copyright:
+  enable: false
+index_top_img_height: 65vh
+index_site_info_top: 35%
+pjax:
+  enable: false
+footer:
+  owner:
+    enable: true
+    since: 2026
+  custom_text:
+inject:
+  head:
+    - <link rel="stylesheet" href="/assets/blog.css">
+  bottom:
+    - <script src="/assets/blog.js" defer></script>
+CDN:
+  internal_provider: local
+  third_party_provider: cdnjs
+  version: true
+  option:
+    fontawesome: /assets/vendor/fontawesome/css/all.min.css
+    medium_zoom: /assets/vendor/medium-zoom.min.js

@@ -1,0 +1,60 @@
+title: "YMGFC_CN's Hidden Space"
+subtitle: "OOP爱好者 Markdown迷 LaTeX享受者 OI受害者..."
+description: "记录 Bug、Feature 还有各种天马行空的灵感。"
+author: YMGFC_CN
+language: zh-CN
+timezone: Asia/Shanghai
+url: https://okazaki-yumemi.github.io
+root: /
+permalink: :title.html
+pretty_urls:
+  trailing_index: true
+  trailing_html: true
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+skip_render:
+  - assets/**
+new_post_name: :title.md
+default_layout: post
+external_link:
+  enable: true
+  field: site
+  exclude: []
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: false
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: false
+  tab_replace: '  '
+prismjs:
+  enable: false
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+default_category: 未分类
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: date
+per_page: 10
+pagination_dir: page
+theme: butterfly
+search:
+  path: search.xml
+  field: post
+  content: true
+markdown:
+  preset: default
+  render:
+    html: true
+    linkify: true
+    typographer: false
+  plugins:
+    - markdown-it-mathjax3

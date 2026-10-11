@@ -1,0 +1,37 @@
+{
+  "name": "ymgfc-cn-blog",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "hexo clean",
+    "build": "hexo generate",
+    "server": "hexo server",
+    "publish:root": "npm run build && npm run check && node tools/publish-root.mjs",
+    "check": "node tools/check-build.mjs"
+  },
+  "hexo": {
+    "version": "8.1.2"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.3.1",
+    "hexo": "8.1.2",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-searchdb": "^1.5.0",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-renderer-markdown-it": "^7.0.0",
+    "hexo-renderer-pug": "^3.0.0",
+    "hexo-renderer-stylus": "^3.0.1",
+    "hexo-server": "^3.0.0",
+    "hexo-theme-butterfly": "5.7.0",
+    "markdown-it-mathjax3": "^4.3.2",
+    "medium-zoom": "^1.1.0"
+  },
+  "devDependencies": {
+    "cheerio": "^1.2.0"
+  }
+}

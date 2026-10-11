@@ -1,281 +1,259 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YMGFC_CN's Blog | 个人博客</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        /* 为了实现全局、撑满全屏的指针，必须让 html/body 占满高度 */
-        html, body { 
-            min-height: 100vh;
-            font-family: 'JetBrains Mono', 'PingFang SC', 'Microsoft YaHei', monospace; 
-            /* 原来的 body 背景和过渡都被我们删掉了，交给背景 div 桶处理 */
-            overflow-x: hidden; 
-            
-            /* 【自定义指针修复版】平常状态下的鼠标指针 */
-            cursor: url('images/cursor-normal.png'), auto;
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YMGFC_CN's Hidden Space - OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...</title><meta name="author" content="YMGFC_CN"><meta name="copyright" content="YMGFC_CN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录 Bug、Feature 还有各种天马行空的灵感。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:url" content="https://okazaki-yumemi.github.io/index.html">
+<meta property="og:site_name" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:description" content="记录 Bug、Feature 还有各种天马行空的灵感。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://okazaki-yumemi.github.io/images/avatar.jpg">
+<meta property="article:author" content="YMGFC_CN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://okazaki-yumemi.github.io/images/avatar.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "YMGFC_CN's Hidden Space",
+  "alternateName": [
+    "OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...",
+    "okazaki-yumemi.github.io"
+  ],
+  "url": "https://okazaki-yumemi.github.io/"
+}</script><link rel="shortcut icon" href="/images/avatar.jpg"><link rel="canonical" href="https://okazaki-yumemi.github.io/index.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
         }
 
-        /* 鼠标放在链接上时的点击态指针 */
-        a, button, [role="button"] {
-            cursor: url('images/cursor-hover.png'), pointer !important;
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
         }
 
-        /* 优化毛玻璃特效，使其更剔透 */
-        .glass-card {
-            background-color: rgba(255, 255, 255, 0.2); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); 
-            border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
-            /* 增加平滑的过渡动画时间 */
-            transition: all 0.4s ease;
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
         }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
         
-        /* 鼠标悬停时的绯红/樱花粉灵力光晕 */
-        .glass-card:hover {
-            box-shadow: 0 0 20px rgba(255, 183, 197, 0.6);
-            border-color: rgba(255, 183, 197, 0.8);
-            transform: translateY(-5px);
-        }
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.13.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'YMGFC_CN\'s Hidden Space',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'home'
+}</script><link rel="stylesheet" href="/assets/blog.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/images/bg1.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(/images/bg1.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YMGFC_CN's Hidden Space</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">YMGFC_CN's Hidden Space</h1><div id="site-subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts nc" id="recent-posts"><div class="recent-post-items"><div class="recent-post-item"><div class="post_cover left"><a href="/post-3.html" title="造轮子记录：交大空教室一键查询器"><img class="post-bg" src="/images/bg3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="造轮子记录：交大空教室一键查询器"></a></div><div class="recent-post-info"><a class="article-title" href="/post-3.html" title="造轮子记录：交大空教室一键查询器">造轮子记录：交大空教室一键查询器</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></span></div><div class="content">受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？ 当然要用代码解决生活痛点！ 今天手搓了一个轻量级的“交大空教室查询器”。 不过感觉这种。。。自己在转专业的这些人里面没有突出点啊。。 啊，忘了提项目网址了，在这里： 🚀 在线体验传送门： SJTU 空教室查询助手 (点击直达) </div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/post-2.html" title="风暴前的安宁？一点小想法"><img class="post-bg" src="/images/bg2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="风暴前的安宁？一点小想法"></a></div><div class="recent-post-info"><a class="article-title" href="/post-2.html" title="风暴前的安宁？一点小想法">风暴前的安宁？一点小想法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E9%9A%8F%E7%AC%94/">随笔</a></span></div><div class="content">来到大学，感觉似乎并没有经历过什么特别让我印象深刻的事情。每天过得平平淡淡，甚至有些无聊。虽然偶尔会有一些小插曲，但总体来说，生活似乎缺乏了些许刺激和挑战。 《桃花幽香》的写作早就已经完成，很多时候都被这个转专业搞的心烦意乱。 夜思 昨天晚上躺在床上，无法入眠，脑袋里面不断闪着自己转专业可能遇到的事情。老师拷打，以及别的别的什么的。 我时常思考，为什么会变成这个样子? 转专业本应该是选择自己兴趣爱好的再次一个途径，但现在，却变成了一个充满不确定性和压力的过程。 我们只看到了那些成功的人，但是，我突然想到，那些失败了的同学们呢？他们的付出和努力真的就是一文不值了吗？ 我甚至在想，如果我在去面试的路上被一辆车撞飞，我拖着流血的身体，骨头从大腿刺出，坚持着面试完，能不能打动老师，给我多一点点的机会？ 前两天到光彪楼上了自习，我发现我真的喜欢那个地方，氛围很好，条件也很好。 Ich hätte das Dunkel ertragen können, hätte ich nicht das Licht gesehen. 这句话的意思是“我本可以忍受黑暗，如果我没有见过光明”。 一开始，我来...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/post-1.html" title="第一篇博客:源(代码)神 启动！"><img class="post-bg" src="/images/bg1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="第一篇博客:源(代码)神 启动！"></a></div><div class="recent-post-info"><a class="article-title" href="/post-1.html" title="第一篇博客:源(代码)神 启动！">第一篇博客:源(代码)神 启动！</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span></div><div class="content">卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢？ 1. 物理与数学的交织 (LaTeX Test) 在无聊的时候，看看优美的公式也是一种放松（真的吗）。比如经典的薛定谔方程： iℏ∂∂tΨ(r,t)=[−ℏ22m∇2+V(r,t)]Ψ(r,t)当然，还有内联公式 eiπ+1=0，这是数学中最纯粹的美。 2. 万物皆对象 (Code Test) 最近刚好在梳理 C++ 的函数封装，顺手写一段优雅的 OOP 示例： 1234567891011121314151617181920212223#include &lt;iostream&gt;#include &lt;string&gt;class Yumemi &#123;private:    std::string title;    int magicPower;public:    // 构造函数    Yumemi(std::string t, int p) : title(t), magicPower(p) &#123;&#125;...</div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">YMGFC_CN</div><div class="author-info-description">OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post-3.html" title="造轮子记录：交大空教室一键查询器"><img src="/images/bg3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="造轮子记录：交大空教室一键查询器"/></a><div class="content"><a class="title" href="/post-3.html" title="造轮子记录：交大空教室一键查询器">造轮子记录：交大空教室一键查询器</a><time datetime="2026-03-08T16:00:00.000Z" title="发表于 2026-03-09 00:00:00">2026-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post-2.html" title="风暴前的安宁？一点小想法"><img src="/images/bg2.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="风暴前的安宁？一点小想法"/></a><div class="content"><a class="title" href="/post-2.html" title="风暴前的安宁？一点小想法">风暴前的安宁？一点小想法</a><time datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post-1.html" title="第一篇博客:源(代码)神 启动！"><img src="/images/bg1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="第一篇博客:源(代码)神 启动！"/></a><div class="content"><a class="title" href="/post-1.html" title="第一篇博客:源(代码)神 启动！">第一篇博客:源(代码)神 启动！</a><time datetime="2026-03-07T16:00:00.000Z" title="发表于 2026-03-08 00:00:00">2026-03-08</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="card-category-list-name">技术</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%9A%8F%E7%AC%94/"><span class="card-category-list-name">随笔</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/"><span class="card-category-list-name">项目</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/LaTeX/" style="font-size: 1.1em; color: #999">LaTeX</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">工具</a> <a href="/tags/%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%B4%BB/" style="font-size: 1.1em; color: #999">大学生活</a> <a href="/tags/SJTU/" style="font-size: 1.1em; color: #999">SJTU</a> <a href="/tags/C/" style="font-size: 1.1em; color: #999">C++</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2026/03/">
+            <span class="card-archive-list-date">
+              三月 2026
+            </span>
+            <span class="card-archive-list-count">3</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">3</div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2026-10-11T13:03:43.232Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By YMGFC_CN</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"><script>window.typedJSFn = {
+  init: str => {
+    window.typed = new Typed('#subtitle', Object.assign({
+      strings: str,
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: true,
+      backSpeed: 50,
+    }, null))
+  },
+  run: subtitleType => {
+    if (false) {
+      if (typeof Typed === 'function') {
+        subtitleType()
+      } else {
+        btf.getScript('https://cdnjs.cloudflare.com/ajax/libs/typed.js/3.0.0/typed.umd.min.js').then(subtitleType)
+      }
+    } else {
+      subtitleType()
+    }
+  },
+  processSubtitle: (content, extraContents = []) => {
+    if (false) {
+      const sub = ["OOP爱好者 Markdown迷 LaTeX享受者 OI受害者..."].slice()
 
-        /* 补回丢失的樱花花瓣实体样式 */
-        .sakura-petal {
-            position: fixed; top: -20px; background-color: #ffb7c5; border-radius: 15px 0 15px 0; 
-            opacity: 0.8; pointer-events: none; z-index: 9999; box-shadow: 0 0 5px rgba(255, 183, 197, 0.5);
-            animation: fall linear forwards;
-        }
+      if (extraContents.length > 0) {
+        sub.unshift(...extraContents)
+      }
 
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg) translateX(0); }
-            100% { transform: translateY(105vh) rotate(360deg) translateX(50px); }
-        }
-    </style>
-</head>
-<body class="text-gray-800">
+      if (typeof content === 'string') {
+        sub.unshift(content)
+      } else if (Array.isArray(content)) {
+        sub.unshift(...content)
+      }
 
-    <div id="bg-fade-container" class="fixed top-0 left-0 w-full h-full z-[-10]">
-        <div id="bg-a" class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-fixed opacity-100" style="transition: opacity 1.5s ease-in-out; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/bg1.png');"></div>
-        <div id="bg-b" class="absolute top-0 left-0 w-full h-full bg-cover bg-center bg-fixed opacity-0" style="transition: opacity 1.5s ease-in-out; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('images/bg1.png');"></div>
-    </div>
-
-    <nav class="bg-white/80 backdrop-blur-md shadow-sm border-t-4 border-red-500 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-gray-900">YMGFC_CN's Hidden Space</h1>
-            <div class="space-x-4 text-sm">
-                <a href="index.html" class="text-gray-600 hover:text-red-500 transition">首页</a>
-                <a href="#" class="text-gray-600 hover:text-red-500 transition">关于</a>
-            </div>
-        </div>
-    </nav>
-
-    <main class="max-w-4xl mx-auto px-4 py-8 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="md:col-span-2 space-y-6">
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2"><a href="post-1.html" class="hover:text-red-500 transition-colors">第一篇博客:源(代码)神 启动！</a></h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-08</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢...</p>
-                <a href="post-1.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center"> 阅读全文 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> </a>
-            </article>
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2"><a href="post-2.html" class="hover:text-red-500 transition-colors">风暴前的安宁？一点小想法</a></h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-08</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">来到大学，感觉似乎并没有经历过什么特别让我印象深刻的事情。每天过得平平淡淡，甚至有些无聊...</p>
-                <a href="post-2.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center"> 阅读全文 <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg> </a>
-            </article>
-            <article class="glass-card p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                <h2 class="text-2xl font-semibold mb-2">
-                    <a href="post-3.html" class="hover:text-red-500 transition-colors">造轮子记录：交大空教室一键查询器</a>
-                </h2>
-                <p class="text-gray-900 text-sm mb-4">发布于 2026-03-09</p>
-                <p class="text-gray-900 line-clamp-3 mb-4">受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？今天顺手搓了一个轻量级的查询脚本...</p>
-                <a href="post-3.html" class="text-red-500 hover:text-red-600 font-bold text-sm inline-flex items-center">
-                    阅读全文 
-                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </a>
-            </article>
-        </div>
-
-            
-
-        <aside class="glass-card p-6 rounded-2xl shadow-sm h-fit">
-            <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden border-4 border-white shadow-inner">
-                <img src="images/avatar.jpg" alt="我的头像" class="w-full h-full object-cover">
-            </div>
-            <h3 class="text-xl font-bold text-center mb-2 text-gray-900">YMGFC_CN</h3>
-            <p id="typing-text" class="text-sm text-gray-900 font-medium text-center px-2 min-h-[20px]"></p>
-            <div class="flex justify-center space-x-5 border-t border-gray-200/50 pt-4 mt-4">
-                <a href="https://github.com/Okazaki-Yumemi" target="_blank" class="text-gray-900 hover:text-black transition-colors transform hover:scale-110">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>
-                </a>
-                <a href="https://space.bilibili.com/96828559?spm_id_from=333.1007.0.0" target="_blank" class="text-gray-900 hover:text-pink-400 transition-colors transform hover:scale-110">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.813 4.653h.002c.006 0 .011-.001.017-.001.02 0 .041-.001.061-.001.698 0 1.359.273 1.853.768.494.495.767 1.156.767 1.854v8.428c0 .698-.273 1.359-.767 1.854a2.61 2.61 0 0 1-1.853.767H6.106a2.61 2.61 0 0 1-1.852-.767 2.624 2.624 0 0 1-.768-1.854V7.274c0-.698.274-1.359.768-1.854a2.61 2.61 0 0 1 1.852-.767.073.073 0 0 1 .054.001h.023l-1.087-1.087a.75.75 0 0 1 1.06-1.061l1.838 1.838h8.016l1.838-1.838a.75.75 0 0 1 1.06 1.061l-1.095 1.086zm-11.707 1.5H17.89c.284 0 .556.113.757.314.201.201.314.473.314.757v8.428c0 .284-.113.556-.314.757a1.066 1.066 0 0 1-.757.314H6.106a1.066 1.066 0 0 1-.757-.314A1.069 1.069 0 0 1 5.035 15.7V7.224c0-.284.113-.556.314-.757a1.066 1.066 0 0 1 .757-.314zM8.98 9.938a1 1 0 0 0-1.332 1.492l1.666 1.488a1 1 0 0 0 1.332-1.492L8.98 9.938zm6.372 1.492a1 1 0 0 0-1.332-1.492l-1.666 1.488a1 1 0 0 0 1.332 1.492l1.666-1.488z" /></svg>
-                </a>
-            </div>
-            <div class="mt-8 pt-6 border-t border-gray-200/50">
-                <h4 class="text-sm font-bold text-gray-900 mb-4 flex items-center">
-                    <svg class="w-4 h-4 mr-1 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    🛠️ 实验室 & Projects
-                </h4>
-                <ul class="space-y-3">
-                    <li>
-                        <a href="post-3.html" class="group flex items-center p-2 rounded-lg hover:bg-white/40 transition-colors border border-transparent hover:border-white/50">
-                            <span class="text-xl mr-3 group-hover:scale-110 transition-transform">🏫</span>
-                            <div>
-                                <p class="text-sm font-semibold text-gray-900 group-hover:text-red-500 transition-colors">SJTU 空教室查询助手</p>
-                                <p class="text-xs text-gray-600">一键索敌，再也不用开盲盒找自习室</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-    </main>
-
-    <div id="music-toggle" class="fixed top-24 right-4 z-50 glass-card rounded-full pr-5 pl-3 py-3 flex items-center space-x-4 cursor-pointer hover:scale-105 transition-transform drop-shadow-lg">
-        <div id="music-disc" class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center animate-[spin_3s_linear_infinite] border-2 border-red-200 shadow-inner">
-            <svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.28l8-1.6v5.434A4.369 4.369 0 0015 11c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"></path></svg>
-        </div>
-        <div class="text-sm font-medium text-gray-900 select-none pr-2">
-            <p class="text-red-500 font-bold text-base">秋鳴りシンフォニー</p>
-            <p class="text-xs text-gray-600 mt-1">点击播放 / 暂停</p>
-        </div>
-        <audio id="bgm-player" loop>
-            <source src="images/bgm.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
-    <div class="fixed bottom-4 left-4 z-40 pointer-events-none">
-        <img src="images/left-pet.gif" alt="左下角装饰" class="w-24 md:w-60 drop-shadow-lg pointer-events-auto hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
-    </div>
-    <div class="fixed bottom-4 right-4 z-40 pointer-events-none">
-        <img src="images/right-pet.gif" alt="右下角装饰" class="w-32 md:w-80 drop-shadow-lg pointer-events-auto hover:-translate-y-2 transition-transform duration-300 cursor-pointer">
-    </div>
-
-    <script>
-        // 1. 樱花特效 (物理引擎补全在 <style> 标签里)
-        function createSakura() {
-            const petal = document.createElement('div');
-            petal.className = 'sakura-petal';
-            const size = Math.random() * 10 + 10;
-            petal.style.width = size + 'px';
-            petal.style.height = size + 'px';
-            petal.style.left = Math.random() * window.innerWidth + 'px';
-            const fallDuration = Math.random() * 4 + 4;
-            petal.style.animationDuration = fallDuration + 's';
-            document.body.appendChild(petal);
-            setTimeout(() => { petal.remove(); }, fallDuration * 1000);
-        }
-        setInterval(createSakura, 400);
-
-        // 2. 极客终端打字机特效
-        const textToType = "OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...";
-        const typingElement = document.getElementById('typing-text');
-        let typeIndex = 0;
-        function typeWriter() {
-            if (typingElement && typeIndex < textToType.length) {
-                typingElement.innerHTML = textToType.substring(0, typeIndex + 1) + '<span class="animate-pulse font-bold text-red-500">_</span>';
-                typeIndex++;
-                setTimeout(typeWriter, Math.random() * 100 + 50); 
-            } else if (typingElement) {
-                typingElement.innerHTML = textToType + '<span class="animate-pulse font-bold text-red-500">_</span>';
-            }
-        }
-        setTimeout(typeWriter, 800);
-
-        // 💡 3. 【终极版】双缓冲 Ping-Pong 壁纸轮播引擎
-        const backgrounds = [
-            'images/bg1.png',
-            'images/bg2.jpg',
-            'images/bg3.png'
-        ];
-        
-        const bgA = document.getElementById('bg-a');
-        const bgB = document.getElementById('bg-b');
-        let currentBgIndex = 0;
-        let activeLayer = 'A'; // 记录当前亮起的是哪一层
-
-        function changeBackground() {
-            if (!bgA || !bgB) return;
-
-            // 1. 计算下一张图片的索引
-            currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
-            const fullStyle = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${backgrounds[currentBgIndex]}')`;
-
-            // 2. 极其优雅的 Ping-Pong 切换逻辑，完全没有 Hack，全靠 CSS 丝滑过渡
-            if (activeLayer === 'A') {
-                // 当前 A 亮着。我们把新图给 B，然后 B 渐入亮起，A 渐出变暗
-                bgB.style.backgroundImage = fullStyle;
-                bgB.style.opacity = '1';
-                bgA.style.opacity = '0';
-                activeLayer = 'B';
-            } else {
-                // 当前 B 亮着。我们把新图给 A，然后 A 渐入亮起，B 渐出变暗
-                bgA.style.backgroundImage = fullStyle;
-                bgA.style.opacity = '1';
-                bgB.style.opacity = '0';
-                activeLayer = 'A';
-            }
-        }
-
-        // 设定每隔 10秒 优雅切换一次
-        setInterval(changeBackground, 10000);
-
-        // 🎵 4. 音乐播放器交互逻辑
-        const musicToggle = document.getElementById('music-toggle');
-        const bgmPlayer = document.getElementById('bgm-player');
-        const musicDisc = document.getElementById('music-disc');
-        let isPlaying = false;
-
-        // 初始状态下暂停光盘旋转
-        musicDisc.style.animationPlayState = 'paused';
-
-        musicToggle.addEventListener('click', () => {
-            if (isPlaying) {
-                bgmPlayer.pause();
-                musicDisc.style.animationPlayState = 'paused'; // 停止旋转
-                isPlaying = false;
-            } else {
-                bgmPlayer.play();
-                musicDisc.style.animationPlayState = 'running'; // 开始旋转
-                isPlaying = true;
-            }
-        });
-
-        // 🎵 5. 跨页面音乐状态继承 (SessionStorage 魔法)
-        
-        // 1. 页面即将销毁前：保存当前的播放进度和状态
-        window.addEventListener('beforeunload', () => {
-            if (typeof bgmPlayer !== 'undefined' && bgmPlayer) {
-                sessionStorage.setItem('bgmTime', bgmPlayer.currentTime);
-                sessionStorage.setItem('bgmPlaying', isPlaying);
-            }
-        });
-
-        // 2. 新页面加载完成后：立刻读取记忆并恢复
-        window.addEventListener('DOMContentLoaded', () => {
-            if (typeof bgmPlayer !== 'undefined' && bgmPlayer) {
-                const savedTime = sessionStorage.getItem('bgmTime');
-                const wasPlaying = sessionStorage.getItem('bgmPlaying') === 'true';
-                
-                // 恢复进度条
-                if (savedTime) {
-                    bgmPlayer.currentTime = parseFloat(savedTime);
-                }
-                
-                // 如果上个页面在播放，则尝试接力播放
-                if (wasPlaying) {
-                    // 使用 Promise 捕获浏览器的自动播放限制
-                    bgmPlayer.play().then(() => {
-                        musicDisc.style.animationPlayState = 'running';
-                        isPlaying = true;
-                    }).catch((error) => {
-                        console.warn('【极客提示】现代浏览器拦截了跨页面的自动播放，需要用户再次手动点击播放按钮。', error);
-                        musicDisc.style.animationPlayState = 'paused';
-                        isPlaying = false;
-                    });
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+      sub.length > 0 && typedJSFn.init(sub)
+    } else {
+      document.getElementById('subtitle').textContent = typeof content === 'string' ? content :
+        (Array.isArray(content) && content.length > 0 ? content[0] : '')
+    }
+  }
+}
+btf.addGlobalFn('pjaxSendOnce', () => { typed && typed.destroy() }, 'typedDestroy')
+</script><script>function subtitleType () {
+  typedJSFn.processSubtitle(["OOP爱好者 Markdown迷 LaTeX享受者 OI受害者..."])
+}
+typedJSFn.run(subtitleType)</script></div><script src="/assets/blog.js" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
