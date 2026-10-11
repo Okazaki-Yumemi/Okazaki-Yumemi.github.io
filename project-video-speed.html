@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>WebsiteSpeedRun：把视频速度调到自己想要的位置 | YMGFC_CN's Hidden Space</title><meta name="author" content="YMGFC_CN"><meta name="copyright" content="YMGFC_CN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一个 Manifest V3 视频速度扩展，以及弹窗、页面执行与浏览器存储之间的连接。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebsiteSpeedRun：把视频速度调到自己想要的位置">
+<meta property="og:url" content="https://okazaki-yumemi.github.io/project-video-speed.html">
+<meta property="og:site_name" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:description" content="一个 Manifest V3 视频速度扩展，以及弹窗、页面执行与浏览器存储之间的连接。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://okazaki-yumemi.github.io/images/covers/cover-09.webp">
+<meta property="article:published_time" content="2026-10-11T04:04:00.000Z">
+<meta property="article:modified_time" content="2026-10-11T04:04:00.000Z">
+<meta property="article:author" content="YMGFC_CN">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="小工具">
+<meta property="article:tag" content="浏览器扩展">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://okazaki-yumemi.github.io/images/covers/cover-09.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "WebsiteSpeedRun：把视频速度调到自己想要的位置",
+  "url": "https://okazaki-yumemi.github.io/project-video-speed.html",
+  "image": "https://okazaki-yumemi.github.io/images/covers/cover-09.webp",
+  "datePublished": "2026-10-11T04:04:00.000Z",
+  "dateModified": "2026-10-11T04:04:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "YMGFC_CN",
+      "url": "https://okazaki-yumemi.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/avatar.jpg"><link rel="canonical" href="https://okazaki-yumemi.github.io/project-video-speed.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.13.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'WebsiteSpeedRun：把视频速度调到自己想要的位置',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/assets/blog.css?v=3"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/images/bg1.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/covers/cover-09.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YMGFC_CN's Hidden Space</span></a><a class="nav-page-title" href="/"><span class="site-name">WebsiteSpeedRun：把视频速度调到自己想要的位置</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">WebsiteSpeedRun：把视频速度调到自己想要的位置</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-11T04:04:00.000Z" title="发表于 2026-10-11 12:04:00">2026-10-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-11T04:04:00.000Z" title="更新于 2026-10-11 12:04:00">2026-10-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>看视频的时候，速度有时候比画质还影响体验。</p>
+<p>一段已经明白的内容，正常速度听下去会觉得慢；一段需要仔细想的内容，又可能得停下来。平台给出的几个档位，并不总是刚好合适。</p>
+<p>WebsiteSpeedRun 把调速做成了一个小扩展。目的很直接，让播放速度的选择多一点余地。</p>
+<h2 id="一个弹窗，两边的状态">一个弹窗，两边的状态</h2>
+<p>项目采用 Manifest V3。弹窗负责读取与保存速度设置，再通过浏览器的脚本执行能力，把操作送到当前页面的媒体元素上。</p>
+<p><code>chrome.storage.local</code> 让设置不至于随着弹窗关闭就丢掉；页面执行则处理真正播放视频的对象。弹窗里滑块变了，并不意味着页面上的视频一定已经改变，这两边需要明确连接。</p>
+<p>公开代码会在页面主执行环境中处理现有的 <code>video</code> 元素，并尝试覆盖 frame 中的媒体。这里不展开用于绕过平台检测的细节，只讨论播放控制本身。</p>
+<h2 id="好用的小工具，也有小工具的边界">好用的小工具，也有小工具的边界</h2>
+<p>不同网站的播放器实现并不相同。有的使用原生媒体元素，有的会反复重置状态；还有的视频是在第一次执行之后才动态添加到页面里的。</p>
+<p>当前代码主要处理执行时已经存在的元素，没有持续观察后来新增视频的机制。所以它不等于装好之后，所有网站、所有播放器都会一直生效。</p>
+<p>浏览器权限、页面结构和 iframe 的限制，也都可能影响结果。不能因为在一个页面上成功，就直接给它一个“万能”的名字。</p>
+<h2 id="调速只是把选择还回来">调速只是把选择还回来</h2>
+<p>快一点不一定学得更好，慢一点也不一定浪费时间。</p>
+<p>真正想解决的，只是原来的速度和当前需求对不上时，能不能少一点来回找按钮的麻烦。至于选了多少倍，最后还是得看内容是否真的跟上了。</p>
+<p>使用时也应遵守平台规则，不把它当作绕过课程考核或服务限制的保证。</p>
+<h2 id="来源">来源</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi/WebsiteSpeedRun">项目仓库</a> · <a target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi/WebsiteSpeedRun/blob/main/popup.js">扩展脚本</a></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/JavaScript/">JavaScript</a><a class="post-meta__tags" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%A9%E5%B1%95/">浏览器扩展</a><a class="post-meta__tags" href="/tags/%E5%B0%8F%E5%B7%A5%E5%85%B7/">小工具</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/project-cell-city.html" title="Cell City：把代谢搬进一座会出问题的小城"><img class="cover" src="/images/covers/cover-08.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Cell City：把代谢搬进一座会出问题的小城</div></div><div class="info-2"><div class="info-item-1">代谢途径画在纸上，经常是一堆箭头。 箭头从这里指到那里，背完名字之后，还是很容易觉得它们只是待在图里的东西。要是把它们变成一个会消耗资源、会失衡、还需要自己做选择的小城，会不会更容易记住一点？ Cell City 就在尝试这样的表达。 状态不只是背景说明 项目使用 Python 和 Pygame，围绕代谢与稳态组织桌面游戏。公开说明中有剧情关卡、挑战模式，以及卡牌、激素、地图和事件等组成部分。 ATP、葡萄糖、氧化还原状态、毒性与健康等变量，把一次选择的后果带到了后面的回合。卡牌不只是打一张看一个动画，而是会让系统的状态发生变化。 这样，某条途径就不再孤零零地待在图中。它会和其他资源发生关系，也会让“眼前看着还行”的选择在之后变得麻烦。 游戏要给人反馈 一旦做成游戏，问题就不止是知识点有没有放进去。 玩家要知道自己刚才改变了什么，为什么失败，还有没有另一种策略。如果只能在结束之后收到一个“你输了”，即使规则很精细，也不容易学到东西。 剧情和不同关卡可以提供目标，状态和事件则提供反馈。但把知识设计成机制之后，还得继续检查：是不是出现了一个特别省事的操作，让整套主题都变成了无意义的背...</div></div></div></a><a class="pagination-related" href="/project-anti-fraud.html" title="别点那个链接！把反诈题目变成一次对话"><img class="cover" src="/images/covers/cover-11.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">别点那个链接！把反诈题目变成一次对话</div></div><div class="info-2"><div class="info-item-1">“不要点陌生链接”当然是对的。 但现实中的消息不一定会把“陌生”写在脸上。它可能看起来像奖学金通知，可能是一个急着让你付款的人，也可能只是车旁边一张不太起眼的二维码。 《别点那个链接！》是人工智能导论的课程大作业。想做的事情，是把一句正确但有点远的提醒，放进一次具体的选择里。 不先告诉你标准答案 项目设计了奖学金诈骗短信、陌生人催促付款和可疑自行车二维码三个模拟场景。用户需要在对话与操作中作出选择，而不是一进页面就看到一张写满正确答案的宣传图。 前端使用 HTML、CSS 和 JavaScript。离线模拟模式可以演示交互，实时模式则由 Flask 后端连接兼容 OpenAI 格式的 API。这里的场景都是模拟，不需要把真实诈骗消息和个人账号当作演示材料。 做完以后，还能回头看 项目保留交互轨迹，围绕信息来源核验、资金边界、未知入口和紧迫感等方面整理风险复盘，并提供行动清单与 Markdown 报告导出。 相比直接告诉人“你的防骗能力是几分”，我觉得能指出某一步为什么值得停一下，更有实际意义。因为下一次遇到的消息，未必长得和题目一样。 不过这些维度是教学项目中的反馈设计，不是经过...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">YMGFC_CN</div><div class="author-info-description">OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%BC%B9%E7%AA%97%EF%BC%8C%E4%B8%A4%E8%BE%B9%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-number">1.</span> <span class="toc-text">一个弹窗，两边的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E7%94%A8%E7%9A%84%E5%B0%8F%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%B9%9F%E6%9C%89%E5%B0%8F%E5%B7%A5%E5%85%B7%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="toc-number">2.</span> <span class="toc-text">好用的小工具，也有小工具的边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E9%80%9F%E5%8F%AA%E6%98%AF%E6%8A%8A%E9%80%89%E6%8B%A9%E8%BF%98%E5%9B%9E%E6%9D%A5"><span class="toc-number">3.</span> <span class="toc-text">调速只是把选择还回来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90"><span class="toc-number">4.</span> <span class="toc-text">来源</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="写完《桃花幽香》之后，花还会再开吗"/></a><div class="content"><a class="title" href="/essay-peach-fragrance.html" title="写完《桃花幽香》之后，花还会再开吗">写完《桃花幽香》之后，花还会再开吗</a><time datetime="2026-10-11T04:25:00.000Z" title="发表于 2026-10-11 12:25:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"><img src="/images/covers/cover-02.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="《幻想乡回访日志》：热闹就在眼前，却不一定属于我"/></a><div class="content"><a class="title" href="/essay-gensokyo-return.html" title="《幻想乡回访日志》：热闹就在眼前，却不一定属于我">《幻想乡回访日志》：热闹就在眼前，却不一定属于我</a><time datetime="2026-10-11T04:24:00.000Z" title="发表于 2026-10-11 12:24:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门"><img src="/images/covers/cover-05.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="未定名接力稿：给被世界扔掉的东西留一扇门"/></a><div class="content"><a class="title" href="/essay-unnamed-relay.html" title="未定名接力稿：给被世界扔掉的东西留一扇门">未定名接力稿：给被世界扔掉的东西留一扇门</a><time datetime="2026-10-11T04:23:00.000Z" title="发表于 2026-10-11 12:23:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来"><img src="/images/covers/cover-01.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS336 学习总结：把语言模型的整条链路串起来"/></a><div class="content"><a class="title" href="/course-cs336.html" title="CS336 学习总结：把语言模型的整条链路串起来">CS336 学习总结：把语言模型的整条链路串起来</a><time datetime="2026-10-11T04:22:00.000Z" title="发表于 2026-10-11 12:22:00">2026-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能"><img src="/images/covers/cover-06.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="AI Infrastructure Seminars：从写 kernel 到解释性能"/></a><div class="content"><a class="title" href="/course-pku-ai-infra.html" title="AI Infrastructure Seminars：从写 kernel 到解释性能">AI Infrastructure Seminars：从写 kernel 到解释性能</a><time datetime="2026-10-11T04:21:00.000Z" title="发表于 2026-10-11 12:21:00">2026-10-11</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By YMGFC_CN</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script src="/assets/blog.js?v=2" defer></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>
