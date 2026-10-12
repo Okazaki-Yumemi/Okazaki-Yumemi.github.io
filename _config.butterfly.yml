@@ -6,6 +6,7 @@ menu:
   课程: /courses/ || fas fa-book
   项目: /projects/ || fas fa-code
   文字: /writing/ || fas fa-pen
+  友链: /links/ || fas fa-link
   关于: /about/ || fas fa-user
 social:
   fab fa-github: https://github.com/Okazaki-Yumemi || GitHub
@@ -30,7 +31,7 @@ subtitle:
   enable: true
   effect: false
   sub:
-    - OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...
+    - 时刻铭记自己的弱小 时刻压制自己的傲慢
 aside:
   enable: true
   hide: false
@@ -39,7 +40,7 @@ aside:
   position: right
   card_author:
     enable: true
-    description: OOP爱好者 Markdown迷 LaTeX享受者 OI受害者...
+    description: 时刻铭记自己的弱小 时刻压制自己的傲慢
     button:
       enable: true
       icon: fab fa-github

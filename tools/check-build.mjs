@@ -7,8 +7,15 @@ const root = path.resolve(import.meta.dirname, '..');
 const output = path.join(root, 'public');
 const expected = ['index.html', 'post-1.html', 'post-2.html', 'post-3.html', 'archives/index.html',
   'tags/index.html', 'categories/index.html', 'about/index.html', 'projects/index.html',
-  'courses/index.html', 'writing/index.html', '404.html', 'search.xml'];
+  'courses/index.html', 'writing/index.html', 'links/index.html', '404.html', 'search.xml'];
 for (const file of expected) assert((await stat(path.join(output, file))).size > 0, `Missing ${file}`);
+const signature = '时刻铭记自己的弱小 时刻压制自己的傲慢';
+const homepage = load(await readFile(path.join(output, 'index.html'), 'utf8'));
+assert(homepage('script').toArray().some(el => homepage(el).text().includes(`typedJSFn.processSubtitle(["${signature}"])`)), 'Homepage signature mismatch');
+assert.equal(homepage('.author-info-description').text().trim(), signature, 'Author signature mismatch');
+const friendPage = load(await readFile(path.join(output, 'links/index.html'), 'utf8'));
+assert.equal(friendPage('.flink-list-item a').attr('href'), 'https://muqi132.github.io/', 'Friend link missing');
+assert.equal(friendPage('.flink-item-name').text().trim(), 'MUQI', 'Friend name mismatch');
 assert.equal(await stat(path.join(output, 'project-sjtu-monitor.html')).catch(() => null), null, 'Removed article must not be generated');
 const wallpaperCss = await readFile(path.join(output, 'assets/blog.css'), 'utf8');
 assert.match(wallpaperCss, /#page-header\s*\{[^}]*background-image:\s*none\s*!important/s, 'Headers must share the site wallpaper layer');
