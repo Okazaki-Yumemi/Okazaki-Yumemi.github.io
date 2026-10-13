@@ -1,5 +1,5 @@
 ---
-title: "未定名接力稿：给被世界扔掉的东西留一扇门"
+title: "【暂时AIGC占位】未定名接力稿：给被世界扔掉的东西留一扇门"
 date: 2026-10-11 12:23:00
 permalink: essay-unnamed-relay.html
 categories: [随笔]

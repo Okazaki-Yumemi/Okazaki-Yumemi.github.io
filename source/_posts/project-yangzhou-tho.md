@@ -1,5 +1,5 @@
 ---
-title: "扬州 THO：热闹的小游戏，也需要一本明白账"
+title: "【暂时AIGC占位】扬州 THO：热闹的小游戏，也需要一本明白账"
 date: 2026-10-11 12:08:00
 permalink: project-yangzhou-tho.html
 categories: [项目]

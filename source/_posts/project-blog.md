@@ -1,5 +1,5 @@
 ---
-title: "给博客搬一次家：Hexo、Butterfly，以及没必要的折腾"
+title: "【暂时AIGC占位】给博客搬一次家：Hexo、Butterfly，以及没必要的折腾"
 date: 2026-10-11 12:01:00
 permalink: project-blog.html
 categories: [项目]

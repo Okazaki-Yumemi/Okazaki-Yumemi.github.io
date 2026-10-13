@@ -1,5 +1,5 @@
 ---
-title: "《幻想乡回访日志》：热闹就在眼前，却不一定属于我"
+title: "【暂时AIGC占位】《幻想乡回访日志》：热闹就在眼前，却不一定属于我"
 date: 2026-10-11 12:24:00
 permalink: essay-gensokyo-return.html
 categories: [随笔]

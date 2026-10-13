@@ -1,5 +1,5 @@
 ---
-title: "CUDA 中文文档：除了翻译，还得让人找得到"
+title: "【暂时AIGC占位】CUDA 中文文档：除了翻译，还得让人找得到"
 date: 2026-10-11 12:11:00
 permalink: project-cuda-guide.html
 categories: [项目]

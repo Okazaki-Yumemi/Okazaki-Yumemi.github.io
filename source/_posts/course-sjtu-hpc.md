@@ -1,5 +1,5 @@
 ---
-title: "SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚"
+title: "【暂时AIGC占位】SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚"
 date: 2026-10-11 12:14:00
 updated: 2026-10-11 12:14:00
 permalink: course-sjtu-hpc.html

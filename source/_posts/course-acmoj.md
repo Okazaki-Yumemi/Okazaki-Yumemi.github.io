@@ -1,5 +1,5 @@
 ---
-title: "ACMOJ 作业整理：接口约束与对象生命周期"
+title: "【暂时AIGC占位】ACMOJ 作业整理：接口约束与对象生命周期"
 date: 2026-10-11 12:16:00
 updated: 2026-10-11 12:16:00
 permalink: course-acmoj.html

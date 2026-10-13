@@ -1,5 +1,5 @@
 ---
-title: "写完《桃花幽香》之后，花还会再开吗"
+title: "【暂时AIGC占位】写完《桃花幽香》之后，花还会再开吗"
 date: 2026-10-11 12:25:00
 permalink: essay-peach-fragrance.html
 categories: [随笔]

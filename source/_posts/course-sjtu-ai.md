@@ -1,5 +1,5 @@
 ---
-title: "人工智能基础与实践：从 Python 练习到可演示的作品"
+title: "【暂时AIGC占位】人工智能基础与实践：从 Python 练习到可演示的作品"
 date: 2026-10-11 12:19:00
 updated: 2026-10-11 12:19:00
 permalink: course-sjtu-ai.html

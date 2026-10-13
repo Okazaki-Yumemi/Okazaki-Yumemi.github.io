@@ -1,5 +1,5 @@
 ---
-title: "空教室雷达：别再一间一间开盲盒了"
+title: "【暂时AIGC占位】空教室雷达：别再一间一间开盲盒了"
 date: 2026-10-11 12:06:00
 permalink: project-classroom-radar.html
 categories: [项目]

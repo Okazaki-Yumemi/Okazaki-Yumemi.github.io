@@ -1,5 +1,5 @@
 ---
-title: "DesktopManager：桌面上的东西，能不能各归各位"
+title: "【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各归各位"
 date: 2026-10-11 12:10:00
 permalink: project-desktop-manager.html
 categories: [项目]

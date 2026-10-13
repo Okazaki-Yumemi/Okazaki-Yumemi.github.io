@@ -1,5 +1,5 @@
 ---
-title: "南堂界遇：把幻想乡的活动规则搬到网页里"
+title: "【暂时AIGC占位】南堂界遇：把幻想乡的活动规则搬到网页里"
 date: 2026-10-11 12:09:00
 permalink: project-nantang.html
 categories: [项目]

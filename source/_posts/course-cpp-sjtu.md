@@ -1,5 +1,5 @@
 ---
-title: "交大 C++ 基础课：从第一个程序开始建立习惯"
+title: "【暂时AIGC占位】交大 C++ 基础课：从第一个程序开始建立习惯"
 date: 2026-10-11 12:17:00
 updated: 2026-10-11 12:17:00
 permalink: course-cpp-sjtu.html

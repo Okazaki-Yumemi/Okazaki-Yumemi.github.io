@@ -1,5 +1,5 @@
 ---
-title: "CS336 学习总结：把语言模型的整条链路串起来"
+title: "【暂时AIGC占位】CS336 学习总结：把语言模型的整条链路串起来"
 date: 2026-10-11 12:22:00
 updated: 2026-10-11 12:22:00
 permalink: course-cs336.html

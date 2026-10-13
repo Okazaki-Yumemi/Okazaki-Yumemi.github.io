@@ -1,5 +1,5 @@
 ---
-title: "AI Infrastructure Seminars：从写 kernel 到解释性能"
+title: "【暂时AIGC占位】AI Infrastructure Seminars：从写 kernel 到解释性能"
 date: 2026-10-11 12:21:00
 updated: 2026-10-11 12:21:00
 permalink: course-pku-ai-infra.html

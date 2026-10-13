@@ -1,5 +1,5 @@
 ---
-title: "CS61A 学习记录：从函数走向对象与状态"
+title: "【暂时AIGC占位】CS61A 学习记录：从函数走向对象与状态"
 date: 2026-10-11 12:18:00
 updated: 2026-10-11 12:18:00
 permalink: course-cs61a.html

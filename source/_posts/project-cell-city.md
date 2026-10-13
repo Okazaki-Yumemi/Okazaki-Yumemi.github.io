@@ -1,5 +1,5 @@
 ---
-title: "Cell City：把代谢搬进一座会出问题的小城"
+title: "【暂时AIGC占位】Cell City：把代谢搬进一座会出问题的小城"
 date: 2026-10-11 12:05:00
 permalink: project-cell-city.html
 categories: [项目]

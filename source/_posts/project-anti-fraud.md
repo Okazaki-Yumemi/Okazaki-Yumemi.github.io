@@ -1,5 +1,5 @@
 ---
-title: "别点那个链接！把反诈题目变成一次对话"
+title: "【暂时AIGC占位】别点那个链接！把反诈题目变成一次对话"
 date: 2026-10-11 12:02:00
 permalink: project-anti-fraud.html
 categories: [项目]

@@ -1,5 +1,5 @@
 ---
-title: "MiniVim：原来光标后面有这么多事情"
+title: "【暂时AIGC占位】MiniVim：原来光标后面有这么多事情"
 date: 2026-10-11 12:12:00
 permalink: project-minivim.html
 categories: [项目]

@@ -1,5 +1,5 @@
 ---
-title: "WebsiteSpeedRun：把视频速度调到自己想要的位置"
+title: "【暂时AIGC占位】WebsiteSpeedRun：把视频速度调到自己想要的位置"
 date: 2026-10-11 12:04:00
 permalink: project-video-speed.html
 categories: [项目]
