@@ -1,0 +1,19 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "hidden-space-writer",
+  "main": "../.writer-build/worker.mjs",
+  "compatibility_date": "2026-10-15",
+  "workers_dev": true,
+  "assets": {
+    "directory": "../.writer-build/assets",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {
+    "PUBLIC_ORIGIN": "https://hidden-space-writer.ymgfc-cn-blog.workers.dev",
+    "GITHUB_CLIENT_ID": "Iv23liQMQSCe7SYo9Iym"
+  },
+  "observability": {
+    "enabled": false
+  }
+}

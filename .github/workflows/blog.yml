@@ -20,9 +20,29 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm run writer:test
+      - run: npm run writer:build
       - run: npm run build
       - run: npm run check
       - uses: actions/upload-artifact@v4
         with:
           name: hexo-site
           path: public/
+      - uses: actions/upload-pages-artifact@v3
+        if: vars.WEB_WRITER_ENABLED == 'true'
+        with:
+          path: public/
+  deploy:
+    if: vars.WEB_WRITER_ENABLED == 'true'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -27,6 +27,12 @@ npm run server
 
 ## 构建与发布
 
+### 网页写作
+
+从导航中的“写作”进入 Cloudflare 写作后台，GitHub 登录后可新建或编辑文章、实时预览 Markdown、选择或上传封面，并直接发布。只允许作者账号，GitHub App 只安装在本博客仓库。草稿保存在当前浏览器，发布才会写入公开仓库。部署与权限细节见 [writer/README.md](writer/README.md)。
+
+网页发布使用 GitHub Actions 自动生成和部署，不需要本地生成 HTML 或手工 push。以下命令保留为本地维护入口。
+
 ```sh
 npm run clean
 npm run publish:root
@@ -43,7 +49,7 @@ npm run check
 
 三篇文学随笔另以作者明确指定的三份原稿为材料，不上传原稿文件或全文。未定名 PDF 为多人署名接力稿，随笔主要讨论署名 YMG 的第四章，不将整部作品归为个人独作。
 
-GitHub Actions 会在推送 main 后安装锁定依赖、构建、检查，并保存 `hexo-site` 构建产物。GitHub Pages 按现有 main 根目录方式发布已提交的静态输出，因此每次更新文章后需运行 `npm run publish:root` 再提交。
+GitHub Actions 会在推送 main 后安装锁定依赖、测试写作后台、构建并检查博客，同时保存 `hexo-site` 构建产物。启用仓库 variable `WEB_WRITER_ENABLED=true` 后，Pages 发布源使用 GitHub Actions，工作流直接部署 `public/`，网页写作只需提交源文件。`publish:root` 保留用于同步根目录的历史静态副本，不再是上线所必需的步骤。
 
 网站地址：https://okazaki-yumemi.github.io/
 

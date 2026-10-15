@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "writer:build": "node writer/build.mjs",
+    "writer:test": "node --test writer/test/*.test.mjs",
+    "writer:deploy": "npm run writer:build && wrangler deploy --config writer/wrangler.jsonc",
+    "writer:setup": "node writer/setup.mjs",
     "clean": "hexo clean",
     "build": "hexo generate",
     "server": "hexo server",
@@ -32,6 +36,11 @@
     "medium-zoom": "^1.1.0"
   },
   "devDependencies": {
-    "cheerio": "^1.2.0"
+    "cheerio": "^1.2.0",
+    "esbuild": "^0.28.2",
+    "lucide": "^1.57.0",
+    "markdown-it": "^15.0.2",
+    "wrangler": "^4.151.0",
+    "yaml": "^2.9.1"
   }
 }

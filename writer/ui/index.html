@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>写作 · Hidden Space</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" type="module"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="https://okazaki-yumemi.github.io/" target="_blank" rel="noopener">Hidden Space <span>写作</span></a>
+    <span id="identity" class="identity">未登录</span>
+    <a class="button" id="login" href="/api/auth/login"><i data-icon="github"></i>GitHub 登录</a>
+    <button id="logout" class="icon-button" title="退出登录" aria-label="退出登录" hidden><i data-icon="log-out"></i></button>
+  </header>
+  <div id="notice" role="status" class="notice" hidden></div>
+  <div class="workspace">
+    <aside class="library">
+      <div class="section-heading"><h2>文章</h2><button id="new" class="icon-button" title="新建文章" aria-label="新建文章"><i data-icon="plus"></i></button></div>
+      <input id="search" type="search" placeholder="搜索文章" aria-label="搜索文章">
+      <div id="posts" class="post-list"><p class="empty">登录后加载文章</p></div>
+    </aside>
+    <main>
+      <div class="document-actions">
+        <span id="draft-state" class="muted" role="status">新文章</span>
+        <div class="actions">
+          <button id="restore" class="icon-button" title="恢复本机草稿" aria-label="恢复本机草稿" hidden><i data-icon="rotate-ccw"></i></button>
+          <button id="download" class="icon-button" title="导出 Markdown" aria-label="导出 Markdown"><i data-icon="download"></i></button>
+          <button id="publish" class="primary" disabled><i data-icon="send"></i>发布</button>
+        </div>
+      </div>
+      <form id="editor-form" autocomplete="off">
+        <label class="sr-only" for="title">文章标题</label>
+        <input id="title" class="title-input" placeholder="文章标题" maxlength="180" required>
+        <div class="metadata">
+          <label>网址标识<input id="slug" placeholder="my-new-post" pattern="[a-z0-9][a-z0-9-]*" maxlength="80"></label>
+          <label>分类<input id="categories" placeholder="随笔"></label>
+          <label>标签<input id="tags" placeholder="学习, 生活"></label>
+          <label class="check"><input type="checkbox" id="mathjax">公式</label>
+        </div>
+        <label class="summary-label" for="description">摘要</label>
+        <textarea id="description" rows="2" maxlength="240" placeholder="可选"></textarea>
+        <div class="cover-line">
+          <button type="button" id="choose-cover" class="cover-thumb" title="选择封面"><img id="cover-preview" alt="文章封面"><span><i data-icon="image"></i>封面</span></button>
+          <button type="button" id="choose-image" class="subtle"><i data-icon="images"></i>仓库选图</button>
+          <label class="button subtle" for="upload"><i data-icon="upload"></i>上传封面</label>
+          <input id="upload" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+          <span id="cover-state" class="muted">未选择</span>
+        </div>
+        <div class="editor-toolbar">
+          <div class="tools" aria-label="Markdown 工具栏">
+            <button type="button" data-edit="bold" class="icon-button" title="加粗" aria-label="加粗"><i data-icon="bold"></i></button>
+            <button type="button" data-edit="italic" class="icon-button" title="斜体" aria-label="斜体"><i data-icon="italic"></i></button>
+            <button type="button" data-edit="heading" class="icon-button" title="二级标题" aria-label="二级标题"><i data-icon="heading-2"></i></button>
+            <button type="button" data-edit="link" class="icon-button" title="链接" aria-label="链接"><i data-icon="link"></i></button>
+            <button type="button" data-edit="quote" class="icon-button" title="引用" aria-label="引用"><i data-icon="quote"></i></button>
+            <button type="button" data-edit="list" class="icon-button" title="列表" aria-label="列表"><i data-icon="list"></i></button>
+            <button type="button" data-edit="code" class="icon-button" title="代码块" aria-label="代码块"><i data-icon="code"></i></button>
+          </div>
+          <div class="segments" aria-label="编辑视图">
+            <button type="button" data-view="edit" aria-pressed="false">编辑</button>
+            <button type="button" data-view="split" aria-pressed="true">对照</button>
+            <button type="button" data-view="preview" aria-pressed="false">预览</button>
+          </div>
+        </div>
+        <div class="writing-area" data-mode="split">
+          <label class="sr-only" for="body">Markdown 正文</label>
+          <textarea id="body" spellcheck="false" placeholder="开始写吧。" aria-label="Markdown 正文"></textarea>
+          <article id="preview" class="preview" aria-label="文章预览"></article>
+        </div>
+      </form>
+      <footer class="editor-footer"><span id="word-count">0 字</span><span id="publication" role="status"></span></footer>
+    </main>
+  </div>
+  <dialog id="image-dialog">
+    <div class="section-heading"><h2>选择封面</h2><button id="close-images" class="icon-button" title="关闭" aria-label="关闭"><i data-icon="x"></i></button></div>
+    <div id="image-grid" class="image-grid"></div>
+  </dialog>
+  <dialog id="publish-dialog">
+    <div class="section-heading"><h2>发布文章</h2></div>
+    <p id="publish-title"></p><p class="muted">正文和封面将进入公开博客仓库。</p>
+    <div class="actions"><button id="cancel-publish">取消</button><button id="confirm-publish" class="primary"><i data-icon="send"></i>确认发布</button></div>
+  </dialog>
+</body>
+</html>

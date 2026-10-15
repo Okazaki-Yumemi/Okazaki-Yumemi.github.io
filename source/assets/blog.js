@@ -1,6 +1,15 @@
 (() => {
   'use strict';
 
+  const siteInfo = document.getElementById('site-info');
+  if (siteInfo) {
+    const writeLink = document.createElement('a');
+    writeLink.href = '/write/';
+    writeLink.className = 'blog-write-link';
+    writeLink.innerHTML = '<i class="fas fa-pen-to-square" aria-hidden="true"></i><span>写一篇</span>';
+    siteInfo.append(writeLink);
+  }
+
   const music = document.createElement('details');
   music.className = 'blog-music';
   music.innerHTML = '<summary>秋鳴りシンフォニー</summary><audio controls loop preload="none" aria-label="秋鳴りシンフォニー" src="/images/bgm.mp3"></audio>';

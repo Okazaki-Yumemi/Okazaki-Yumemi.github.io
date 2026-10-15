@@ -7,6 +7,7 @@ menu:
   项目: /projects/ || fas fa-code
   文字: /writing/ || fas fa-pen
   友链: /links/ || fas fa-link
+  写作: /write/ || fas fa-pen-to-square
   关于: /about/ || fas fa-user
 social:
   fab fa-github: https://github.com/Okazaki-Yumemi || GitHub
@@ -86,9 +87,9 @@ footer:
   custom_text:
 inject:
   head:
-    - <link rel="stylesheet" href="/assets/blog.css?v=3">
+    - <link rel="stylesheet" href="/assets/blog.css?v=4">
   bottom:
-    - <script src="/assets/blog.js?v=2" defer></script>
+    - <script src="/assets/blog.js?v=3" defer></script>
 CDN:
   internal_provider: local
   third_party_provider: cdnjs

@@ -11,6 +11,29 @@ a, button, summary, input[type='button'] {
 #site-subtitle {
   font-size: 1rem;
 }
+.blog-write-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  margin-top: 18px;
+  padding: 6px 16px;
+  border: 1px solid #fffc;
+  border-radius: 4px;
+  background: #0003;
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+}
+.blog-write-link:hover {
+  background: #fff;
+  color: #18764b;
+}
+.blog-write-link:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
+}
 /* One fixed wallpaper beneath both header and content on every page. */
 #web_bg {
   opacity: 1 !important;

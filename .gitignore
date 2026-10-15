@@ -3,4 +3,10 @@ public/
 db.json
 .cache/
 .preview/
+.writer-build/
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
 *.log
