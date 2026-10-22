@@ -70,7 +70,7 @@
   }
   fetch('/assets/features-config.json').then(r => r.json()).then(async config => {
     comments(config.comments);
-    const permitted = new Set(['/', '/about/', '/archives/', '/tags/', '/categories/', '/courses/', '/projects/', '/writing/', '/links/']);
+    const permitted = new Set(['/', '/about/', '/archives/', '/tags/', '/categories/', '/courses/', '/projects/', '/writing/', '/links/', '/atlas/', '/desk/']);
     await counters(config.api).catch(() => {});
     if (!post && !permitted.has(location.pathname)) return;
     if (dnt || optedOut || document.visibilityState !== 'visible') return;

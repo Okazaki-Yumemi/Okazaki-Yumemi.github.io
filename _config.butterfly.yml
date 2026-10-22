@@ -5,6 +5,8 @@ menu:
   分类: /categories/ || fas fa-folder-open
   课程: /courses/ || fas fa-book
   项目: /projects/ || fas fa-code
+  图谱: /atlas/ || fas fa-diagram-project
+  阅读台: /desk/ || fas fa-bookmark
   文字: /writing/ || fas fa-pen
   友链: /links/ || fas fa-link
   写作: /write/ || fas fa-pen-to-square
@@ -89,9 +91,11 @@ inject:
   head:
     - <link rel="stylesheet" href="/assets/blog.css?v=5">
     - <link rel="stylesheet" href="/assets/site-features.css?v=1">
+    - <link rel="stylesheet" href="/assets/tech.css?v=1">
   bottom:
     - <script src="/assets/blog.js?v=3" defer></script>
-    - <script src="/assets/site-features.js?v=1" defer></script>
+    - <script src="/assets/site-features.js?v=2" defer></script>
+    - <script src="/assets/tech.js?v=1" type="module"></script>
 CDN:
   internal_provider: local
   third_party_provider: cdnjs

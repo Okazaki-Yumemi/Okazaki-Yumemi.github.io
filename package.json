@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "site:test": "node --test client/test/*.test.mjs",
     "writer:build": "node writer/build.mjs",
     "writer:test": "node --test writer/test/*.test.mjs",
     "writer:deploy": "npm run writer:build && wrangler deploy --config writer/wrangler.jsonc",
@@ -38,6 +39,10 @@
   "devDependencies": {
     "chart.js": "^4.5.1",
     "cheerio": "^1.2.0",
+    "d3-drag": "^3.0.0",
+    "d3-force": "^3.0.0",
+    "d3-selection": "^3.0.0",
+    "d3-zoom": "^3.0.0",
     "esbuild": "^0.28.2",
     "lucide": "^1.57.0",
     "markdown-it": "^15.0.2",

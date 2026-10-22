@@ -8,7 +8,8 @@ const output = path.join(root, 'public');
 const expected = ['index.html', 'post-1.html', 'post-2.html', 'post-3.html', 'archives/index.html',
   'tags/index.html', 'categories/index.html', 'about/index.html', 'projects/index.html',
   'courses/index.html', 'writing/index.html', 'links/index.html', 'write/index.html', 'privacy/index.html',
-  'assets/site-features.js', 'assets/site-features.css', 'traffic-pages.json', '404.html', 'search.xml'];
+  'assets/site-features.js', 'assets/site-features.css', 'traffic-pages.json', '404.html', 'search.xml',
+  'atlas/index.html', 'desk/index.html', 'assets/tech.js', 'assets/atlas.js', 'assets/reading-index.json', 'assets/tech.css', 'assets/d3-LICENSE.txt'];
 for (const file of expected) assert((await stat(path.join(output, file))).size > 0, `Missing ${file}`);
 const signature = '时刻铭记自己的弱小 时刻压制自己的傲慢';
 const homepage = load(await readFile(path.join(output, 'index.html'), 'utf8'));
@@ -43,8 +44,19 @@ assert.equal(trafficPages.filter(page => page.path.endsWith('.html')).length, so
 for (const page of trafficPages) {
   assert(/^\/(?:[a-zA-Z0-9_-]+\/|[a-zA-Z0-9_-]+\.html)?$/.test(page.path) && typeof page.title === 'string', 'Unsafe traffic path');
 }
-assert(homepage('script[src="/assets/site-features.js?v=1"]').length, 'Site features not injected');
+assert(homepage('script[src="/assets/site-features.js?v=2"]').length, 'Site features not injected');
 assert.equal((search.match(/<entry>/g) || []).length, sourcePosts.length, 'Search must include every post');
+const readingIndex = JSON.parse(await readFile(path.join(output, 'assets/reading-index.json'), 'utf8'));
+assert.equal(readingIndex.length, sourcePosts.length, 'Reading index must include every public post');
+assert.equal(new Set(readingIndex.map(post => post.path)).size, sourcePosts.length, 'Duplicate reading index paths');
+for (const post of readingIndex) {
+  assert(/^\/[a-zA-Z0-9_-]+\.html$/.test(post.path), 'Unsafe reading path');
+  assert(approvedImages.includes(post.cover.slice(8)), 'Unapproved graph cover');
+  assert(post.minutes > 0 && post.minutes < 1000 && Array.isArray(post.tags), 'Invalid reading metadata');
+  assert((await stat(path.join(output, post.path))).isFile(), 'Missing graph article');
+  for (const tagPath of Object.values(post.tagPaths)) assert((await stat(path.join(output, decodeURIComponent(tagPath), 'index.html'))).isFile(), 'Broken tag path');
+}
+assert(homepage('script[src="/assets/tech.js?v=1"][type=module]').length, 'Technical features not injected');
 const allowedRepositories = JSON.parse(await readFile(path.join(root, 'public-sources.json'), 'utf8'));
 for (const name of sourcePosts) {
   const source = await readFile(path.join(root, 'source/_posts', name), 'utf8');
