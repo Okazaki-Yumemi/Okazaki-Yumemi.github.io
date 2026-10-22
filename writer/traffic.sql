@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS page_totals (
+  path TEXT PRIMARY KEY,
+  views INTEGER NOT NULL DEFAULT 0 CHECK(views >= 0)
+);
+CREATE TABLE IF NOT EXISTS page_daily (
+  day TEXT NOT NULL, path TEXT NOT NULL, views INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY(day, path)
+);
+CREATE TABLE IF NOT EXISTS visitor_daily (
+  day TEXT NOT NULL, visitor TEXT NOT NULL,
+  PRIMARY KEY(day, visitor)
+);
+CREATE TABLE IF NOT EXISTS dimension_daily (
+  day TEXT NOT NULL, kind TEXT NOT NULL, value TEXT NOT NULL, views INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY(day, kind, value)
+);
+CREATE TABLE IF NOT EXISTS visit_guard (
+  key TEXT PRIMARY KEY, nonce TEXT NOT NULL, expires INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS recent_visits (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  at TEXT NOT NULL, path TEXT NOT NULL, country TEXT NOT NULL, device TEXT NOT NULL, source TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS recent_visits_at ON recent_visits(at);

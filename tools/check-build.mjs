@@ -7,7 +7,8 @@ const root = path.resolve(import.meta.dirname, '..');
 const output = path.join(root, 'public');
 const expected = ['index.html', 'post-1.html', 'post-2.html', 'post-3.html', 'archives/index.html',
   'tags/index.html', 'categories/index.html', 'about/index.html', 'projects/index.html',
-  'courses/index.html', 'writing/index.html', 'links/index.html', 'write/index.html', '404.html', 'search.xml'];
+  'courses/index.html', 'writing/index.html', 'links/index.html', 'write/index.html', 'privacy/index.html',
+  'assets/site-features.js', 'assets/site-features.css', 'traffic-pages.json', '404.html', 'search.xml'];
 for (const file of expected) assert((await stat(path.join(output, file))).size > 0, `Missing ${file}`);
 const signature = '时刻铭记自己的弱小 时刻压制自己的傲慢';
 const homepage = load(await readFile(path.join(output, 'index.html'), 'utf8'));
@@ -31,6 +32,18 @@ assert.match(posts[1], /Ich hätte das Dunkel ertragen können/, 'Unicode conten
 assert.match(posts[2], /https:\/\/sjtu-empty-classroom-radar-1.onrender.com\//, 'Project link missing');
 const search = await readFile(path.join(output, 'search.xml'), 'utf8');
 const sourcePosts = (await readdir(path.join(root, 'source/_posts'))).filter(name => name.endsWith('.md'));
+const features = JSON.parse(await readFile(path.join(output, 'assets/features-config.json'), 'utf8'));
+assert.equal(features.api, new URL(JSON.parse(await readFile(path.join(root, 'writer-site.json'), 'utf8')).url).origin);
+assert.equal(features.comments.repo, 'Okazaki-Yumemi/Okazaki-Yumemi.github.io');
+assert(features.comments.repoId && features.comments.categoryId, 'Comment discussion IDs missing');
+assert.deepEqual(JSON.parse(await readFile(path.join(root, 'giscus.json'), 'utf8')).origins, ['https://okazaki-yumemi.github.io']);
+const trafficPages = JSON.parse(await readFile(path.join(output, 'traffic-pages.json'), 'utf8'));
+assert.equal(new Set(trafficPages.map(page => page.path)).size, trafficPages.length, 'Duplicate traffic paths');
+assert.equal(trafficPages.filter(page => page.path.endsWith('.html')).length, sourcePosts.length, 'Traffic manifest must include every post');
+for (const page of trafficPages) {
+  assert(/^\/(?:[a-zA-Z0-9_-]+\/|[a-zA-Z0-9_-]+\.html)?$/.test(page.path) && typeof page.title === 'string', 'Unsafe traffic path');
+}
+assert(homepage('script[src="/assets/site-features.js?v=1"]').length, 'Site features not injected');
 assert.equal((search.match(/<entry>/g) || []).length, sourcePosts.length, 'Search must include every post');
 const allowedRepositories = JSON.parse(await readFile(path.join(root, 'public-sources.json'), 'utf8'));
 for (const name of sourcePosts) {

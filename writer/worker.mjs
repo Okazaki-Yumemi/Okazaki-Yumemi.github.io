@@ -1,4 +1,5 @@
 import { OWNER, REPO, OWNER_ID, SITE, PREFIX, Problem, requireValue, postName, splitPost, decodeText, encode64, validateUpload, approvedImage, makePost } from './content.mjs';
+import { createTraffic } from './traffic.mjs';
 
 const encoder = new TextEncoder();
 const SESSION = '__Host-blog-session';
@@ -57,6 +58,7 @@ async function readJson(request, limit = 4 * 1024 * 1024) {
 }
 
 export function createWorker(upstream = fetch) {
+  const traffic = createTraffic(upstream);
   async function github(path, token, method = 'GET', body) {
     const response = await upstream(PREFIX + path, { method, headers: {
       Accept: 'application/vnd.github+json', 'User-Agent': 'Hidden-Space-Writer', 'X-GitHub-Api-Version': '2022-11-28',
@@ -124,9 +126,25 @@ export function createWorker(upstream = fetch) {
     return { sha: commit.sha, name, content, url: `${SITE}/${previous?.metadata.permalink || `${input.slug}.html`}`, commitUrl: `https://github.com/${OWNER}/${REPO}/commit/${commit.sha}` };
   }
   return {
+    async scheduled(event, env, ctx) { ctx.waitUntil(traffic.cleanup(env)); },
     async fetch(request, env) {
       const url = new URL(request.url);
       try {
+        if (url.pathname.startsWith('/api/traffic/')) {
+          const origin = request.headers.get('Origin');
+          const cors = origin === SITE ? { 'Access-Control-Allow-Origin': SITE, 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type', Vary: 'Origin' } : {};
+          try {
+            requireValue(!origin || origin === SITE || origin === env.PUBLIC_ORIGIN, '来源不允许', 403);
+            if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...security, ...cors } });
+            requireValue(env.TRAFFIC_DB, '统计尚未启用', 503);
+            if (url.pathname === '/api/traffic/count' && request.method === 'GET') return json(await traffic.count(url.searchParams.get('path'), env), 200, cors);
+            if (url.pathname === '/api/traffic/collect' && request.method === 'POST') {
+              requireValue(origin === SITE, '来源不允许', 403);
+              return json(await traffic.collect(request, await readJson(request, 4096), env), 200, cors);
+            }
+            return json({ error: '接口不存在' }, 404, cors);
+          } catch (error) { return json({ error: error instanceof Problem ? error.message : '统计暂不可用' }, error instanceof Problem ? error.status : 500, cors); }
+        }
         if (!url.pathname.startsWith('/api/')) {
           const response = await env.ASSETS.fetch(request);
           const headers = new Headers(response.headers);
@@ -141,7 +159,8 @@ export function createWorker(upstream = fetch) {
         if (url.pathname === '/api/auth/login' && request.method === 'GET') {
           const repo = await publicRepo();
           const state = random(); const verifier = random();
-          const value = await seal({ state, verifier, repoId: repo.id, exp: Date.now() + 10 * 60 * 1000 }, env.SESSION_SECRET, context + ':oauth');
+          const next = url.searchParams.get('next') === '/stats.html' ? '/stats.html' : '/';
+          const value = await seal({ state, verifier, repoId: repo.id, next, exp: Date.now() + 10 * 60 * 1000 }, env.SESSION_SECRET, context + ':oauth');
           const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(verifier))));
           const target = new URL('https://github.com/login/oauth/authorize');
           target.search = new URLSearchParams({ client_id: env.GITHUB_CLIENT_ID, redirect_uri: `${url.origin}/api/auth/callback`, state, code_challenge: challenge, code_challenge_method: 'S256' }).toString();
@@ -160,7 +179,7 @@ export function createWorker(upstream = fetch) {
           await fetchFile('public-images.json', token.access_token);
           const age = Math.min(7200, Number(token.expires_in) || 7200);
           const value = await seal({ token: token.access_token, id: OWNER_ID, csrf: random(), exp: Date.now() + age * 1000 }, env.SESSION_SECRET, context + ':session');
-          const headers = new Headers({ ...security, Location: '/' });
+          const headers = new Headers({ ...security, Location: flow.next === '/stats.html' ? '/stats.html' : '/' });
           headers.append('Set-Cookie', cookie(SESSION, value, age)); headers.append('Set-Cookie', cookie(OAUTH, '', 0));
           return new Response(null, { status: 303, headers });
         }
@@ -169,6 +188,10 @@ export function createWorker(upstream = fetch) {
           requireValue(request.headers.get('Origin') === env.PUBLIC_ORIGIN && same(request.headers.get('X-CSRF-Token'), session.csrf), '请求来源验证失败', 403);
         }
         if (url.pathname === '/api/logout' && request.method === 'POST') return json({ ok: true }, 200, { 'Set-Cookie': cookie(SESSION, '', 0) });
+        if (url.pathname === '/api/analytics' && request.method === 'GET') {
+          requireValue(env.TRAFFIC_DB, '统计尚未启用', 503);
+          return json(await traffic.summary(Number(url.searchParams.get('days') || 7), env));
+        }
         await publicRepo();
         if (url.pathname === '/api/posts' && request.method === 'GET') {
           const entries = await file('source/_posts', session.token);

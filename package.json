@@ -36,6 +36,7 @@
     "medium-zoom": "^1.1.0"
   },
   "devDependencies": {
+    "chart.js": "^4.5.1",
     "cheerio": "^1.2.0",
     "esbuild": "^0.28.2",
     "lucide": "^1.57.0",

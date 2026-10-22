@@ -29,6 +29,8 @@
 
 ## 构建与部署
 
+测试使用 Node.js 24（与 GitHub Actions 一致），访问统计测试通过内置 SQLite 执行真实 SQL。
+
 ```sh
 npm ci
 npm run writer:test
@@ -39,6 +41,22 @@ npm run writer:deploy
 配置文件 `writer/wrangler.jsonc` 中的 `PUBLIC_ORIGIN` 必须等于 Worker 的公开 HTTPS origin；`GITHUB_CLIENT_ID` 是公开配置，不是密钥。`writer-site.json` 记录博客入口指向的后台地址。构建产物 `.writer-build/` 不提交。
 
 GitHub Pages 发布源应为 GitHub Actions，仓库 Actions variable `WEB_WRITER_ENABLED` 为 `true`。`.github/workflows/blog.yml` 先检查并生成 Hexo，再使用官方 Pages artifact / deployment actions 部署，不再依赖提交根目录 HTML。根目录历史生成文件保留兼容，本地仍可运行 `npm run publish:root`，但网页写作不需要它。
+
+### 评论与访问统计
+
+文章底部点击“加载评论”才会连接 Giscus；评论保存在此公开博客仓库的 Discussions。`site-features.json` 保存公开的仓库 / 分类 ID，`giscus.json` 只允许正式博客域名嵌入。Giscus App 仅安装到此仓库，不需要扩大写作 App 的权限。
+
+写作后台顶部的“访客统计”进入 `/stats.html`，沿用作者的 GitHub 登录。匿名用户只能取得全站与单页累计数量，不能读取趋势、来源、国家 / 地区或最近访问。访客估计不代表真实人数，也不推断身份。
+
+Cloudflare D1 绑定 `TRAFFIC_DB`，初始化或重建数据库时执行：
+
+```sh
+npx wrangler d1 execute hidden-space-traffic --remote --file writer/traffic.sql
+```
+
+数据库名称 / ID、每分钟限流绑定及每日清理 cron 在 `writer/wrangler.jsonc`。上线前必须先初始化表；Hexo 生成的 `traffic-pages.json` 是允许记录的固定公开页面清单，未发布页面拒绝写入。半小时区间通过原子事务去重，常见爬虫、DNT / GPC 和主动关闭统计的访问不记录。没有反作弊保证，仍可能有爬虫漏判或人为刷量。
+
+不存原始 IP、完整 User-Agent / 来源 URL。IP 仅在请求内参与按日变化的 HMAC 去标识化计算；不同网络或浏览器可能重复计算，同网同类浏览器可能合并。原始 IP 仍可能由托管平台按其政策处理。近期记录保留 30 天，按日统计与去标识化标识保留 90 天，cron 每天清理一次；无访客标识的累计计数长期保留。隐私说明位于 `/privacy/`，页脚可关闭统计。不使用前端持久访客 ID。
 
 ### 首次连接 GitHub App
 

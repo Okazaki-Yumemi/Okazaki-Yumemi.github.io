@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>访客统计 · Hidden Space</title><link rel="stylesheet" href="/app.css"><link rel="stylesheet" href="/stats.css"><script src="/stats.js" type="module"></script></head>
+<body>
+<header class="topbar"><a class="brand" href="/">Hidden Space <span>写作</span></a><a href="/stats.html" class="stats-nav" aria-current="page">访客统计</a><span id="identity" class="identity">未登录</span><a id="login" class="button" href="/api/auth/login?next=/stats.html">GitHub 登录</a><button id="logout" class="icon-button" title="退出登录" aria-label="退出登录" hidden><i data-icon="log-out"></i></button></header>
+<div id="notice" class="notice" role="status">登录后查看访客统计</div>
+<main class="stats-main" id="stats-main" hidden>
+  <div class="stats-heading"><h1>访客统计</h1><div class="stats-filters"><select id="period" aria-label="统计时间范围"><option value="7">最近 7 天</option><option value="30">最近 30 天</option><option value="90">最近 90 天</option></select><button id="refresh" class="icon-button" title="刷新统计" aria-label="刷新统计"><i data-icon="refresh"></i></button></div></div>
+  <section class="metrics" aria-label="关键指标"><div><span>累计有效浏览</span><strong id="total-views">—</strong></div><div><span>今日有效浏览</span><strong id="today-views">—</strong></div><div><span>今日访客估计</span><strong id="today-visitors">—</strong></div><div><span>所选时段有效浏览</span><strong id="period-views">—</strong></div></section>
+  <section class="trend"><div class="section-heading"><h2>访问趋势</h2><span class="muted" id="updated"></span></div><div class="chart-wrap"><canvas id="trend-chart" aria-label="每日阅读与访客估计趋势" role="img"></canvas></div></section>
+  <div class="stats-columns"><section><h2>热门页面</h2><div class="table-scroll"><table><thead><tr><th>页面</th><th>有效浏览</th></tr></thead><tbody id="top-pages"></tbody></table></div></section><section><h2>访问来源</h2><div id="sources" class="breakdown"></div><h2>设备</h2><div id="devices" class="breakdown"></div></section><section><h2>国家 / 地区</h2><div id="countries" class="breakdown"></div></section></div>
+  <section class="recent"><div class="section-heading"><h2>最近访问</h2><span class="muted">去标识化 · 最近 50 条</span></div><div class="table-scroll"><table><thead><tr><th>时间（上海）</th><th>页面</th><th>国家 / 地区</th><th>设备</th><th>来源</th></tr></thead><tbody id="recent"></tbody></table></div></section>
+  <footer class="stats-footer">访客数为估计值，不跨日识别同一人；半小时内相同网络和浏览器的重复阅读会合并。<a href="https://okazaki-yumemi.github.io/privacy/" target="_blank" rel="noopener">隐私说明</a></footer>
+</main></body></html>
