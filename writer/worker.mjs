@@ -1,4 +1,4 @@
-import { OWNER, REPO, OWNER_ID, SITE, PREFIX, Problem, requireValue, postName, splitPost, decodeText, encode64, validateUpload, approvedImage, makePost } from './content.mjs';
+import { OWNER, REPO, OWNER_ID, REPO_ID, SITE, PREFIX, Problem, requireValue, postName, splitPost, decodeText, encode64, validateUpload, approvedImage, makePost } from './content.mjs';
 import { createTraffic } from './traffic.mjs';
 
 const encoder = new TextEncoder();
@@ -65,12 +65,28 @@ export function createWorker(upstream = fetch) {
       ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(body ? { 'Content-Type': 'application/json' } : {})
     }, ...(body ? { body: JSON.stringify(body) } : {}) });
     if (response.status === 404) return null;
-    requireValue(response.ok, response.status === 401 ? 'GitHub 登录已失效，请重新登录' : response.status === 409 || response.status === 422 ? '仓库已有新变更，请重新加载文章后再发布' : 'GitHub 请求失败，请检查 App 的仓库权限或稍后重试', response.status === 401 ? 401 : response.status === 409 || response.status === 422 ? 409 : 502);
+    if (!response.ok) {
+      let message = ''; try { message = (await response.json()).message || ''; } catch {}
+      const limited = response.status === 429 || response.status === 403 && (response.headers.get('X-RateLimit-Remaining') === '0' || response.headers.has('Retry-After') || /rate limit/i.test(message));
+      if (limited) {
+        const error = new Problem(429, 'GitHub API 请求已达限流，请稍后重试；这不代表 App 权限不足');
+        const wait = Number(response.headers.get('Retry-After'));
+        const reset = Number(response.headers.get('X-RateLimit-Reset'));
+        const seconds = wait > 0 ? wait : reset > 0 ? Math.ceil(reset - Date.now() / 1000) : 60;
+        error.retryAfter = Math.max(1, Math.min(86400, Number.isFinite(seconds) ? seconds : 60));
+        throw error;
+      }
+      if (response.status === 403) throw new Problem(403, 'GitHub App 无法访问博客仓库，请检查是否安装到此博客仓库及所需权限；不要扩大到其他仓库');
+      if (response.status === 401) throw new Problem(401, 'GitHub 登录已失效，请重新登录');
+      if (response.status === 409 || response.status === 422) throw new Problem(409, '仓库已有新变更，请重新加载文章后再发布');
+      throw new Problem(502, 'GitHub 服务暂不可用，请稍后重试');
+    }
     return response.status === 204 ? {} : response.json();
   }
-  async function publicRepo() {
-    const repo = await github('', null);
-    requireValue(repo && repo.private === false && repo.visibility === 'public' && repo.full_name === `${OWNER}/${REPO}` && repo.owner.id === OWNER_ID && repo.default_branch === 'main', '目标仓库不是预期的公开博客，已拒绝访问', 403);
+  async function publicRepo(token) {
+    requireValue(typeof token === 'string' && token.length > 0, 'GitHub 登录已失效，请重新登录', 401);
+    const repo = await github('', token);
+    requireValue(repo && repo.id === REPO_ID && repo.private === false && repo.visibility === 'public' && repo.full_name === `${OWNER}/${REPO}` && repo.owner?.id === OWNER_ID && repo.default_branch === 'main', '目标仓库不是预期的公开博客，已拒绝访问', 403);
     return repo;
   }
   const file = (path, token, ref = 'main') => github(`/contents/${path}?ref=${encodeURIComponent(ref)}`, token);
@@ -157,10 +173,9 @@ export function createWorker(upstream = fetch) {
         if (url.pathname === '/api/session' && request.method === 'GET') return json({ configured, user: session?.id === OWNER_ID ? { login: OWNER, id: OWNER_ID } : null, csrf: session?.id === OWNER_ID ? session.csrf : null, site: SITE });
         requireValue(configured && env.PUBLIC_ORIGIN === url.origin && url.protocol === 'https:', '写作后台尚未完成安全配置', 503);
         if (url.pathname === '/api/auth/login' && request.method === 'GET') {
-          const repo = await publicRepo();
           const state = random(); const verifier = random();
           const next = url.searchParams.get('next') === '/stats.html' ? '/stats.html' : '/';
-          const value = await seal({ state, verifier, repoId: repo.id, next, exp: Date.now() + 10 * 60 * 1000 }, env.SESSION_SECRET, context + ':oauth');
+          const value = await seal({ state, verifier, repoId: REPO_ID, next, exp: Date.now() + 10 * 60 * 1000 }, env.SESSION_SECRET, context + ':oauth');
           const challenge = base64url(new Uint8Array(await crypto.subtle.digest('SHA-256', encoder.encode(verifier))));
           const target = new URL('https://github.com/login/oauth/authorize');
           target.search = new URLSearchParams({ client_id: env.GITHUB_CLIENT_ID, redirect_uri: `${url.origin}/api/auth/callback`, state, code_challenge: challenge, code_challenge_method: 'S256' }).toString();
@@ -168,14 +183,14 @@ export function createWorker(upstream = fetch) {
         }
         if (url.pathname === '/api/auth/callback' && request.method === 'GET') {
           const flow = await unseal(cookies(request)[OAUTH], env.SESSION_SECRET, context + ':oauth');
-          requireValue(flow && same(flow.state, url.searchParams.get('state')) && url.searchParams.get('code'), '登录验证失败，请重新登录', 403);
+          requireValue(flow && flow.repoId === REPO_ID && same(flow.state, url.searchParams.get('state')) && url.searchParams.get('code'), '登录验证失败，请重新登录', 403);
           const tokenResponse = await upstream('https://github.com/login/oauth/access_token', { method: 'POST', headers: { Accept: 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ client_id: env.GITHUB_CLIENT_ID, client_secret: env.GITHUB_CLIENT_SECRET, code: url.searchParams.get('code'), redirect_uri: `${url.origin}/api/auth/callback`, code_verifier: flow.verifier, repository_id: String(flow.repoId) }) });
           const token = await tokenResponse.json();
           requireValue(tokenResponse.ok && token.access_token && !token.error, 'GitHub 授权失败，请重试', 403);
           const userResponse = await upstream('https://api.github.com/user', { headers: { Authorization: `Bearer ${token.access_token}`, Accept: 'application/vnd.github+json', 'User-Agent': 'Hidden-Space-Writer' } });
           const user = await userResponse.json();
           requireValue(userResponse.ok && user.id === OWNER_ID && user.login === OWNER, '这个 GitHub 账号没有写作权限', 403);
-          await publicRepo();
+          await publicRepo(token.access_token);
           await fetchFile('public-images.json', token.access_token);
           const age = Math.min(7200, Number(token.expires_in) || 7200);
           const value = await seal({ token: token.access_token, id: OWNER_ID, csrf: random(), exp: Date.now() + age * 1000 }, env.SESSION_SECRET, context + ':session');
@@ -192,7 +207,7 @@ export function createWorker(upstream = fetch) {
           requireValue(env.TRAFFIC_DB, '统计尚未启用', 503);
           return json(await traffic.summary(Number(url.searchParams.get('days') || 7), env));
         }
-        await publicRepo();
+        await publicRepo(session.token);
         if (url.pathname === '/api/posts' && request.method === 'GET') {
           const entries = await file('source/_posts', session.token);
           requireValue(Array.isArray(entries), '读取文章列表失败', 502);
@@ -222,7 +237,7 @@ export function createWorker(upstream = fetch) {
         }
         return json({ error: '接口不存在' }, 404);
       } catch (error) {
-        return json({ error: error instanceof Problem ? error.message : '服务暂时不可用，请稍后重试' }, error instanceof Problem ? error.status : 500);
+        return json({ error: error instanceof Problem ? error.message : '服务暂时不可用，请稍后重试' }, error instanceof Problem ? error.status : 500, error?.retryAfter ? { 'Retry-After': String(error.retryAfter) } : {});
       }
     }
   };

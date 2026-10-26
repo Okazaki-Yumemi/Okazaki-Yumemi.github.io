@@ -18,7 +18,7 @@
 
 - GitHub App 只安装到 `Okazaki-Yumemi/Okazaki-Yumemi.github.io`，不选择 All repositories，也不安装到私有仓库。
 - 仓库权限只有 Contents 读写、Actions 只读和自动提供的 Metadata 只读；不申请组织、账号、工作流写入或私有仓库相关权限。
-- 服务端硬编码仓库、分支及作者 GitHub 数字 ID `259598129`。所有仓库操作前再次核实它仍为指定作者的公开仓库，不能从请求中指定其他仓库或文件目录。
+- 服务端硬编码仓库、分支、博客数字 ID `1176004251` 及作者 GitHub 数字 ID `259598129`。登录入口不查询匿名 GitHub API，以免共享出口的匿名限流阻断授权。回调与所有仓库操作前用用户授权凭据核实它仍为指定 ID、指定作者的公开仓库，不能从请求中指定其他仓库或文件目录。
 - GitHub 授权使用 PKCE S256、随机 state、加密的临时 HttpOnly Cookie，并将用户 token 进一步限制到博客 repository ID。用户 ID 与登录名都需符合白名单。
 - 用户 token 只保存在 AES-GCM 加密的 HttpOnly / Secure / SameSite=Lax Cookie 中，最长两小时。不返回浏览器 JavaScript、不写入 localStorage、不记录日志。会话密钥及 GitHub client secret 只在 Cloudflare Secrets。
 - 发布请求同时校验 Origin 与 CSRF token。匿名用户即使加载编辑器，也无法读取后台接口或提交。

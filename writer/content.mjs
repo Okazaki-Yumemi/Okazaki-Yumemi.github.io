@@ -3,6 +3,7 @@ import { parse, stringify } from 'yaml';
 export const OWNER = 'Okazaki-Yumemi';
 export const REPO = 'Okazaki-Yumemi.github.io';
 export const OWNER_ID = 259598129;
+export const REPO_ID = 1176004251;
 export const SITE = 'https://okazaki-yumemi.github.io';
 export const PREFIX = `https://api.github.com/repos/${OWNER}/${REPO}`;
 export const MAX_BODY = 512 * 1024;
