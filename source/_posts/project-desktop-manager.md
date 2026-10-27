@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各
 date: 2026-10-11 12:10:00
 permalink: project-desktop-manager.html
 categories: [项目]
-tags: [Tauri, Rust, Svelte, 桌面工具]
+tags: [工具开发]
 cover: /images/covers/cover-07.webp
 description: 从虚拟集合到任务、日历与专注，记录 DesktopManager 的结构和不挪动原文件的整理方式。
 ---

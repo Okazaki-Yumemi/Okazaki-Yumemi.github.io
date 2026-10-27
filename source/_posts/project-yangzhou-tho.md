@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】扬州 THO：热闹的小游戏，也需要一本�
 date: 2026-10-11 12:08:00
 permalink: project-yangzhou-tho.html
 categories: [项目]
-tags: [东方Project, Node.js, 活动系统]
+tags: [游戏开发, Web开发]
 cover: /images/covers/cover-02.webp
 description: 记录扬州 THO 活动系统中阵营、探索、积分和抽奖的关系，以及单实例数据保存的取舍。
 ---

@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】MiniVim：原来光标后面有这么多事情"
 date: 2026-10-11 12:12:00
 permalink: project-minivim.html
 categories: [项目]
-tags: [C++, 编辑器, 课程项目]
+tags: [工具开发, 编程与算法]
 cover: /images/covers/cover-04.webp
 description: 从文本缓冲区、模式切换到终端渲染，记录 MiniVim 里一个按键怎样变成一次编辑。
 ---

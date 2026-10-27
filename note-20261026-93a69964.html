@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YMarkdownG项目说明 | YMGFC_CN's Hidden Space</title><meta name="author" content="YMGFC_CN"><meta name="copyright" content="YMGFC_CN"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="类neovide markdown笔记编辑器。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YMarkdownG项目说明">
+<meta property="og:url" content="https://okazaki-yumemi.github.io/note-20261026-93a69964.html">
+<meta property="og:site_name" content="YMGFC_CN&#39;s Hidden Space">
+<meta property="og:description" content="类neovide markdown笔记编辑器。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://okazaki-yumemi.github.io/images/covers/upload-eb71b29a-1045-4f09-811c-532d22aa0a9f.webp">
+<meta property="article:published_time" content="2026-10-25T21:13:03.400Z">
+<meta property="article:modified_time" content="2026-10-25T21:13:03.400Z">
+<meta property="article:author" content="YMGFC_CN">
+<meta property="article:tag" content="工具开发">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://okazaki-yumemi.github.io/images/covers/upload-eb71b29a-1045-4f09-811c-532d22aa0a9f.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "YMarkdownG项目说明",
+  "url": "https://okazaki-yumemi.github.io/note-20261026-93a69964.html",
+  "image": "https://okazaki-yumemi.github.io/images/covers/upload-eb71b29a-1045-4f09-811c-532d22aa0a9f.webp",
+  "datePublished": "2026-10-25T21:13:03.400Z",
+  "dateModified": "2026-10-25T21:13:03.400Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "YMGFC_CN",
+      "url": "https://okazaki-yumemi.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/images/avatar.jpg"><link rel="canonical" href="https://okazaki-yumemi.github.io/note-20261026-93a69964.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="stylesheet" href="/css/index.css?v=5.7.0"><link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        const data = { value }
+
+        if (ttl != null) {
+          data.expiry = Date.now() + ttl * 86400000
+        }
+
+        localStorage.setItem(key, JSON.stringify(data))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return
+
+        try {
+          const data = JSON.parse(itemStr)
+
+          if (data.expiry && Date.now() > data.expiry) {
+            localStorage.removeItem(key)
+            return
+          }
+
+          return data.value
+        } catch {
+          localStorage.removeItem(key)
+        }
+      }
+    }
+
+    const scriptCache = new Map()
+    const cssCache = new Map()
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => {
+        if (scriptCache.has(url)) {
+          return scriptCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+
+          script.src = url
+          script.async = true
+
+          for (const key in attr) {
+            script.setAttribute(key, attr[key])
+          }
+
+          script.onload = resolve
+          script.onerror = reject
+
+          document.head.appendChild(script)
+        })
+
+        scriptCache.set(url, promise)
+
+        return promise
+      },
+      getCSS: (url, id) => {
+        if (cssCache.has(url)) {
+          return cssCache.get(url)
+        }
+
+        const promise = new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+
+          link.rel = 'stylesheet'
+          link.href = url
+
+          if (id) {
+            link.id = id
+          }
+
+          link.onload = resolve
+          link.onerror = reject
+
+          document.head.appendChild(link)
+        })
+
+        cssCache.set(url, promise)
+
+        return promise
+      },
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const metaThemeColor = document.querySelector('meta[name="theme-color"]')
+      const activateDarkMode = () => {
+        document.documentElement.dataset.theme = 'dark'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.dataset.theme = 'light'
+        if (metaThemeColor !== null) {
+          metaThemeColor.setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.13.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'YMarkdownG项目说明',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/assets/blog.css?v=5"><link rel="stylesheet" href="/assets/site-features.css?v=1"><link rel="stylesheet" href="/assets/tech.css?v=1"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="bg-animation" id="web_bg" style="background-image: url(/images/bg1.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/atlas/"><i class="fa-fw fas fa-diagram-project"></i><span> 图谱</span></a></div><div class="menus_item"><a class="site-page" href="/desk/"><i class="fa-fw fas fa-bookmark"></i><span> 阅读台</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/write/"><i class="fa-fw fas fa-pen-to-square"></i><span> 写作</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/images/covers/upload-eb71b29a-1045-4f09-811c-532d22aa0a9f.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">YMGFC_CN's Hidden Space</span></a><a class="nav-page-title" href="/"><span class="site-name">YMarkdownG项目说明</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/courses/"><i class="fa-fw fas fa-book"></i><span> 课程</span></a></div><div class="menus_item"><a class="site-page" href="/projects/"><i class="fa-fw fas fa-code"></i><span> 项目</span></a></div><div class="menus_item"><a class="site-page" href="/atlas/"><i class="fa-fw fas fa-diagram-project"></i><span> 图谱</span></a></div><div class="menus_item"><a class="site-page" href="/desk/"><i class="fa-fw fas fa-bookmark"></i><span> 阅读台</span></a></div><div class="menus_item"><a class="site-page" href="/writing/"><i class="fa-fw fas fa-pen"></i><span> 文字</span></a></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/write/"><i class="fa-fw fas fa-pen-to-square"></i><span> 写作</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">YMarkdownG项目说明</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-25T21:13:03.400Z" title="发表于 2026-10-26 05:13:03">2026-10-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-25T21:13:03.400Z" title="更新于 2026-10-26 05:13:03">2026-10-26</time></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>YMarkdownG项目说明</h1>
+<p>类neovide markdown笔记编辑器。</p>
+<h2 id="起因">起因</h2>
+<p>起因其实很简单，就是因为我想写一个博客，用来专门来记录拆分Deepseek Inference Engine记录。</p>
+<p>我倒是之前有写一个给博客增加在线写文章的功能，但是显然如果要在一个随时可能会被手关闭的东西里面写进去十多个小时的文档，那我估计到时候哭爹喊娘也不够了。</p>
+<p>但是我真的真的不想在vscode里面写，很难看。而且vscode太辣眼睛了。</p>
+<p>所以我尝试了一下使用Typora。但是呢发现Typora居然要收费，而且也没那么好用。</p>
+<p>说到这里，又想起来之前倒是看到过一个neovide的代码编辑器，里面的光标很灵动，在写字的时候也有不错的光效反馈。所以我就想要不干脆给他做到这里面来算了。</p>
+<p>所以就有了YMarkdownG. 一个100MB左右无需安装的markdown编辑器。兼容MacOS,Linux和Windows</p>
+<h2 id="后续更新计划。">后续更新计划。</h2>
+<ol>
+<li>可能会考虑把文件管理做到更类似Zotero的方式，可以更好的管理markdown文档。</li>
+<li>增加一个一键导出PDF功能。</li>
+<li>左侧笔记右键菜单还没做。只做了文件夹的。所以有些不方便。</li>
+<li>目录目前我觉得不是很好看。可能会考虑参考VsCode做成折叠类型的。这样会更加方便一些。</li>
+</ol>
+<h2 id="项目地址。">项目地址。</h2>
+<p>Okazaki-Yumemi/YMarkdownG</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/">工具开发</a></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/deepinfer1.html" title="From Surface To Deep—— An overview of DeepInfer Part1"><img class="cover" src="/images/covers/upload-8aec0400-b671-42d7-8b20-3407086aa9fb.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">From Surface To Deep—— An overview of DeepInfer Part1</div></div><div class="info-2"><div class="info-item-1">DeepInfer 相信的心就是你的力量。 1.总览 DeepInfer主要支持DeepSeek - V4.1 - Flash  高性能 Attention / MoE Kernels Attention DP\ MoE EP and Expert Load Balancing Dspark Speculative Decoding and mobile verification Sliding- Window Attention State recovery Batch- invariant Inference and Deterministic Sampling  局限性: Deepinfer 并不是完全开放的Online Inference Serving.  ReadMe says that the complete serbing needs KV Cache ... etc. 本Markdown将以一个请求为例，自顶向下来分析。 注意：本blog分析去掉了大量的多模态代码和多模态的分析 2.STAGE1. 一条请求怎么穿过DeepInfer 2.1  llm.py f...</div></div></div></a><a class="pagination-related" href="/wkend-10-15.html" title="周末杂记"><img class="cover" src="/images/covers/upload-6e31b393-1413-4e73-8c60-af7d456bccce.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">周末杂记</div></div><div class="info-2"><div class="info-item-1">总而言之，一切算是慢慢的好起来了 我再一次依靠着涵泽湖的晚风，湖上流动的碎金和浮影，以及天上闪烁着的群星，让我的心情恢复到不至于影响工作的状况。 半期考试还有三周，怎么的也得开始复习了。不过总是感觉自己被困在这最基础的学积分里面，没有办法进行爱好和学习的拓展。 理想中的我现在应该学习的是Operating system和算法导论，或许加上一门计算机网络和，而不是还得每天抓着竞赛书刷题，有够无聊的。 不过今天和学科营里面讨论，也算看出来了一点点数学的魅力吧，起码比之前有意思不少。 本来听说今天要来台风，结果后面没来，可惜了，我还没见过那种十级以上的大风呢。如果不危险的话，其实有点想要体验背靠着大风，躺在风中的感觉。 啊，唉。有些东西一临到了笔头，又说不出来什么东西。不过我第一篇文章弄出来之后，可能会想一个什么办法随便找个地方实习一下。。？ 毕竟现在也算对学术稍微祛魅了一些了。第一篇论文应该这周末能投了。也算投入了不少心血吧。 今天晚上突然想到了一个meme 12345    / CS \   / 计院 \  /  电院  \ /   工科   \/    医学院  \ 过去一年我在...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/project-minivim.html" title="【暂时AIGC占位】MiniVim：原来光标后面有这么多事情"><img class="cover" src="/images/covers/cover-04.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">【暂时AIGC占位】MiniVim：原来光标后面有这么多事情</div></div><div class="info-2"><div class="info-item-1">平时用编辑器，输入、删除、移动光标，都自然得像呼吸。自己去写的时候才发现，这些东西并不会自动发生。 一个退格键应该删掉什么？行首按下去会怎样？光标到了屏幕外面，是移动窗口，还是让它消失？问题都不大，但每一个都得有人回答。 MiniVim 就是这样一个项目。它来自交大 CS1958-01 的课程框架，我的仓库是课程上游的 fork，使用 C++17。这里记一下它的结构，不把教学框架也算成自己从零设计的东西。 不只是把字放到屏幕上 项目把事情分给了 Buffer、Window、Command、Renderer、Editor 和 Terminal。文本本身、可见区域、命令、显示和终端交互，分别有各自的位置。 这个拆分挺重要。屏幕上的第几行，不一定是文件里的第几行；修改了缓冲区，也不等于终端已经把修改画出来了。如果全都混在一起，一个光标问题就很容易牵出一串别的问题。 仓库里的 Buffer.cpp 和 Editor.cpp 已经有具体实现，可以沿着“按键进入编辑器，再作用到缓冲区”的路径去看。比起直接盯着最终画面，这样更容易定位一件事到底应该在哪一层发生。 同一个按键，也未必是同一件事 ...</div></div></div></a><a class="pagination-related" href="/project-classroom-radar.html" title="【暂时AIGC占位】空教室雷达：别再一间一间开盲盒了"><img class="cover" src="/images/covers/cover-03.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">【暂时AIGC占位】空教室雷达：别再一间一间开盲盒了</div></div><div class="info-2"><div class="info-item-1">之前已经写过一篇空教室查询器的记录。这次想稍微往程序里面看一看，不只是说“终于不用开盲盒了”。 说到底，要找的也不是什么复杂的东西。一个地方，一段时间，能坐下来。 但程序必须先回答，“这段时间没课”究竟怎么算。 从一段时间开始 公开代码使用 Flask，查询接口接收日期、楼栋和起止节次，再遍历楼层与教室的课程安排，排除时间有交集的教室。 把查询时间记作闭区间 [a, b]，课程时间记作 [c, d]。两者不重叠的情况只有两种：查询结束早于课程开始，或者查询开始晚于课程结束。也就是 b &lt; c 或 a &gt; d。 其余情况，都有重叠。 这比对着几个例子写一堆分支清楚得多。查询刚好覆盖一节课、课程跨过查询起点、两边完全包含，最终都可以回到同一个判断。 这里用的是节次边界，不是“随便填一个几点几分都能精确匹配”的承诺。 没排课，不一定没人 代码还针对当天的查询尝试补充现场占用信息及部分环境指标。它们和课表不是同一种信息：课表说的是计划，现场状态说的是某个时刻的观测。 如果把二者混成一个绝对的“空闲”，到了门口发现里面有人，用户就会觉得整个系统不可信。 所以更准确的理解是：先把...</div></div></div></a><a class="pagination-related" href="/post-3.html" title="造轮子记录：交大空教室一键查询器"><img class="cover" src="/images/bg3.png" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-03-09</div><div class="info-item-2">造轮子记录：交大空教室一键查询器</div></div><div class="info-2"><div class="info-item-1">受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？ 当然要用代码解决生活痛点！ 今天手搓了一个轻量级的“交大空教室查询器”。 不过感觉这种。。。自己在转专业的这些人里面没有突出点啊。。 啊，忘了提项目网址了，在这里： 🚀 在线体验传送门： SJTU 空教室查询助手 (点击直达) </div></div></div></a><a class="pagination-related" href="/project-video-speed.html" title="【暂时AIGC占位】WebsiteSpeedRun：把视频速度调到自己想要的位置"><img class="cover" src="/images/covers/cover-09.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">【暂时AIGC占位】WebsiteSpeedRun：把视频速度调到自己想要的位置</div></div><div class="info-2"><div class="info-item-1">看视频的时候，速度有时候比画质还影响体验。 一段已经明白的内容，正常速度听下去会觉得慢；一段需要仔细想的内容，又可能得停下来。平台给出的几个档位，并不总是刚好合适。 WebsiteSpeedRun 把调速做成了一个小扩展。目的很直接，让播放速度的选择多一点余地。 一个弹窗，两边的状态 项目采用 Manifest V3。弹窗负责读取与保存速度设置，再通过浏览器的脚本执行能力，把操作送到当前页面的媒体元素上。 chrome.storage.local 让设置不至于随着弹窗关闭就丢掉；页面执行则处理真正播放视频的对象。弹窗里滑块变了，并不意味着页面上的视频一定已经改变，这两边需要明确连接。 公开代码会在页面主执行环境中处理现有的 video 元素，并尝试覆盖 frame 中的媒体。这里不展开用于绕过平台检测的细节，只讨论播放控制本身。 好用的小工具，也有小工具的边界 不同网站的播放器实现并不相同。有的使用原生媒体元素，有的会反复重置状态；还有的视频是在第一次执行之后才动态添加到页面里的。 当前代码主要处理执行时已经存在的元素，没有持续观察后来新增视频的机制。所以它不等于装好之后，所有网...</div></div></div></a><a class="pagination-related" href="/project-session-lock.html" title="【暂时AIGC占位】水源会话锁：给再看一眼加一点阻力"><img class="cover" src="/images/covers/cover-05.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">【暂时AIGC占位】水源会话锁：给再看一眼加一点阻力</div></div><div class="info-2"><div class="info-item-1">“再看一眼”是一个很神奇的计时单位。 它可以只有几秒，也可以把整段空闲时间都装进去。等反应过来，想做的事情还没开始，帖子倒是又看了不少。 水源会话锁做的事情很直接：给一次浏览设置一个时间边界。 在已经会打开的地方提醒自己 它是运行在 Tampermonkey / Violentmonkey 一类环境中的用户脚本，不是社区官方功能。公开脚本提供预设与自定义时长，保存相关状态，并避免在同一会话里不断重复弹出提示。 相对于另外启动一个计时软件，直接放在网页里的约束离行为更近一点。已经打开水源的时候，它才有机会介入。 留退路，也保留一点不方便 项目说明里有设置后的短暂撤销窗口，也有受次数限制的强制解锁。这些细节挺有意思：完全没有退路，可能一次设置错了就不想再用了；退路太顺手，又会变成随手点掉的另一个提示。 这种矛盾没有特别漂亮的答案。只能承认人不总是按照自己十分钟前的计划行动，再给临时反悔增加一点成本。 用户脚本的状态保存依赖脚本管理器提供的存储能力。它不是系统级的访问控制，也拦不住主动停用脚本、换一个浏览器或用其他入口浏览。 它不是意志力的替代品 把限制开起来，并不会自动把剩下的时间变...</div></div></div></a><a class="pagination-related" href="/project-desktop-manager.html" title="【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各归各位"><img class="cover" src="/images/covers/cover-07.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-11</div><div class="info-item-2">【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各归各位</div></div><div class="info-2"><div class="info-item-1">桌面上有文件，有快捷方式，也有一些暂时不想处理的东西。 它们待在那里很方便，但方便久了，就会变成另一种不方便。要找的时候得扫一遍；想整理的时候，又担心改动原来的位置之后，之前的路径和习惯都乱了。 DesktopManager 把“整理”先做成了一个单独的层。至少不必为了给文件分组，就马上把文件搬来搬去。 整理关系，不急着整理磁盘 虚拟集合保存的是文件与集合的关联，而不是把原文件实际移动到新目录。桌面索引负责发现和记录对象，集合负责提供另一个观察方式。 这样做并不意味着磁盘从此就不需要整理了。它只是把“我现在想把这些东西看作一组”和“我要改变它们的实际位置”分开。 这个区别很小，却能少一点顾虑。 界面后面也要分层 项目使用 Tauri 2、Rust、Svelte 5 / TypeScript 和 SQLite。界面经过统一的调用入口进入 Tauri commands，继续交给领域逻辑和存储层；SQL 留在存储模块中，Windows 桌面相关行为则放在专门的适配模块。 看起来绕了几层，但每层有自己的职责。界面不需要知道一条查询怎么写，数据库也不应该决定一个按钮长什么样。 仓库还记录了...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">YMGFC_CN</div><div class="author-info-description">时刻铭记自己的弱小 时刻压制自己的傲慢</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">35</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Okazaki-Yumemi"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Okazaki-Yumemi" target="_blank" title="GitHub"><i class="fab fa-github"></i></a><a class="social-icon" href="https://space.bilibili.com/96828559" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">YMarkdownG项目说明</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%B7%E5%9B%A0"><span class="toc-number">1.1.</span> <span class="toc-text">起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E7%BB%AD%E6%9B%B4%E6%96%B0%E8%AE%A1%E5%88%92%E3%80%82"><span class="toc-number">1.2.</span> <span class="toc-text">后续更新计划。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80%E3%80%82"><span class="toc-number">1.3.</span> <span class="toc-text">项目地址。</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/deepinfer2.html" title="DeepInfer Part2  —— The adaptive verification of Dspark"><img src="/images/bg1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepInfer Part2  —— The adaptive verification of Dspark"/></a><div class="content"><a class="title" href="/deepinfer2.html" title="DeepInfer Part2  —— The adaptive verification of Dspark">DeepInfer Part2  —— The adaptive verification of Dspark</a><time datetime="2026-10-27T00:50:02.040Z" title="发表于 2026-10-27 08:50:02">2026-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/deepinfer1.html" title="From Surface To Deep—— An overview of DeepInfer Part1"><img src="/images/covers/upload-8aec0400-b671-42d7-8b20-3407086aa9fb.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="From Surface To Deep—— An overview of DeepInfer Part1"/></a><div class="content"><a class="title" href="/deepinfer1.html" title="From Surface To Deep—— An overview of DeepInfer Part1">From Surface To Deep—— An overview of DeepInfer Part1</a><time datetime="2026-10-27T00:11:10.930Z" title="发表于 2026-10-27 08:11:10">2026-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/note-20261026-93a69964.html" title="YMarkdownG项目说明"><img src="/images/covers/upload-eb71b29a-1045-4f09-811c-532d22aa0a9f.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="YMarkdownG项目说明"/></a><div class="content"><a class="title" href="/note-20261026-93a69964.html" title="YMarkdownG项目说明">YMarkdownG项目说明</a><time datetime="2026-10-25T21:13:03.400Z" title="发表于 2026-10-26 05:13:03">2026-10-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/wkend-10-15.html" title="周末杂记"><img src="/images/covers/upload-6e31b393-1413-4e73-8c60-af7d456bccce.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="周末杂记"/></a><div class="content"><a class="title" href="/wkend-10-15.html" title="周末杂记">周末杂记</a><time datetime="2026-10-24T05:59:21.779Z" title="发表于 2026-10-24 13:59:21">2026-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/note-20261020-1bf182ba.html" title="病隙杂笔"><img src="/images/covers/upload-667fd8e6-4256-49a3-80a1-9b98cfc11d04.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="病隙杂笔"/></a><div class="content"><a class="title" href="/note-20261020-1bf182ba.html" title="病隙杂笔">病隙杂笔</a><time datetime="2026-10-19T19:09:09.226Z" title="发表于 2026-10-20 03:09:09">2026-10-20</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2026 By YMGFC_CN</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.2</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.7.0</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.7.0"></script><script src="/js/main.js?v=5.7.0"></script><div class="js-pjax"></div><script src="/assets/blog.js?v=3" defer></script><script src="/assets/site-features.js?v=2" defer></script><script src="/assets/tech.js?v=1" type="module"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.7.0"></script></div></div></body></html>

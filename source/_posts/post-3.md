@@ -7,8 +7,8 @@ permalink: post-3.html
 categories:
   - 项目
 tags:
-  - SJTU
-  - 工具
+  - 工具开发
+  - Web开发
 cover: /images/bg3.png
 mathjax: false
 ---

@@ -6,7 +6,8 @@ updated: 2026-10-27T08:11:10.930Z
 categories:
   - 学习
 tags:
-  - 学习
+  - 人工智能
+  - 系统与性能
 cover: /images/covers/upload-8aec0400-b671-42d7-8b20-3407086aa9fb.webp
 description: 相信的心就是你的力量
 mathjax: false

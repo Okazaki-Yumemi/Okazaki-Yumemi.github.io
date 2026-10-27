@@ -4,7 +4,7 @@ date: 2026-10-11 12:22:00
 updated: 2026-10-11 12:22:00
 permalink: course-cs336.html
 categories: [课程]
-tags: [CS336, LLM, 系统]
+tags: [人工智能, 系统与性能]
 cover: /images/covers/cover-01.webp
 description: 从 BPE、Transformer 到数据处理与对齐，整理 CS336 的实现主线，以及计算资源限制下没有完整复现的部分。
 ---

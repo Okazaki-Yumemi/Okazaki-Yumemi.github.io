@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】别点那个链接！把反诈题目变成一次�
 date: 2026-10-11 12:02:00
 permalink: project-anti-fraud.html
 categories: [项目]
-tags: [AI, 课程项目, Web]
+tags: [人工智能, Web开发]
 cover: /images/covers/cover-11.webp
 description: 人工智能导论课程大作业：在三种模拟场景中记录选择、识别风险，并保留可回看的交互结果。
 ---

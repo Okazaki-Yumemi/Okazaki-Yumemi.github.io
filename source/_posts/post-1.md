@@ -7,8 +7,8 @@ permalink: post-1.html
 categories:
   - 技术
 tags:
-  - C++
-  - LaTeX
+  - 博客建设
+  - 编程与算法
 cover: /images/bg1.png
 mathjax: true
 ---

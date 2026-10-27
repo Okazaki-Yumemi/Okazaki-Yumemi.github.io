@@ -4,7 +4,7 @@ date: 2026-10-11 12:16:00
 updated: 2026-10-11 12:16:00
 permalink: course-acmoj.html
 categories: [课程]
-tags: [C++, ACMOJ, SJTU]
+tags: [编程与算法]
 cover: /images/covers/cover-09.webp
 description: 从两组公开作业中整理受限接口下的逻辑构造，以及析构驱动的延迟执行。
 ---

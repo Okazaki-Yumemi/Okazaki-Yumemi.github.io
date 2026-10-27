@@ -4,7 +4,7 @@ date: 2026-10-11 12:17:00
 updated: 2026-10-11 12:17:00
 permalink: course-cpp-sjtu.html
 categories: [课程]
-tags: [C++, SJTU]
+tags: [编程与算法]
 cover: /images/covers/cover-04.webp
 description: 基于公开课堂练习，整理输入输出、编译与小程序组织这些容易被略过的基础。
 ---

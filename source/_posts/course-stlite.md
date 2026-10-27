@@ -4,7 +4,7 @@ date: 2026-10-11 12:15:00
 updated: 2026-10-11 12:15:00
 permalink: course-stlite.html
 categories: [课程]
-tags: [C++, 数据结构, STLite]
+tags: [编程与算法]
 cover: /images/covers/cover-11.webp
 description: 整理 vector、deque、priority_queue 与 map 的课程项目，以及分块存储和对象生命周期的实现思考。
 ---

@@ -4,7 +4,7 @@ date: 2026-10-11 12:18:00
 updated: 2026-10-11 12:18:00
 permalink: course-cs61a.html
 categories: [课程]
-tags: [CS61A, Python, OOP]
+tags: [编程与算法]
 cover: /images/covers/cover-05.webp
 description: 从 Discussion、Lab 和 Homework 中整理函数思考、对象封装与状态变化的学习重点。
 ---

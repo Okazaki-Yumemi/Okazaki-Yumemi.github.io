@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】南堂界遇：把幻想乡的活动规则搬到�
 date: 2026-10-11 12:09:00
 permalink: project-nantang.html
 categories: [项目]
-tags: [东方Project, Node.js, 活动系统]
+tags: [游戏开发, Web开发]
 cover: /images/covers/cover-01.webp
 description: 记录南堂界遇的区域推进、贡献与抽奖，以及玩家、管理和大屏三种视角。
 ---

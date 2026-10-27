@@ -6,7 +6,8 @@ updated: 2026-10-27T08:50:02.040Z
 categories:
   - 学习
 tags:
-  - 学习
+  - 人工智能
+  - 系统与性能
 cover: /images/bg1.png
 description: ""
 mathjax: false

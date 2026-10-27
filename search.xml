@@ -22,9 +22,7 @@ Homework2/1048/DeferClass.hpp 使用 std::function&lt;void()&gt; 保存动作，
         <category>课程</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>ACMOJ</tag>
-        <tag>SJTU</tag>
+        <tag>编程与算法</tag>
       </tags>
   </entry>
   <entry>
@@ -48,8 +46,103 @@ Cpp_SJTU 目前留下的公开课堂记录不多，主要是 Hello World、课�
         <category>课程</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>SJTU</tag>
+        <tag>编程与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】李宏毅机器学习 2023：把模型、训练和实验放在一起</title>
+    <url>//course-hungyi-ml.html</url>
+    <content><![CDATA[模型的名字越来越多，但有些问题一直没变。数据从哪里来，想让它学会什么，最后又是拿什么判断它学会了。
+李宏毅 Machine Learning 2023 Spring 的这份学习记录，把讲义笔记与作业 Notebook 分开保存。仓库里也记下了一条路线：先把机器学习基础接起来，再继续 CS336，数学与概率知识按需要补充。
+与其急着记下更多名字，不如先看看这些不同的作业，究竟在解决什么不同的问题。
+基础问题会反复出现
+前面的笔记涉及 PyTorch、机器学习的基本思想，以及网络无法正常训练时的排查。回归和分类看起来简单，但数据怎样划分、损失怎样定义、模型是否学到了可泛化的规律，后面学习更复杂模型时仍然绕不开。
+公开目录中，作业进一步覆盖 CNN、Self-Attention、Transformer、BERT、Autoencoder、可解释模型、对抗攻击、领域适应、强化学习与网络压缩。这里按目录整理主题，不把 Notebook 的存在等同于每项作业都达到了某个评分门槛。
+怎样回看这些作业
+一个比较有用的复习方式，是把每份作业拆成三个问题：输入和监督信号是什么，模型引入了什么结构假设，评估结果到底在衡量什么。换了模型之后，这三个问题仍然成立。
+例如，Self-Attention 与 CNN 使用不同的组织方式；领域适应强调训练分布和目标分布之间的变化；压缩关注资源约束。把这些问题并列起来，比只按模型名字记忆，更容易理解为什么要选择不同方法。
+保留实验的边界
+仓库包含预测或提交文件，但本文没有重新运行训练，也不据此声称取得某个排行榜成绩。它是一份学习内容索引与复习总结，具体实现和笔记仍以公开仓库为准。
+公开来源
+学习路线 · 讲义笔记 · 作业记录
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】CS61A 学习记录：从函数走向对象与状态</title>
+    <url>//course-cs61a.html</url>
+    <content><![CDATA[在之前的随笔里，我提过 Recursion、OOP 这些东西。它们让我觉得，程序不只是把一串指令顺着写完。
+CS61A 的练习也是这样。一个银行账户，一台售货机，看起来很普通，却能把对象和状态的问题一点一点摆到面前。
+my_cs61a_study_codes 按学习日保存 Discussion、Lab 和 Homework，也有 Cats 项目的文件。这是过程记录，不代表整门课程所有部分都已完成。
+一个对象不只是几项属性
+Day11/lab06/lab06.py 中的银行账户练习，把余额变化与交易历史联系起来。存款和取款不仅要计算一个新余额，还要记录前后状态，让后续报告能够解释发生了什么。
+Day12/hw06/hw06.py 中的自动售货机练习，则把库存、余额和商品价格放进同一个对象。缺货、金额不足、找零与正常购买都是不同的状态分支。代码需要把这些情况组织成稳定的接口，而不是依靠调用者猜测内部数据。
+例子本身也是规格
+这些作业的 docstring 中包含大量调用与预期输出。它们把“应该怎样工作”变成具体序列：先补货、再投币、最后购买，每一步都会影响下一步。理解这样的例子，有助于把测试当作行为描述，而不只是提交前的检查按钮。
+函数与对象也可以放在同一个视角下理解：函数描述一次计算，对象维护多次操作之间的关系。随着程序变复杂，需要认真判断哪些状态应当留下，哪些值只是当前计算的中间结果。
+回看方式
+回看的时候，先别急着找最终答案。把几次操作之后的状态自己推一遍，再看代码，往往更能发现理解在哪里断了。
+这次没有重新运行课程评测。仓库里的个人实现、原题模板与测试文件，也仍然是三种不同的东西，不能混在一起当作完成证明。
+公开来源
+学习仓库 · 账户与交易练习 · 售货机练习
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>编程与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】人工智能基础与实践：从 Python 练习到可演示的作品</title>
+    <url>//course-sjtu-ai.html</url>
+    <content><![CDATA[人工智能这个词太大了。大到听过很多介绍之后，还是很难说清楚自己究竟学了什么。
+所以我更愿意从一份练习、一个实验和最后能打开的作品说起。这份交大人工智能入门课程仓库，保存了按周组织的实践、期末复习、自测页面和期末项目，内容从 Python 基础延伸到神经网络、CNN、目标检测、大语言模型、生成式 AI、Agent 与 AI 伦理。
+把概念接到实际任务上
+公开文件中可以看到回归与 MNIST 相关 Notebook，以及后续 CNN 实验。学习这些内容时，模型结构只是其中一部分：输入张量、标签、损失、训练循环和结果分析共同构成一个实验。
+Final_term_review/ 以章节整理概念，Final_exercises/ 保存复习笔记和 HTML 自测页面。两者适合配合使用：先解释一个概念，再用问题检查自己是否真的能区分相近的说法。
+从实验转向交付
+期末项目《别点那个链接！》把校园反诈场景做成互动网页，包含三关剧情、风险线索复盘、AI 问答和报告导出。它既有可直接打开的静态演示模式，也有通过本地 Flask 后端连接模型接口的模式。
+这让“调用一个模型”之外的工程问题也变得具体：接口失败怎么办，离线展示是否完整，用户选择怎样保存，输出依据怎样呈现。项目另有独立记录，这里主要整理课程的整体连接。
+复习时保留两种视角
+一边沿着模型和方法复习，另一边沿着完整实验复习：数据进入、模型计算、训练与评估、交互与输出。
+概念不应该只留在期末的复习页上。能把它接到一个具体的小作品里，至少下次提起的时候，不会只剩下一个名字。这份记录只整理公开的课程内容，不放入成绩表和个人提交资料。
+公开来源
+课程仓库 · 期末复习笔记 · 期末项目
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>编程与算法</tag>
+        <tag>人工智能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】CS189/289A 资料整理：给机器学习补上理论阅读入口</title>
+    <url>//course-cs189.html</url>
+    <content><![CDATA[能把模型跑起来之后，仍然会有一些问题绕回来：为什么这样定义目标？为什么这个假设成立？换一份数据，它还会不会成立？
+所以这里也留下一个偏理论的阅读入口。CS189/289A Spring 2024 这份仓库，是从 cy-Yin 的课程资料仓库 fork 而来，包含 Discussion、考试材料和作业解答。
+先叠一个很必要的甲：上游 README 里的“我的解答”指的是原作者，不能因为我点了 fork，就变成我自己的完成记录。
+为什么保留这样的资料入口
+在学习机器学习实现之后，还需要回到模型假设、目标函数和理论条件。课程资料可以作为补充阅读入口，帮助把一个实验中的具体选择放回更一般的问题中考虑。
+使用作业解答时，可以先独立写出问题与推理，再对照已有答案检查差异。否则，看到熟悉的公式很容易产生“已经理解”的错觉，却无法解释它在什么假设下成立。
+数据与材料需要分开核对
+上游说明部分数据较大，不能只依赖仓库里的文件集合；相关数据和空白作业包另有来源。因此，阅读代码之前应先核对题目版本、数据格式和材料出处，避免把缺失数据当作实现问题。
+这里不复制上游整份解答，也不把资料收藏写成已经完成六次作业。对于个人学习进度，公开 fork 本身不足以提供证据；这篇文章的定位就是资料整理与阅读索引。
+公开来源
+我的公开 fork · 资料原作者 · 课程网站
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
       </tags>
   </entry>
   <entry>
@@ -74,60 +167,7 @@ deque/notes.md 记录了一个具体选择：使用分块数组和逻辑下标�
         <category>课程</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-        <tag>数据结构</tag>
-        <tag>STLite</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】李宏毅机器学习 2023：把模型、训练和实验放在一起</title>
-    <url>//course-hungyi-ml.html</url>
-    <content><![CDATA[模型的名字越来越多，但有些问题一直没变。数据从哪里来，想让它学会什么，最后又是拿什么判断它学会了。
-李宏毅 Machine Learning 2023 Spring 的这份学习记录，把讲义笔记与作业 Notebook 分开保存。仓库里也记下了一条路线：先把机器学习基础接起来，再继续 CS336，数学与概率知识按需要补充。
-与其急着记下更多名字，不如先看看这些不同的作业，究竟在解决什么不同的问题。
-基础问题会反复出现
-前面的笔记涉及 PyTorch、机器学习的基本思想，以及网络无法正常训练时的排查。回归和分类看起来简单，但数据怎样划分、损失怎样定义、模型是否学到了可泛化的规律，后面学习更复杂模型时仍然绕不开。
-公开目录中，作业进一步覆盖 CNN、Self-Attention、Transformer、BERT、Autoencoder、可解释模型、对抗攻击、领域适应、强化学习与网络压缩。这里按目录整理主题，不把 Notebook 的存在等同于每项作业都达到了某个评分门槛。
-怎样回看这些作业
-一个比较有用的复习方式，是把每份作业拆成三个问题：输入和监督信号是什么，模型引入了什么结构假设，评估结果到底在衡量什么。换了模型之后，这三个问题仍然成立。
-例如，Self-Attention 与 CNN 使用不同的组织方式；领域适应强调训练分布和目标分布之间的变化；压缩关注资源约束。把这些问题并列起来，比只按模型名字记忆，更容易理解为什么要选择不同方法。
-保留实验的边界
-仓库包含预测或提交文件，但本文没有重新运行训练，也不据此声称取得某个排行榜成绩。它是一份学习内容索引与复习总结，具体实现和笔记仍以公开仓库为准。
-公开来源
-学习路线 · 讲义笔记 · 作业记录
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>PyTorch</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚</title>
-    <url>//course-sjtu-hpc.html</url>
-    <content><![CDATA[提起 HPC，很容易先想到 GPU、并行和各种性能数字。
-但程序还没成功编译出来的时候，这些东西暂时都离得挺远。工具链不明白，连问题发生在哪一步都说不清楚。
-SJTUHPC2026 保存了学习与准备中的 Shell 练习、C/C++ 程序、Makefile、CMake 示例、CUDA 文件和 Python 构建测试脚本，笔记则记录工具、网络、编译和语言。这次先从它们怎样接起来说起。
-编译不是一个黑盒按钮
-编译笔记把预处理、生成汇编、汇编成目标文件和链接拆开观察。这样做的价值，是能把不同类型的错误放回对应阶段：头文件和宏的问题、语言规则的问题，以及符号与库的问题，并不发生在同一个地方。
-课程练习中同时出现单文件构建与多文件组织。随着程序拆成多个模块，编译参数、依赖关系和链接目标都需要显式管理，构建文件也因此成为项目的一部分。
-从主机程序走向 GPU
-公开的 class06 目录包含 C++、CUDA 与 Python 文件。这提供了一个观察接口的入口：主机端如何组织调用，设备端怎样实现计算，测试脚本怎样把构建与检查串起来。
-这份总结不会只凭文件扩展名就推断已经实现某个高性能算法，也不会把学习准备仓库写成比赛成绩记录。性能结果需要对应的输入、硬件、测量方法与可重复实验支持。
-复习的顺序
-先能解释程序怎样构建和运行，再看语言与库如何连接，最后讨论并行执行和性能。工具链知识看起来基础，却能帮助区分“算错了”“编译错了”和“测量方式不对”这几类完全不同的问题。
-公开来源
-学习仓库 · 编译笔记 · class06 练习
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>HPC</tag>
-        <tag>CUDA</tag>
+        <tag>编程与算法</tag>
       </tags>
   </entry>
   <entry>
@@ -152,97 +192,8 @@ A3 讨论模型规模、数据量和计算预算的关系；A4 处理文本提�
         <category>课程</category>
       </categories>
       <tags>
-        <tag>CS336</tag>
-        <tag>LLM</tag>
-        <tag>系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】CS189/289A 资料整理：给机器学习补上理论阅读入口</title>
-    <url>//course-cs189.html</url>
-    <content><![CDATA[能把模型跑起来之后，仍然会有一些问题绕回来：为什么这样定义目标？为什么这个假设成立？换一份数据，它还会不会成立？
-所以这里也留下一个偏理论的阅读入口。CS189/289A Spring 2024 这份仓库，是从 cy-Yin 的课程资料仓库 fork 而来，包含 Discussion、考试材料和作业解答。
-先叠一个很必要的甲：上游 README 里的“我的解答”指的是原作者，不能因为我点了 fork，就变成我自己的完成记录。
-为什么保留这样的资料入口
-在学习机器学习实现之后，还需要回到模型假设、目标函数和理论条件。课程资料可以作为补充阅读入口，帮助把一个实验中的具体选择放回更一般的问题中考虑。
-使用作业解答时，可以先独立写出问题与推理，再对照已有答案检查差异。否则，看到熟悉的公式很容易产生“已经理解”的错觉，却无法解释它在什么假设下成立。
-数据与材料需要分开核对
-上游说明部分数据较大，不能只依赖仓库里的文件集合；相关数据和空白作业包另有来源。因此，阅读代码之前应先核对题目版本、数据格式和材料出处，避免把缺失数据当作实现问题。
-这里不复制上游整份解答，也不把资料收藏写成已经完成六次作业。对于个人学习进度，公开 fork 本身不足以提供证据；这篇文章的定位就是资料整理与阅读索引。
-公开来源
-我的公开 fork · 资料原作者 · 课程网站
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>CS189</tag>
-        <tag>资料整理</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】未定名接力稿：给被世界扔掉的东西留一扇门</title>
-    <url>//essay-unnamed-relay.html</url>
-    <content><![CDATA[这份稿子目前还没有一个正式的名字，PDF 文件也只是叫“名称未设定”。
-不过有些故事还没取好名字，就已经留下了几句让人想再看一遍的话。
-先说清楚，这是一份多人署名的接力稿，不是整本都由我一个人写的。下面主要聊署名 YMG 的第四章，也会涉及前后章带来的故事背景。会有一些剧透。
-如果不再有里面和外面
-这一章的异变没有先摆出一个等着打败的敌人。
-外界的人类只是逐渐不再把“内”和“外”当作理所当然的概念。城市还在运行，人们还在生活，对于他们而言，这甚至不是一件需要特别解释的事情。
-可对于依靠境界和后户的幻想乡，就不是这样了。
-我觉得这里有意思的地方，是危险并不来自恶意。没有谁一定要摧毁幻想乡，只是外面的常识变了，里面熟悉的一切就开始站不稳。
-当然，非定向空间、拓扑工程改变日常常识，以及它们影响结界的方式，都是这份同人中的科幻与二设，不是现实物理或数学定理。它们在这里承担的是一个故事问题：如果支撑一个地方存在的前提，被所有人慢慢忘掉了，会怎样？
-摩多罗一直说自己不在意
-她起初把事情理解成八云紫的另一次较劲。觉得只要自己不先低头，那个人迟早会出来收场。
-于是嘴上说着不管，行动上却已经在拦截外界误入的东西，后来又把结界的缝隙补上。
-我不太想让她在某一刻突然换一种说话方式，郑重宣布自己终于懂得了什么。她可以一直嫌麻烦，一直嘲笑那个理想，甚至到了最后还在想到底算谁赢。
-但她开的门，已经暴露了她到底在乎什么。
-不是一个可以随便丢掉的地方
-第四章里，她一扇一扇地看过去，看到的不是宏大的设定，而是正在生活的人。捡东西的巫女、安置来客的村民、努力照顾一株花的妖精，还有那些名字已经看不清的墓碑。
-这些东西放在一起，幻想乡才不只是地图上划出来的一块区域。
-它也容纳那些已经被外界说成过时、无用、不再需要的事物。对于局外的人，那可能像一个大垃圾堆；对于住在里面的人，那却是能够继续生活的地方。
-所以比起“保护一个永远不会改变的乐园”，我更在意的是另一件事：已经被扔掉过一次的东西，可不可以不要再被扔第二次。
-有几句话，总是留到下次
-录音带反复出现。年轻时候的话，本来可以拿来在宴会上嘲笑，到了后面却成了很难再听到的声音。
-摩多罗也还有没说完的话。那张歪歪扭扭的地图，其实不错；那个一直被她嫌弃的理想，已经把她自己也装进去了。
-只是人很容易把这些话留给下一次。
-活得很久，也未必能保证还有下一次。
-接力稿后面的章节继续把这些东西接了过去，那些部分的表达属于对应署名的作者。我先在这里留下第四章的一点想法，不替其他作者解释创作动机，也不给这本未定名的稿子擅自取一个正式书名。
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>文学创作</tag>
-        <tag>东方Project</tag>
-        <tag>接力小说</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】人工智能基础与实践：从 Python 练习到可演示的作品</title>
-    <url>//course-sjtu-ai.html</url>
-    <content><![CDATA[人工智能这个词太大了。大到听过很多介绍之后，还是很难说清楚自己究竟学了什么。
-所以我更愿意从一份练习、一个实验和最后能打开的作品说起。这份交大人工智能入门课程仓库，保存了按周组织的实践、期末复习、自测页面和期末项目，内容从 Python 基础延伸到神经网络、CNN、目标检测、大语言模型、生成式 AI、Agent 与 AI 伦理。
-把概念接到实际任务上
-公开文件中可以看到回归与 MNIST 相关 Notebook，以及后续 CNN 实验。学习这些内容时，模型结构只是其中一部分：输入张量、标签、损失、训练循环和结果分析共同构成一个实验。
-Final_term_review/ 以章节整理概念，Final_exercises/ 保存复习笔记和 HTML 自测页面。两者适合配合使用：先解释一个概念，再用问题检查自己是否真的能区分相近的说法。
-从实验转向交付
-期末项目《别点那个链接！》把校园反诈场景做成互动网页，包含三关剧情、风险线索复盘、AI 问答和报告导出。它既有可直接打开的静态演示模式，也有通过本地 Flask 后端连接模型接口的模式。
-这让“调用一个模型”之外的工程问题也变得具体：接口失败怎么办，离线展示是否完整，用户选择怎样保存，输出依据怎样呈现。项目另有独立记录，这里主要整理课程的整体连接。
-复习时保留两种视角
-一边沿着模型和方法复习，另一边沿着完整实验复习：数据进入、模型计算、训练与评估、交互与输出。
-概念不应该只留在期末的复习页上。能把它接到一个具体的小作品里，至少下次提起的时候，不会只剩下一个名字。这份记录只整理公开的课程内容，不放入成绩表和个人提交资料。
-公开来源
-课程仓库 · 期末复习笔记 · 期末项目
-]]></content>
-      <categories>
-        <category>课程</category>
-      </categories>
-      <tags>
-        <tag>SJTU</tag>
         <tag>人工智能</tag>
-        <tag>学习笔记</tag>
+        <tag>系统与性能</tag>
       </tags>
   </entry>
   <entry>
@@ -266,9 +217,138 @@ GPU 执行是异步的。仓库 README 特别讨论了预热、同步、重复�
         <category>课程</category>
       </categories>
       <tags>
-        <tag>CUDA</tag>
-        <tag>GPU</tag>
-        <tag>Triton</tag>
+        <tag>人工智能</tag>
+        <tag>系统与性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DeepInfer Part2  —— The adaptive verification of Dspark</title>
+    <url>//deepinfer2.html</url>
+    <content><![CDATA[DeepInfer Part2—— DSpark的动态验证调度
+简单来说，DeepInfer的设计算法是 一个以GPU有效吞吐为目标的全局预算分配算法
+核心的思考来说，就是可以参考这篇文章的一个观察：
+Speculative Decoding: Performance or Illusion?](https://arxiv.org/abs/2601.11580)
+想必看到这里的读者，其实都明白一个道理
+所谓投机解码，就是一种利用GPU的多余算力，做一些额外的计算和工作，从而让核心的路径达到更高的计算速度的一种方式。Drafter做了很多额外的proposal tokens，其中只有相当一部分最终能被接受。
+想必敏锐的读者到现在已经发现问题所在了。
+投机解码的技术能够在单卡单请求上面得到不错的加速比例(一般是2~5x), 其根本原因是因为一般来说我们说Decode阶段是 Memory-bound的。而投机解码 激进的计算能够提高计算强度。从而达到加速。而现在我们的目光到了serving阶段，多个请求一般来说能够直接给我们的Compute打满。到了这种时候，我们再用投机解码，被拒绝掉的token就是真正的浪费掉了、本来可以用于加速的计算能力了。
+因此，如何良好的去进行验证，提高acceptance，就是speculative decoding 在 serving utilization的一个关键点。
+看到这里，想必你对动机有了一个清晰的理解。
+1. 先从一轮Decode batch入手。
+现在我们假设有32条亲求，每个token都已经有5个DSpark生成的draft tokens,那么我们就需要一次验证192个token，并且每个token的接受率并不相同。
+给一个高接受率的token验证全部6 tokens, and it maybe still worth it !
+但是对于一个不好的draft，预测第一个可能都没用。
+1.1 数学细节
+假设confidence head给出了三个drafter tokens的置信度，我们在预测一个token是否值得接受的时候，应该采用前缀积的方式，否则可能某处自己的概率很高，但是其前面很容易被拒绝。
+void update_draft_state(    MTPState&amp; state,    const vector&lt;int&gt;&amp; new_drafts,    const vector&lt;float&gt;&amp; confidence) &#123;    state.draft_tokens = new_drafts;    // 保存上一轮的估计，用于异步调度    state.prev_accept_rates = state.accept_rates;    state.accept_rates.clear();    float prefix_prob = 1.0f;    for (float c : confidence) &#123;        prefix_prob *= c;        state.accept_rates.push_back(prefix_prob);    &#125;&#125;
+上述代码去除了错误处理等。可以看到核心的执行逻辑就是那个for
+1.2 验证数的确定
+假设我们已经准备好了累积概率。
+DeepInfer会把所有的累积概率降序排序，选择最好的k个额外token。所以其实际的近似目标可以被考虑为是:
+argmax ( B + k / T )
+// 教学版vector&lt;pair&lt;float, int&gt;&gt; candidates;for (int i = 0; i &lt; requests.size(); ++i) &#123;    for (float p : requests[i].prefix_accept_rates) &#123;        candidates.emplace_back(p, i);    &#125;&#125;sort(candidates.begin(), candidates.end(),     [](auto a, auto b) &#123;         return a.first &gt; b.first;     &#125;);int B = requests.size();int best_Q = B;double best_tps = 0.0;double expected = B;for (int k = 0; k &lt;= candidates.size(); ++k) &#123;    int Q = B + k;    int graph_size = select_graph_size(Q);    double time_ms =        estimated_forward_ms(graph_size)        + estimated_sampler_ms(B);    double tps = expected / time_ms;    if (tps &gt; best_tps) &#123;        best_tps = tps;        best_Q = Q;    &#125;    if (k &lt; candidates.size())        expected += candidates[k].first;&#125;
+其中，estimated_forward_ms可以视作一个已有的函数，不用去细究里面的细节。
+粗略的来讲，里面包含一条启动profiling得到的拟合曲线，从而根据已有的数据进行拟合，估计其具体时间。
+1.3 怎么放到GPU上面？
+我们刚刚得到了 启发式最佳的Q(本轮verification token数目)
+但是在实际上，如何把他放进去去运行，也是一个很难的事情。
+首先第一个困难，就是异步调度带来的数据依赖问题。
+传统模式下：Schedule N -&gt; Forward N -&gt; verify N -&gt; Get confidence N -&gt; Schedule N+1
+而Deepinfer希望做到的是，GPU在计算N轮的时候，CPU可以提前安排N +1 轮。
+但此时N轮的Confidence 和 Acceptance还没有返回CPU。
+所以，他们把决策拆开
+
+CPU: 选择全局总预算： 根据更早的历史Acceptance 估计Q
+GPU: 重新分配各个请求的验证长度，用GPU上面比较新的数据把Q分配个每个 小q
+
+我们应该明晰一个设计: 总计算量允许我们根据历史预测去提前决定，但是实际的计算量分配应该尽可能地使用最新的信息
+我们可先看GPU侧的代码
+import torchdef allocate_verification(total_q, remap, prev_conf):    &quot;&quot;&quot;    total_q: CPU 已确定的总验证输入数    remap: 当前请求在上一轮 Batch 中的索引，-1 为新请求    prev_conf: 上一轮每个请求各位置的 Confidence    &quot;&quot;&quot;    B = len(remap)    gamma = prev_conf.shape[1]    confidence = torch.zeros(        (B, gamma), device=prev_conf.device    )    valid = remap &gt;= 0    confidence[valid] = prev_conf[remap[valid].long()]    # 条件概率 -&gt; 累计前缀接受概率    prefix_prob = torch.cumprod(confidence, dim=1)    # 全局排序，选择最值得验证的额外 Tokens    order = torch.argsort(        prefix_prob.flatten(),        descending=True,        stable=True,    )    extra_budget = total_q - B    selected = order[:extra_budget]    extra_per_req = torch.bincount(        selected // gamma,        minlength=B,    )    return 1 + extra_per_req
+GPU不只是修正Seqlens_q ，因为这个地方有一个额外的细节，上一轮的acceptance也会影响KV 长度，所以在调度的时候需要注意这些信息的同步，不然很有可能导致 Attention Positions 和 KV cache Length的mismatch
+2. Where gose Verification?
+def verify_and_draft_next(logits, inputs, draft_model):    # 1. 将 Flattened Target Logits 映射回各请求    row_to_req, pos, is_verify = prepare_verification_metadata(        inputs.first_token_positions,        inputs.seqlens_q,        logits.shape[0],        inputs.max_draft_len,    )    # 2. Target 对上一轮 Draft 做真正的概率验证    sampled, accept_flags = verify_draft_probabilities(        logits, inputs.draft_state, row_to_req, is_verify    )    # 3. 找到连续接受的前缀以及最终输出 Token    result = finalize_accepted_prefix(        sampled, accept_flags, inputs.seqlens_q    )    # 4. 根据本轮 Target 输出，再生成下一轮 Draft    next_drafts = draft_model.decode_forward(        result.final_tokens,        result.accepted_lengths,    )    return result, next_drafts
+Confidence Head 用于调度，不会负责决定接受和拒绝，因此，预测的置信度不准确可能会影响性能，但是他不会因为某个token的confidence太低就直接判断其错误。
+最后在验证结束之后，调用链会回到 LLMEngine
+Decode step 提交以下内容
+
+SamplerOutput: 接受的Draft Tokens , 最终采样Token, 下一轮Draft,confidence
+Process_MTPInfo: 更新每个亲求的Draft 状态和概率估计
+Scheduler.process_outputs() 提交输出Token,更新Sequence 和 KV states
+
+根据它们的性能证据，他们给出:
+
+
+
+并发请求数
+固定验证长度
+动态平均验证长度
+动态吞吐增益
+
+
+
+
+16
+5.00
+4.44
+-1.5%
+
+
+32
+5.00
+3.65
++1.6%
+
+
+60
+5.00
+3.58
++5.4%
+
+
+96
+5.00
+3.24
++11.0%
+
+
+
+这些数据给我们以下的观察
+
+动态验证长度不是无条件有效。
+越接近高并发的地方，减少低价值Verification通常就越有意义。
+这个优化的收益没有2x \ 3x 那么夸张。
+
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>系统与性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】SJTU HPC 2026 学习记录：先把工具链和运行过程弄清楚</title>
+    <url>//course-sjtu-hpc.html</url>
+    <content><![CDATA[提起 HPC，很容易先想到 GPU、并行和各种性能数字。
+但程序还没成功编译出来的时候，这些东西暂时都离得挺远。工具链不明白，连问题发生在哪一步都说不清楚。
+SJTUHPC2026 保存了学习与准备中的 Shell 练习、C/C++ 程序、Makefile、CMake 示例、CUDA 文件和 Python 构建测试脚本，笔记则记录工具、网络、编译和语言。这次先从它们怎样接起来说起。
+编译不是一个黑盒按钮
+编译笔记把预处理、生成汇编、汇编成目标文件和链接拆开观察。这样做的价值，是能把不同类型的错误放回对应阶段：头文件和宏的问题、语言规则的问题，以及符号与库的问题，并不发生在同一个地方。
+课程练习中同时出现单文件构建与多文件组织。随着程序拆成多个模块，编译参数、依赖关系和链接目标都需要显式管理，构建文件也因此成为项目的一部分。
+从主机程序走向 GPU
+公开的 class06 目录包含 C++、CUDA 与 Python 文件。这提供了一个观察接口的入口：主机端如何组织调用，设备端怎样实现计算，测试脚本怎样把构建与检查串起来。
+这份总结不会只凭文件扩展名就推断已经实现某个高性能算法，也不会把学习准备仓库写成比赛成绩记录。性能结果需要对应的输入、硬件、测量方法与可重复实验支持。
+复习的顺序
+先能解释程序怎样构建和运行，再看语言与库如何连接，最后讨论并行执行和性能。工具链知识看起来基础，却能帮助区分“算错了”“编译错了”和“测量方式不对”这几类完全不同的问题。
+公开来源
+学习仓库 · 编译笔记 · class06 练习
+]]></content>
+      <categories>
+        <category>课程</category>
+      </categories>
+      <tags>
+        <tag>系统与性能</tag>
       </tags>
   </entry>
   <entry>
@@ -307,47 +387,6 @@ GPU 执行是异步的。仓库 README 特别讨论了预热、同步、重复�
       </categories>
       <tags>
         <tag>文学创作</tag>
-        <tag>东方Project</tag>
-        <tag>桃花幽香</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】《幻想乡回访日志》：热闹就在眼前，却不一定属于我</title>
-    <url>//essay-gensokyo-return.html</url>
-    <content><![CDATA[讲真，这个题材确定之后，很快就让我后悔了。
-冈崎梦美和现在的幻想乡，联系实在太少了。认识灵梦，认识魔理沙，然后呢？她为什么要去见别的人？别人又为什么愿意和她聊那么久？
-不能因为我想写一个角色出场，就直接把梦美推进她家门里。
-原稿后记里面也写了这些纠结。现在单独留一篇，算是把这次绕路的过程记下来。
-她不能知道所有的事情
-作为读者，我知道幻想乡后来发生过什么。梦美却不能因为拿着我的笔，就自动得到同样的记忆。
-她得先听魔理沙讲，听完之后还要怀疑，还得自己去看看。对于魔力有自己的解释，并不等于对于神明、妖怪和各种异变，也能马上坦然接受。
-日志里有一个我很在意的转折：她听着那些故事，突然意识到自己的态度，或许和学会里那些听她讲魔力理论的人很像。
-原来被别人怀疑过的人，轮到自己面对陌生的事情时，也不一定马上就能理解。
-这比简单地写她“科学地解释了幻想乡的一切”，更像是一个真正需要面对问题的人。
-日志和描写，偏偏有点打架
-如果写得太规整，日志就变成了行程表。几点到了哪里，见到了谁，接着去了哪里。信息倒是有了，故事却没剩下多少。
-如果每一个景色都铺开写，又不太像梦美会随手留在本子里的记录。
-所以这篇尽量写成回忆式的日志。她已经经历了事情，再回头讲一遍，中途还会跑题，想到学校、实验室或某个不太相干的细节。
-高科技也尽量不是郑重其事展示的道具，而是她顺手就会拿出来用的东西。她自己觉得正常，旁边的人却未必这样觉得。这种落差，能让她不必每段都宣布一次“我是科学家”。
-当然，这不代表文中科技就是现实里能实现的技术。它们是同人故事里的设定。
-她终究是一个来访的人
-后来让魔理沙当导游，才算给继续走访找到了一条比较自然的路。但这也没有消除另一个问题：梦美大部分时候，还是在旁边看着。
-幻想乡很热闹，那里的人有自己的生活，自己的交情，还有她没有参与过的故事。她可以坐下来听，可以修好留下来的旧东西，却不能因为这次回访，就突然补齐那些缺席的日子。
-写到夜市时，这种感觉就更明显了。下面人头攒动，树上却可以安静地坐着。热闹确实存在，只是不必全都属于坐在这里的人。
-想一想，我们和幻想乡的关系，或许也差不多。
-也许就在明天
-原稿目前写到 Pt1。那个关于“还会不会回来”的问题，没有用一个特别确定的答案结束。
-我觉得这样也好。不是所有暂时离开的时刻，都能提前知道下一次见面是什么时候。
-至少可以先把这一回留下来。
-至于以后嘛，也许就在明天。
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>文学创作</tag>
-        <tag>东方Project</tag>
-        <tag>冈崎梦美</tag>
       </tags>
   </entry>
   <entry>
@@ -402,7 +441,231 @@ GitHub 权限实现
         <category>技术</category>
       </categories>
       <tags>
-        <tag>技术</tag>
+        <tag>博客建设</tag>
+        <tag>Web开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】《幻想乡回访日志》：热闹就在眼前，却不一定属于我</title>
+    <url>//essay-gensokyo-return.html</url>
+    <content><![CDATA[讲真，这个题材确定之后，很快就让我后悔了。
+冈崎梦美和现在的幻想乡，联系实在太少了。认识灵梦，认识魔理沙，然后呢？她为什么要去见别的人？别人又为什么愿意和她聊那么久？
+不能因为我想写一个角色出场，就直接把梦美推进她家门里。
+原稿后记里面也写了这些纠结。现在单独留一篇，算是把这次绕路的过程记下来。
+她不能知道所有的事情
+作为读者，我知道幻想乡后来发生过什么。梦美却不能因为拿着我的笔，就自动得到同样的记忆。
+她得先听魔理沙讲，听完之后还要怀疑，还得自己去看看。对于魔力有自己的解释，并不等于对于神明、妖怪和各种异变，也能马上坦然接受。
+日志里有一个我很在意的转折：她听着那些故事，突然意识到自己的态度，或许和学会里那些听她讲魔力理论的人很像。
+原来被别人怀疑过的人，轮到自己面对陌生的事情时，也不一定马上就能理解。
+这比简单地写她“科学地解释了幻想乡的一切”，更像是一个真正需要面对问题的人。
+日志和描写，偏偏有点打架
+如果写得太规整，日志就变成了行程表。几点到了哪里，见到了谁，接着去了哪里。信息倒是有了，故事却没剩下多少。
+如果每一个景色都铺开写，又不太像梦美会随手留在本子里的记录。
+所以这篇尽量写成回忆式的日志。她已经经历了事情，再回头讲一遍，中途还会跑题，想到学校、实验室或某个不太相干的细节。
+高科技也尽量不是郑重其事展示的道具，而是她顺手就会拿出来用的东西。她自己觉得正常，旁边的人却未必这样觉得。这种落差，能让她不必每段都宣布一次“我是科学家”。
+当然，这不代表文中科技就是现实里能实现的技术。它们是同人故事里的设定。
+她终究是一个来访的人
+后来让魔理沙当导游，才算给继续走访找到了一条比较自然的路。但这也没有消除另一个问题：梦美大部分时候，还是在旁边看着。
+幻想乡很热闹，那里的人有自己的生活，自己的交情，还有她没有参与过的故事。她可以坐下来听，可以修好留下来的旧东西，却不能因为这次回访，就突然补齐那些缺席的日子。
+写到夜市时，这种感觉就更明显了。下面人头攒动，树上却可以安静地坐着。热闹确实存在，只是不必全都属于坐在这里的人。
+想一想，我们和幻想乡的关系，或许也差不多。
+也许就在明天
+原稿目前写到 Pt1。那个关于“还会不会回来”的问题，没有用一个特别确定的答案结束。
+我觉得这样也好。不是所有暂时离开的时刻，都能提前知道下一次见面是什么时候。
+至少可以先把这一回留下来。
+至于以后嘛，也许就在明天。
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>文学创作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>From Surface To Deep—— An overview of DeepInfer Part1</title>
+    <url>//deepinfer1.html</url>
+    <content><![CDATA[DeepInfer
+相信的心就是你的力量。
+1.总览
+DeepInfer主要支持DeepSeek - V4.1 - Flash
+
+高性能 Attention / MoE Kernels
+Attention DP\ MoE EP and Expert Load Balancing
+Dspark Speculative Decoding and mobile verification
+Sliding- Window Attention State recovery
+Batch- invariant Inference and Deterministic Sampling
+
+局限性: Deepinfer 并不是完全开放的Online Inference Serving.  ReadMe says that the complete serbing needs KV Cache ... etc.
+本Markdown将以一个请求为例，自顶向下来分析。
+注意：本blog分析去掉了大量的多模态代码和多模态的分析
+2.STAGE1. 一条请求怎么穿过DeepInfer
+2.1  llm.py
+file: examples/offline_inference.py
+outputs = llm.generate(    prompts = prompts,    sampling_params = sampling_params,    multi_modal_data = multi_modal_data,    use_tqdm = False,)
+LLM.generate() 内部会给每个Prompt添加请求，并循环执行 LLMEngine.step() 直到请求完成。
+调用链大概如下
+
+LLM.generate()  离线入口，Tokenize、 创建请求
+LLMEngine.add_request() 构建Sequence 把请求交给Scheduler
+Scheduler.schedule() 选择本轮请求，Prefill/Decode 类型，KV Blocks
+Worker.execute_model_step() 准备Tensor，执行Model Forward and sampling
+process_outputs() 处理接受结果，更新Sequence,输出Tokens
+
+主要源码(我手动删掉额外处理之后的 精简版本):
+def generate(       self,       prompts: str | list[str] | None = None,       sampling_params: SamplingParams | list[SamplingParams] | None = None,       prompt_token_ids: list[list[int]] | list[np.ndarray[np.int32]] | None = None,       use_tqdm: bool = True,       multi_modal_data: dict | list[dict] | None = None,   ) -&gt; list[list[RequestOutput] | str]:       # Add requests to the engine.       num_requests = len(prompts) if prompts is not None else len(prompt_token_ids)       for i in range(num_requests):           prompt = prompts[i] if prompts is not None else None           token_ids = None if prompt_token_ids is None else prompt_token_ids[i]           self._add_request(               prompt,               # 共享同一个 SamplingParams 时无需在此复制：_add_request 内部会 deepcopy               sampling_params if isinstance(sampling_params, SamplingParams) else sampling_params[i],               token_ids,               None if multi_modal_data is None else multi_modal_data[i],           )       return self._run_engine(use_tqdm)
+根据里面的注释，里面有写
+&quot;For the performance, put all of your prompts into a single list and pass it to this method.&quot;
+也就是说这个函数希望接受一个直接的列表prompt.
+函数的开头先做错误处理，随后是把str转换为list格式
+剩下的不多说，然后看下面
+函数会逐个从prompts里面提取prompt 和 token_ids , 然后调用requset函数
+def _add_request(    self,    prompt: str | None,    sampling_params: SamplingParams,    prompt_token_ids: list[int] | np.ndarray[np.int32] | None = None,    multi_modal_data: dict | None = None,) -&gt; Sequence:    sampling_params = copy.deepcopy(sampling_params)    request_id = str(next(self.request_counter))    if prompt_token_ids is None:        prompt_token_ids = self.llm_engine.tokenizer.encode(prompt) # 进行tokenize    prompt_token_ids = np.asarray(prompt_token_ids, dtype=np.int32)    return self.llm_engine.add_request(        user_id=&quot;0&quot;,  # HACK 随便加一个 user_id        request_id=request_id,        sampling_params=sampling_params,        prompt_token_ids=prompt_token_ids,        multi_modal_data=multi_modal_data,    )
+add_request 是一个辅助函数，用于llm的generate向engine里面的中间搭桥.
+这个函数对prompt进行tokenize,然后把prompt-token id进行构建，然后调用engine类的构建request.
+2.2 llm_engine.py
+这个函数把request 加入到 request pool 里面，随后被scheduler 使用engine.step() 处理。
+@cpu_timer.record(&quot;add_request&quot;)    def add_request(        self,        /,        user_id: str,        request_id: str,        sampling_params: dict | SamplingParams | None,        prompt_token_ids: np.ndarray[np.int32],        multi_modal_data: dict | None = None,        arrival_time: float | None = None,        extra: dict | None = None,  # 各种额外的自定义参数都放在 extra 里，这样新增参数就不用再改 entrypoint 了        enqueue: bool = True,  # 是否加入 scheduler waiting 队列        chunk_checkpoints: list[int] | None = None,    ) -&gt; Sequence | None:        &quot;&quot;&quot;Add a request to the engine&#x27;s request pool.        The request is added to the request pool and will be processed by the        scheduler as `engine.step()` is called. The exact scheduling policy is        determined by the scheduler.        Args:            request_id: The unique ID of the request.            prompt_token_ids: 1-D np.ndarray[np.int32]. String prompts must be                tokenized by the caller beforehand.            sampling_params: The sampling parameters for text generation.            arrival_time: The arrival time of the request. If None, we use                the current monotonic time.        Details:            - Set arrival_time to the current time if it is None.            - Create a :class:`~deepinfer.Sequence` object            - Add the :class:`~deepinfer.Sequence` object to the scheduler.        Example:            &gt;&gt;&gt; # initialize engine            &gt;&gt;&gt; engine = LLMEngine.from_engine_args(engine_args)            &gt;&gt;&gt; # set request arguments            &gt;&gt;&gt; example_prompt = &quot;Who is the president of the United States?&quot;            &gt;&gt;&gt; sampling_params = SamplingParams(temperature=0.0)            &gt;&gt;&gt; request_id = 0            &gt;&gt;&gt;            &gt;&gt;&gt; # add the request to the engine            &gt;&gt;&gt; engine.add_request(            &gt;&gt;&gt;    user_id=&quot;user&quot;,            &gt;&gt;&gt;    request_id=str(request_id),            &gt;&gt;&gt;    sampling_params=sampling_params,            &gt;&gt;&gt;    prompt_token_ids=np.asarray(engine.tokenizer.encode(example_prompt), dtype=np.int32))            &gt;&gt;&gt; # continue the request processing            &gt;&gt;&gt; ...        &quot;&quot;&quot;
+这个函数里面各种处理太多，我就不放完整的函数了。
+这个函数的主要工作是接受llm.py模块里面的传达的请求。
+在函数的最后, 他们使用了一个
+if enqueue:            def _enqueue(s: Sequence) -&gt; None:                if s.so_matcher is not None and s.so_matcher.is_aborted():                    s.status = SequenceStatus.FINISHED_SO_FAILED                self.scheduler.add_sequence(s)                if self.multi_modal_processor is not None:                    self.multi_modal_processor.add(request_id, multi_modal_data)            if so_pending:                self.so_matcher_builder.submit(seq, sampling_params.so_args, _enqueue)            else:                _enqueue(seq)
+的内部函数。
+通过把之前的sequence传入，并通过add_sequence来加入scheduler里面等待调用。
+step()
+step函数进行一次inference流程。返回np.ndarray装着的token ids.
+(同样的，这个代码很长，我去除了所有的log、 timer、错误处理等代码)
+def step(self) -&gt; np.ndarray[np.uint64]:    # 1. 调度请求    seq_metadata_list, scheduler_outputs = self.scheduler.schedule(        self.sequence_metadata_pool    )    # 2. 处理调度产生的状态变化（如抢占、状态克隆与清零）    clone_states = scheduler_outputs.clone_states    clone_blocks = scheduler_outputs.clone_blocks    zero_states = scheduler_outputs.zero_states    if clone_states.size &gt; 0 or clone_blocks.size &gt; 0 or zero_states.size &gt; 0:        to_release, to_release2 = self._run_workers(            &quot;clone_and_zero_states_and_blocks_on_default_stream&quot;,            clone_states=clone_states,            clone_blocks=clone_blocks,            zero_states=zero_states,        )        self.deferred_release.collect_clone_unpins(to_release, to_release2)    # 3. 调度后处理    self.post_schedule(scheduler_outputs)    # 4. 执行模型推理    request_outputs = self._execute_model_async_step(        seq_metadata_list, scheduler_outputs    )    self.generate_step += 1    return request_outputs
+函数首先调用scheduler里面的schedule方法，并传入调度尺里面的元数据。
+在调度指挥，其返回的output里面有clone的状态，准备其抢占和清理。再准备好之后，把这些东西传入给_run_worker函数，让其开始执行。随后执行调度后处理。
+在workers处理好之后，状态在克隆和清零之后，开始执行model。
+随后返回output.
+_execute_model_async_step()
+def _execute_model_async_step(        self, seq_metadata_list: list[SequenceMetadata], scheduler_outputs: SchedulerOutputs    ) -&gt; np.ndarray[np.uint64]:            request_outputs = self._run_workers(                &quot;execute_model_step&quot;,                driver_kwargs=dict(                    seq_metadata_list=seq_metadata_list,                    scheduler_outputs=scheduler_outputs,                ),                is_prompt=scheduler_outputs.prompt_run,                is_placeholder=scheduler_outputs.is_empty(),            )        self.deferred_release.collect_request_outputs(request_outputs)        return request_outputs
+这个函数通过异步执行推理，同driver_kwargs封装sequence metadata 和 scheduler的反馈。
+_run_workers()
+def _run_workers(    self,    method: str,    driver_kwargs: dict[str, Any] | None = None,    **kwargs: Any,) -&gt; Any:    if driver_kwargs is None:        driver_kwargs = &#123;&#125;    return self.driver_worker.run_workers(method, driver_kwargs, **kwargs)
+_run_workers  函数最后调用driver_worker的这个函数，把事情继续往下传。
+driver workder不再细讲，其牵扯到一个全新的外部类，driver worker会创建一个class worker,里面接受engine type， model config parallel策略等参数
+2.3 scheduler.hpp
+_schedule()
+std::unique_ptr&lt;SchedulerOutputs&gt; _schedule() &#123;    py::gil_scoped_release release; // otherwise other python threads would be blocked    BlockManagerMutexAcquire acquire&#123;block_manager, state_manager&#125;;    // 上一个 step 的 SchedulerOutputs 借用这三个 vector 的存储（见 pybind 的    // clone_states/clone_blocks/zero_states property），Python 侧必须在下一次    // schedule 前消费完，这里 clear 后复用。    clone_states.clear();    zero_states.clear();    clone_blocks.clear();    tokens_chunked_prefill_remaining = 0;    switch (engine_type) &#123;    case EngineType::PROMPT:        // PROMPT 引擎只做 prefill，即使没调度到请求也返回（空的）prefill 结果        return _schedule_prefill(acquire);    case EngineType::COMPLETION:        // COMPLETION 引擎只做 decode        return _schedule_decode(acquire);    case EngineType::NORMAL: &#123;        // NORMAL 引擎：决定这一步全组做 prompt 还是 decode。dp 内必须同型，靠投票统一。        //        // 两类尝试点：        //   ALL 点（每 prefill_attempt_interval 个 decode step）：全员都有 prefill 活才做，        //     防止一个 rank 干活、其余 rank 陪跑空 prompt step。        //   ANY 点（每 prefill_any_attempt_interval 个 decode step）：一个 rank 有活就一起做，        //     给孤立 rank 兜底——它的 prefill 最多等这么多个 decode step。        //   两类点重合时按 ANY 算。        //        // prompt step 会把 decode_step 清零（见 schedule()），所以刚做完 prefill 的下一步        // decode_step==0，又落在 ALL 点上：想连着 prefill 同样要全员有活。        // decode_step 各 rank 一致，投票的次数和语义全组对得上，不会卡在 allreduce。        bool is_any_point = (decode_step != 0) &amp;&amp; (decode_step % prefill_any_attempt_interval == 0);        bool is_all_point = (decode_step % prefill_attempt_interval == 0);        if (!is_any_point &amp;&amp; !is_all_point) &#123;            return _schedule_decode(acquire);        &#125;        bool want = (get_gpu_cache_usage() &lt;= GPU_CACHE_PREFILL_WATERMARK) &amp;&amp; _has_prefill_waiting();        bool do_prefill;        if (is_any_point) &#123;            do_prefill = (_dp_allreduce(want ? 0 : 1, c10d::ReduceOp::MIN) == 0); // ANY：任一 rank 想做即触发        &#125; else &#123;            do_prefill = (_dp_allreduce(want ? 1 : 0, c10d::ReduceOp::MIN) == 1); // ALL：全员想做才触发        &#125;        if (!do_prefill) &#123;            return _schedule_decode(acquire);        &#125;        std::unique_ptr&lt;SchedulerOutputs&gt; outputs;        if (want) &#123;            outputs = _schedule_prefill(acquire);        &#125;        // 第二轮投票：确认这轮真有 rank 排出了 prefill。want 只看了 waiting 非空，        // 但 _schedule_prefill 仍可能空手（slot 满、KV 块不够）。        // 全组都空手时必须转 decode：硬做空 prompt step 会把 decode_step 清零，        // 下一步接着投票、接着空手——running 满 + waiting 非空就死循环了。        bool any_scheduled = (_dp_allreduce(outputs ? 0 : 1, c10d::ReduceOp::MIN) == 0);        if (!any_scheduled) &#123;            return _schedule_decode(acquire);        &#125;        if (outputs) &#123;            return outputs;        &#125;        // 组内确有 rank 在做 prompt：本 rank 陪跑空 prompt step 保持步型一致        return _make_outputs(&#123;&#125;, true, 0, &#123;&#125;, &#123;&#125;, &#123;&#125;, 0);    &#125;    &#125;    TORCH_CHECK(false, &quot;unknown engine_type &quot;, int(engine_type));    return nullptr;&#125;
+schedule函数接受 py那边传过来的状态。
+通过swith函数，决定执行模式。
+PROMPT -&gt; 调用 prefill 引擎
+COMPLETION -&gt; 调用decode
+NORMAL引擎 则是可以借鉴这篇文章:
+Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](https://arxiv.org/abs/2403.02310)
+在Prefill之间和Decode之间做抉择。
+同一个Step并不会混合执行Prefill和Decode，因为Deepseek的生产架构本身是采用Prefill和/ Decode Disaggregation 采用不同的P D 分别独立运行在独立的实例，未必在同一个GPU Batch 内混合两类工作。
+具体的内部的选择的话，这里不过多展开叙述，读者可以认为函数内部采用了类似dp投票的方式，选择pre_fill和decode在不同的地方的执行的一个比例。从而尽量减少bubble.
+_schedule_prefill()
+我仍然只保留了核心的业务逻辑。
+std::unique_ptr&lt;SchedulerOutputs&gt;_schedule_prefill(BlockManagerMutexAcquire &amp;acquire) &#123;    std::vector&lt;SequencePtr&gt; scheduled;    std::vector&lt;SequencePtr&gt; ignored_seqs;    std::vector&lt;int&gt; seqlens_q;    int num_curr_seqs = running.size();    int num_batched_tokens = 0;    int prefill_sum_seqlen_k_remain = prefill_max_sum_seqlen_k;    while (!waiting.empty()) &#123;        auto &amp;seq = waiting.front();        if (!seq-&gt;schedule.schedulable) &#123;            break;        &#125;        int prompt_len = seq-&gt;get_len();        int cached_tokens = seq-&gt;cache.num_tokens;        int workload = prompt_len - cached_tokens;        // 1. 检查 Prompt 长度与 KV Cache 资源        if (seq-&gt;cache.block_table.empty()) &#123;            if (prompt_len &gt; prompt_limit) &#123;                seq-&gt;schedule.status = SequenceStatus::FINISHED_IGNORED;                ignored_seqs.push_back(seq);                waiting.pop_front();                continue;            &#125;            auto alloc_status = _can_allocate_with_state(                seq-&gt;get_num_blocks()            );            if (alloc_status == AllocStatus::LATER) &#123;                break;            &#125;            if (alloc_status == AllocStatus::NEVER) &#123;                seq-&gt;schedule.status = SequenceStatus::FINISHED_IGNORED;                ignored_seqs.push_back(seq);                waiting.pop_front();                continue;            &#125;        &#125;        // 2. 检查并发请求数限制        if (num_curr_seqs + 1 &gt; max_num_prompts) &#123;            break;        &#125;        // 3. 检查 Prefill KV 长度预算        if (prefill_sum_seqlen_k_remain &lt; prompt_len) &#123;            break;        &#125;        // 4. 根据 Token Budget 决定是否进行 Chunked Prefill        int available_tokens =            (max_num_batched_tokens - num_batched_tokens)            / cp_align * cp_align;        int seqlen_q = std::min(workload, available_tokens);        bool is_chunked = seqlen_q &lt; workload;        if (is_chunked &amp;&amp; !chunked_prefill) &#123;            break;        &#125;        if (seqlen_q &lt; std::max(lookahead_tokens, 1)) &#123;            break;        &#125;        // 5. 提交调度，分配必要资源        prefill_sum_seqlen_k_remain -= prompt_len;        num_batched_tokens +=            (seqlen_q + cp_align - 1) / cp_align * cp_align;        if (seq-&gt;cache.block_table.empty()) &#123;            acquire.allocate_seq(*seq);        &#125;        if (!is_chunked) &#123;            ++num_curr_seqs;            seq-&gt;schedule.status = SequenceStatus::RUNNING;            allocate_mtp_info_slot(*seq);        &#125;        // 6. 记录本轮执行的请求        scheduled.push_back(seq);        seqlens_q.push_back(seqlen_q);        seq-&gt;schedule.chunked_rest_len =            is_chunked ? workload - seqlen_q : 0;        if (is_chunked) &#123;            tokens_chunked_prefill_remaining += prompt_len;        &#125;        waiting.pop_front();        // NORMAL 引擎每轮至多安排一个未完成的 Chunk        if (is_chunked &amp;&amp; engine_type == EngineType::NORMAL) &#123;            break;        &#125;    &#125;    // 7. 生成调度结果    if (engine_type != EngineType::NORMAL ||        !scheduled.empty() ||        !ignored_seqs.empty()) &#123;        return _make_outputs(            std::move(scheduled),            true,            num_batched_tokens,            &#123;&#125;,            std::move(ignored_seqs),            std::move(seqlens_q),            0        );    &#125;    // 本轮无 Prefill，允许上层调度 Decode    return nullptr;&#125;
+看完这段代码，很适合用来理解 LLM Serving种的 Admission Control 准入控制和 Chunked Prefill Scheduling 分块预填充调度。
+首先给出结论，就是这个Serving是一个FIFO的队列，支持分块prefill,优先从Waiting Queue 中接纳请求，资源不足的时候截断prompt.
+首先我们根据这个表格看一下一个scheduler受到哪些limits.
+
+
+
+资源
+对应变量
+调度含义
+
+
+
+
+KV cache blocks
+_can_allocate_with_state()
+能否分配Kv Cache blocks
+
+
+并发数
+max_num_prompts
+最多接纳多少个运行请求
+
+
+总kv 长度预算
+prefill_max_sum_seqlen_k
+本轮接纳请求的总序列长度限制
+
+
+batch Token Budget
+max_num_batched_tokens
+本轮最多执行的token数目
+
+
+
+核心设计:Chunked Prefill:
+我们可以假设现在有请求 A B C
+
+A 1000 tokens
+B 800 tokens
+C 2000 tokens
+
+And now the budget is 2048 tokens.
+So , we will use the full A and B , while using only 248 tokens in C.
+在调度器中
+int available_tokens = max_num_batched_tokens - num_batched_tokens;int seqlen_q = std::min(workload, available_tokens);
+在这个地方有一个类似priority_map 中惰性二项堆的设计，就是他们会首先检查所有的调度能否完成，能否模拟，最后再进行调度。
+因为回滚的代价非常之大。
+_schedule_decode
+精简之后的decode调度逻辑如下
+std::unique_ptr&lt;SchedulerOutputs&gt;_schedule_decode(BlockManagerMutexAcquire &amp;acquire) &#123;    // 1. 将已完成 Prefill 的请求加入 Running Queue    const size_t max_seqs = max_num_seqs;    while (!prompted.empty() &amp;&amp; running.size() &lt; max_seqs) &#123;        auto seq = std::move(prompted.front().first);        prompted.pop_front();        seq-&gt;schedule.status = SequenceStatus::RUNNING;        allocate_mtp_info_slot(*seq);        running.push_back(std::move(seq));    &#125;    // 2. 按已生成 Token 数排序    // Output 越短，优先级越高    std::sort(        running.begin(), running.end(),        [](const SequencePtr &amp;a, const SequencePtr &amp;b) &#123;            return a-&gt;get_output_len() &gt; b-&gt;get_output_len();        &#125;    );    // 3. 根据 KV Cache 容量调度或抢占请求    std::vector&lt;SequencePtr&gt; scheduled;    std::vector&lt;SequencePtr&gt; ignored_seqs;    size_t l = 0, r = running.size();    while (l &lt; r &amp;&amp; scheduled.size() &lt; max_seqs) &#123;        auto &amp;seq = running[r - 1];        // KV Cache 不足时，优先抢占 Output 较长的请求        while (!block_manager-&gt;can_allocate_single_nolock()               &amp;&amp; r - l &gt; 1) &#123;            auto victim = running[l];            _preempt(victim, ignored_seqs);            ++l;        &#125;        if (block_manager-&gt;can_allocate_single_nolock()) &#123;            _append_slot(*seq);            scheduled.push_back(std::move(seq));        &#125; else &#123;            _preempt(seq, ignored_seqs);        &#125;        --r;    &#125;    running.clear();    // 4. 按上下文长度重新排列执行顺序    std::sort(        scheduled.begin(), scheduled.end(),        [](const SequencePtr &amp;a, const SequencePtr &amp;b) &#123;            return a-&gt;get_len() &gt; b-&gt;get_len();        &#125;    );    // 5. MTP 调度：决定每个请求本轮执行多少 Token    std::vector&lt;int&gt; seqlens_q;    _mtp_varlen.schedule(scheduled, seqlens_q);    int num_batched_tokens = 0;    for (int q : seqlens_q) &#123;        num_batched_tokens += q;    &#125;    // 6. 返回调度结果    return _make_outputs(        std::move(scheduled),        false,        num_batched_tokens,        &#123;&#125;,        std::move(ignored_seqs),        std::move(seqlens_q),        0    );&#125;
+调度的优先逻辑依靠目前已经生成的token数目，并且token数目越少，越优先获得KV Cache。
+KV Cache不足的时候，会通过抢占的方式实现资源竞争。
+while( !block_manager-&gt; can_allocate_single_nolock() &amp;&amp; r - l &gt; 1)&#123;  auto victim = running[i];  _preempt(victim, ignored_seqs);  ++l;&#125;
+它的含义是
+
+尝试为当前的高优先级分配cache slot
+如果没有可用block,抢占低优先级请求
+查看资源是否足够
+资源足够就执行 _append_slot()
+如果最终任然不足，当前请求也抢占。
+
+]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>人工智能</tag>
+        <tag>系统与性能</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】未定名接力稿：给被世界扔掉的东西留一扇门</title>
+    <url>//essay-unnamed-relay.html</url>
+    <content><![CDATA[这份稿子目前还没有一个正式的名字，PDF 文件也只是叫“名称未设定”。
+不过有些故事还没取好名字，就已经留下了几句让人想再看一遍的话。
+先说清楚，这是一份多人署名的接力稿，不是整本都由我一个人写的。下面主要聊署名 YMG 的第四章，也会涉及前后章带来的故事背景。会有一些剧透。
+如果不再有里面和外面
+这一章的异变没有先摆出一个等着打败的敌人。
+外界的人类只是逐渐不再把“内”和“外”当作理所当然的概念。城市还在运行，人们还在生活，对于他们而言，这甚至不是一件需要特别解释的事情。
+可对于依靠境界和后户的幻想乡，就不是这样了。
+我觉得这里有意思的地方，是危险并不来自恶意。没有谁一定要摧毁幻想乡，只是外面的常识变了，里面熟悉的一切就开始站不稳。
+当然，非定向空间、拓扑工程改变日常常识，以及它们影响结界的方式，都是这份同人中的科幻与二设，不是现实物理或数学定理。它们在这里承担的是一个故事问题：如果支撑一个地方存在的前提，被所有人慢慢忘掉了，会怎样？
+摩多罗一直说自己不在意
+她起初把事情理解成八云紫的另一次较劲。觉得只要自己不先低头，那个人迟早会出来收场。
+于是嘴上说着不管，行动上却已经在拦截外界误入的东西，后来又把结界的缝隙补上。
+我不太想让她在某一刻突然换一种说话方式，郑重宣布自己终于懂得了什么。她可以一直嫌麻烦，一直嘲笑那个理想，甚至到了最后还在想到底算谁赢。
+但她开的门，已经暴露了她到底在乎什么。
+不是一个可以随便丢掉的地方
+第四章里，她一扇一扇地看过去，看到的不是宏大的设定，而是正在生活的人。捡东西的巫女、安置来客的村民、努力照顾一株花的妖精，还有那些名字已经看不清的墓碑。
+这些东西放在一起，幻想乡才不只是地图上划出来的一块区域。
+它也容纳那些已经被外界说成过时、无用、不再需要的事物。对于局外的人，那可能像一个大垃圾堆；对于住在里面的人，那却是能够继续生活的地方。
+所以比起“保护一个永远不会改变的乐园”，我更在意的是另一件事：已经被扔掉过一次的东西，可不可以不要再被扔第二次。
+有几句话，总是留到下次
+录音带反复出现。年轻时候的话，本来可以拿来在宴会上嘲笑，到了后面却成了很难再听到的声音。
+摩多罗也还有没说完的话。那张歪歪扭扭的地图，其实不错；那个一直被她嫌弃的理想，已经把她自己也装进去了。
+只是人很容易把这些话留给下一次。
+活得很久，也未必能保证还有下一次。
+接力稿后面的章节继续把这些东西接了过去，那些部分的表达属于对应署名的作者。我先在这里留下第四章的一点想法，不替其他作者解释创作动机，也不给这本未定名的稿子擅自取一个正式书名。
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>文学创作</tag>
       </tags>
   </entry>
   <entry>
@@ -424,7 +687,54 @@ fuck this world。
         <category>随笔</category>
       </categories>
       <tags>
-        <tag>心情</tag>
+        <tag>生活随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>YMarkdownG项目说明</title>
+    <url>//note-20261026-93a69964.html</url>
+    <content><![CDATA[YMarkdownG项目说明
+类neovide markdown笔记编辑器。
+起因
+起因其实很简单，就是因为我想写一个博客，用来专门来记录拆分Deepseek Inference Engine记录。
+我倒是之前有写一个给博客增加在线写文章的功能，但是显然如果要在一个随时可能会被手关闭的东西里面写进去十多个小时的文档，那我估计到时候哭爹喊娘也不够了。
+但是我真的真的不想在vscode里面写，很难看。而且vscode太辣眼睛了。
+所以我尝试了一下使用Typora。但是呢发现Typora居然要收费，而且也没那么好用。
+说到这里，又想起来之前倒是看到过一个neovide的代码编辑器，里面的光标很灵动，在写字的时候也有不错的光效反馈。所以我就想要不干脆给他做到这里面来算了。
+所以就有了YMarkdownG. 一个100MB左右无需安装的markdown编辑器。兼容MacOS,Linux和Windows
+后续更新计划。
+
+可能会考虑把文件管理做到更类似Zotero的方式，可以更好的管理markdown文档。
+增加一个一键导出PDF功能。
+左侧笔记右键菜单还没做。只做了文件夹的。所以有些不方便。
+目录目前我觉得不是很好看。可能会考虑参考VsCode做成折叠类型的。这样会更加方便一些。
+
+项目地址。
+Okazaki-Yumemi/YMarkdownG
+]]></content>
+      <tags>
+        <tag>工具开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一篇博客:源(代码)神 启动！</title>
+    <url>//post-1.html</url>
+    <content><![CDATA[卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢？
+1. 物理与数学的交织 (LaTeX Test)
+在无聊的时候，看看优美的公式也是一种放松（真的吗）。比如经典的薛定谔方程：
+iℏ∂∂tΨ(r,t)=[−ℏ22m∇2+V(r,t)]Ψ(r,t)当然，还有内联公式 eiπ+1=0，这是数学中最纯粹的美。
+2. 万物皆对象 (Code Test)
+最近刚好在梳理 C++ 的函数封装，顺手写一段优雅的 OOP 示例：
+#include &lt;iostream&gt;#include &lt;string&gt;class Yumemi &#123;private:    std::string title;    int magicPower;public:    // 构造函数    Yumemi(std::string t, int p) : title(t), magicPower(p) &#123;&#125;    // 完美封装的方法    void castSpell() &#123;        std::cout &lt;&lt; title &lt;&lt; &quot;: Science and Magic, perfectly encapsulated!&quot; &lt;&lt; std::endl;    &#125;&#125;;int main() &#123;    Yumemi professor(&quot;Prof. Okazaki&quot;, 9999);    professor.castSpell();    return 0;&#125;
+水源社区过于公开，日记过于私密，所以平时的一些想法就放在这里了吧。
+以后就在这里记录更多的 Bug、Feature 还有各种天马行空的灵感吧！
+]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
+      <tags>
+        <tag>编程与算法</tag>
+        <tag>博客建设</tag>
       </tags>
   </entry>
   <entry>
@@ -446,72 +756,7 @@ At the cost of life.
         <category>随笔</category>
       </categories>
       <tags>
-        <tag>心情</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>风暴前的安宁？一点小想法</title>
-    <url>//post-2.html</url>
-    <content><![CDATA[来到大学，感觉似乎并没有经历过什么特别让我印象深刻的事情。每天过得平平淡淡，甚至有些无聊。虽然偶尔会有一些小插曲，但总体来说，生活似乎缺乏了些许刺激和挑战。
-《桃花幽香》的写作早就已经完成，很多时候都被这个转专业搞的心烦意乱。
-夜思
-昨天晚上躺在床上，无法入眠，脑袋里面不断闪着自己转专业可能遇到的事情。老师拷打，以及别的别的什么的。
-我时常思考，为什么会变成这个样子? 转专业本应该是选择自己兴趣爱好的再次一个途径，但现在，却变成了一个充满不确定性和压力的过程。
-我们只看到了那些成功的人，但是，我突然想到，那些失败了的同学们呢？他们的付出和努力真的就是一文不值了吗？
-我甚至在想，如果我在去面试的路上被一辆车撞飞，我拖着流血的身体，骨头从大腿刺出，坚持着面试完，能不能打动老师，给我多一点点的机会？
-前两天到光彪楼上了自习，我发现我真的喜欢那个地方，氛围很好，条件也很好。
-Ich hätte das Dunkel ertragen können, hätte ich nicht das Licht gesehen.
-这句话的意思是“我本可以忍受黑暗，如果我没有见过光明”。
-一开始，我来到大学，感觉偌大的一个学校，似乎没有适合自己的专业，也不存在我能到达的地方，我盲目的学习，为了一个转专业的空头支票付出着自己的一切。
-我永远会在相同的时间，出现在相同的地点，而很大概率，我还会做着一样的题。
-这样的日子，真的是我所期望着的日子吗？
-直到我在水源上面要转致远物理的帖子被众人“喷”了个狗血淋头。 大家都开始劝说我，说我适合做点别的，适合学一学CS。
-于是我怀着将信将疑的念头和态度，尝试了一下。
-我陷进去了。
-我发现我已经无法离开这个事情了。
-似乎是这么多年的人生里面，我真正的找到了一个同时满足事业和我个人爱好的东西。Recursion、OOP、DFS、BFS、Gitlet...
-这些东西能让我沉入其中，让我不知疲惫的学习着。虽然不知道是我真的爱上了这个东西，还是说只是我的功利心再一次发作了。
-每每当我写完这些，我会突然感到一阵空虚和失落，因为这并不是我现在实实在在该干的事情。
-我是一个医学生。
-我是一个临床五年的学生。
-我该学习的是解剖、代谢生物化学、内外妇儿等等。
-妈的
-如果我未曾接触过这一切，我定然不会有这么多的想法，我也不会有这么多的纠结。
-可是已经晚了，我感觉我自己真的找到了一个我自己该属于的地方。
-结语
-今天，又在C200待了一整个日子。
-没有说一句话，只是写着GitLet,学了一点点算法。
-昨天夜里给我的那种失落感实在是太强了，我还没能完完全全的从里面逃脱出来。
-休息了一会，感觉到自己的注意力涣散，所以我还是干了这个我一直想干的事情。
-我搭了这个博客，似乎这样可以让我和那些码类的学生们更相似一样。
-希望，我能不仅仅是和他们相似吧。
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>大学生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>第一篇博客:源(代码)神 启动！</title>
-    <url>//post-1.html</url>
-    <content><![CDATA[卷了一整个周末，有些无聊，又不想无所事事，所以这个blog就诞生了。作为一个 Markdown 迷和 LaTeX 享受者，怎么能容忍纯文本呢？
-1. 物理与数学的交织 (LaTeX Test)
-在无聊的时候，看看优美的公式也是一种放松（真的吗）。比如经典的薛定谔方程：
-iℏ∂∂tΨ(r,t)=[−ℏ22m∇2+V(r,t)]Ψ(r,t)当然，还有内联公式 eiπ+1=0，这是数学中最纯粹的美。
-2. 万物皆对象 (Code Test)
-最近刚好在梳理 C++ 的函数封装，顺手写一段优雅的 OOP 示例：
-#include &lt;iostream&gt;#include &lt;string&gt;class Yumemi &#123;private:    std::string title;    int magicPower;public:    // 构造函数    Yumemi(std::string t, int p) : title(t), magicPower(p) &#123;&#125;    // 完美封装的方法    void castSpell() &#123;        std::cout &lt;&lt; title &lt;&lt; &quot;: Science and Magic, perfectly encapsulated!&quot; &lt;&lt; std::endl;    &#125;&#125;;int main() &#123;    Yumemi professor(&quot;Prof. Okazaki&quot;, 9999);    professor.castSpell();    return 0;&#125;
-水源社区过于公开，日记过于私密，所以平时的一些想法就放在这里了吧。
-以后就在这里记录更多的 Bug、Feature 还有各种天马行空的灵感吧！
-]]></content>
-      <categories>
-        <category>技术</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>LaTeX</tag>
+        <tag>生活随笔</tag>
       </tags>
   </entry>
   <entry>
@@ -556,34 +801,69 @@ CSAPP，一天三章，12小时，lab一天一个。我用着我现在都不敢�
         <category>随笔</category>
       </categories>
       <tags>
-        <tag>生活</tag>
+        <tag>生活随笔</tag>
       </tags>
   </entry>
   <entry>
-    <title>【暂时AIGC占位】CS61A 学习记录：从函数走向对象与状态</title>
-    <url>//course-cs61a.html</url>
-    <content><![CDATA[在之前的随笔里，我提过 Recursion、OOP 这些东西。它们让我觉得，程序不只是把一串指令顺着写完。
-CS61A 的练习也是这样。一个银行账户，一台售货机，看起来很普通，却能把对象和状态的问题一点一点摆到面前。
-my_cs61a_study_codes 按学习日保存 Discussion、Lab 和 Homework，也有 Cats 项目的文件。这是过程记录，不代表整门课程所有部分都已完成。
-一个对象不只是几项属性
-Day11/lab06/lab06.py 中的银行账户练习，把余额变化与交易历史联系起来。存款和取款不仅要计算一个新余额，还要记录前后状态，让后续报告能够解释发生了什么。
-Day12/hw06/hw06.py 中的自动售货机练习，则把库存、余额和商品价格放进同一个对象。缺货、金额不足、找零与正常购买都是不同的状态分支。代码需要把这些情况组织成稳定的接口，而不是依靠调用者猜测内部数据。
-例子本身也是规格
-这些作业的 docstring 中包含大量调用与预期输出。它们把“应该怎样工作”变成具体序列：先补货、再投币、最后购买，每一步都会影响下一步。理解这样的例子，有助于把测试当作行为描述，而不只是提交前的检查按钮。
-函数与对象也可以放在同一个视角下理解：函数描述一次计算，对象维护多次操作之间的关系。随着程序变复杂，需要认真判断哪些状态应当留下，哪些值只是当前计算的中间结果。
-回看方式
-回看的时候，先别急着找最终答案。把几次操作之后的状态自己推一遍，再看代码，往往更能发现理解在哪里断了。
-这次没有重新运行课程评测。仓库里的个人实现、原题模板与测试文件，也仍然是三种不同的东西，不能混在一起当作完成证明。
-公开来源
-学习仓库 · 账户与交易练习 · 售货机练习
+    <title>风暴前的安宁？一点小想法</title>
+    <url>//post-2.html</url>
+    <content><![CDATA[来到大学，感觉似乎并没有经历过什么特别让我印象深刻的事情。每天过得平平淡淡，甚至有些无聊。虽然偶尔会有一些小插曲，但总体来说，生活似乎缺乏了些许刺激和挑战。
+《桃花幽香》的写作早就已经完成，很多时候都被这个转专业搞的心烦意乱。
+夜思
+昨天晚上躺在床上，无法入眠，脑袋里面不断闪着自己转专业可能遇到的事情。老师拷打，以及别的别的什么的。
+我时常思考，为什么会变成这个样子? 转专业本应该是选择自己兴趣爱好的再次一个途径，但现在，却变成了一个充满不确定性和压力的过程。
+我们只看到了那些成功的人，但是，我突然想到，那些失败了的同学们呢？他们的付出和努力真的就是一文不值了吗？
+我甚至在想，如果我在去面试的路上被一辆车撞飞，我拖着流血的身体，骨头从大腿刺出，坚持着面试完，能不能打动老师，给我多一点点的机会？
+前两天到光彪楼上了自习，我发现我真的喜欢那个地方，氛围很好，条件也很好。
+Ich hätte das Dunkel ertragen können, hätte ich nicht das Licht gesehen.
+这句话的意思是“我本可以忍受黑暗，如果我没有见过光明”。
+一开始，我来到大学，感觉偌大的一个学校，似乎没有适合自己的专业，也不存在我能到达的地方，我盲目的学习，为了一个转专业的空头支票付出着自己的一切。
+我永远会在相同的时间，出现在相同的地点，而很大概率，我还会做着一样的题。
+这样的日子，真的是我所期望着的日子吗？
+直到我在水源上面要转致远物理的帖子被众人“喷”了个狗血淋头。 大家都开始劝说我，说我适合做点别的，适合学一学CS。
+于是我怀着将信将疑的念头和态度，尝试了一下。
+我陷进去了。
+我发现我已经无法离开这个事情了。
+似乎是这么多年的人生里面，我真正的找到了一个同时满足事业和我个人爱好的东西。Recursion、OOP、DFS、BFS、Gitlet...
+这些东西能让我沉入其中，让我不知疲惫的学习着。虽然不知道是我真的爱上了这个东西，还是说只是我的功利心再一次发作了。
+每每当我写完这些，我会突然感到一阵空虚和失落，因为这并不是我现在实实在在该干的事情。
+我是一个医学生。
+我是一个临床五年的学生。
+我该学习的是解剖、代谢生物化学、内外妇儿等等。
+妈的
+如果我未曾接触过这一切，我定然不会有这么多的想法，我也不会有这么多的纠结。
+可是已经晚了，我感觉我自己真的找到了一个我自己该属于的地方。
+结语
+今天，又在C200待了一整个日子。
+没有说一句话，只是写着GitLet,学了一点点算法。
+昨天夜里给我的那种失落感实在是太强了，我还没能完完全全的从里面逃脱出来。
+休息了一会，感觉到自己的注意力涣散，所以我还是干了这个我一直想干的事情。
+我搭了这个博客，似乎这样可以让我和那些码类的学生们更相似一样。
+希望，我能不仅仅是和他们相似吧。
 ]]></content>
       <categories>
-        <category>课程</category>
+        <category>随笔</category>
       </categories>
       <tags>
-        <tag>CS61A</tag>
-        <tag>Python</tag>
-        <tag>OOP</tag>
+        <tag>生活随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>造轮子记录：交大空教室一键查询器</title>
+    <url>//post-3.html</url>
+    <content><![CDATA[受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？
+当然要用代码解决生活痛点！
+今天手搓了一个轻量级的“交大空教室查询器”。
+不过感觉这种。。。自己在转专业的这些人里面没有突出点啊。。
+啊，忘了提项目网址了，在这里：
+🚀 在线体验传送门： SJTU 空教室查询助手 (点击直达)
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Web开发</tag>
+        <tag>工具开发</tag>
       </tags>
   </entry>
   <entry>
@@ -612,9 +892,7 @@ ATP、葡萄糖、氧化还原状态、毒性与健康等变量，把一次选�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>Pygame</tag>
-        <tag>游戏</tag>
+        <tag>游戏开发</tag>
       </tags>
   </entry>
   <entry>
@@ -643,9 +921,8 @@ ATP、葡萄糖、氧化还原状态、毒性与健康等变量，把一次选�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
-        <tag>Butterfly</tag>
-        <tag>博客</tag>
+        <tag>博客建设</tag>
+        <tag>Web开发</tag>
       </tags>
   </entry>
   <entry>
@@ -672,88 +949,37 @@ AI 的作用不是制造一个更会骗人的入口
         <category>项目</category>
       </categories>
       <tags>
-        <tag>AI</tag>
-        <tag>课程项目</tag>
-        <tag>Web</tag>
+        <tag>人工智能</tag>
+        <tag>Web开发</tag>
       </tags>
   </entry>
   <entry>
-    <title>造轮子记录：交大空教室一键查询器</title>
-    <url>//post-3.html</url>
-    <content><![CDATA[受够了每次想找个安静的地方自习、推导公式，却还要像开盲盒一样挨个教室找？
-当然要用代码解决生活痛点！
-今天手搓了一个轻量级的“交大空教室查询器”。
-不过感觉这种。。。自己在转专业的这些人里面没有突出点啊。。
-啊，忘了提项目网址了，在这里：
-🚀 在线体验传送门： SJTU 空教室查询助手 (点击直达)
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>SJTU</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各归各位</title>
-    <url>//project-desktop-manager.html</url>
-    <content><![CDATA[桌面上有文件，有快捷方式，也有一些暂时不想处理的东西。
-它们待在那里很方便，但方便久了，就会变成另一种不方便。要找的时候得扫一遍；想整理的时候，又担心改动原来的位置之后，之前的路径和习惯都乱了。
-DesktopManager 把“整理”先做成了一个单独的层。至少不必为了给文件分组，就马上把文件搬来搬去。
-整理关系，不急着整理磁盘
-虚拟集合保存的是文件与集合的关联，而不是把原文件实际移动到新目录。桌面索引负责发现和记录对象，集合负责提供另一个观察方式。
-这样做并不意味着磁盘从此就不需要整理了。它只是把“我现在想把这些东西看作一组”和“我要改变它们的实际位置”分开。
-这个区别很小，却能少一点顾虑。
-界面后面也要分层
-项目使用 Tauri 2、Rust、Svelte 5 / TypeScript 和 SQLite。界面经过统一的调用入口进入 Tauri commands，继续交给领域逻辑和存储层；SQL 留在存储模块中，Windows 桌面相关行为则放在专门的适配模块。
-看起来绕了几层，但每层有自己的职责。界面不需要知道一条查询怎么写，数据库也不应该决定一个按钮长什么样。
-仓库还记录了桌面监听、布局快照、工作场景、任务、日历、专注计时及日历导出等功能。它开始不只是一个文件列表，而是在尝试把工作时会一起出现的东西放在同一个地方。
-能跑，和放心使用之间
-这类工具的难点，经常不在演示最顺利的那一条路径。
-文件消失了怎么办？数据库升级失败怎么办？重启之后，刚才的计时还在不在？显示器和 DPI 变了，原来的布局还能不能用？这些问题都比再加一个按钮更实在。
-架构文档里有迁移备份、缺失文件标记等处理；状态记录也区分了自动测试、浏览器检查和真实 Windows 窗口验收。这里按这些公开记录介绍功能，不把所有功能都写成已经逐项实机验证，更不补上没有依据的性能承诺。
-一个桌面工具最终还是得回到日常使用。希望整理完之后，事情真的少一点，而不是又多出一个需要整理的软件。
+    <title>【暂时AIGC占位】CUDA 中文文档：除了翻译，还得让人找得到</title>
+    <url>//project-cuda-guide.html</url>
+    <content><![CDATA[有时候，学一个东西的阻力并不完全来自它有多难。
+也可能只是想查的那句话埋得太深，几个术语换着名字出现，刚刚看到的图一翻页又找不着了。尤其是 CUDA 这种文档，随便一个细节都能把人从当前章节拉到另一个章节去。
+所以这份中文整理不只是把英文换成中文。至少我希望它能成为一个查得动、读得下去的入口。
+先把路修通
+项目围绕 CUDA Programming Guide Release 13.3 整理，内容目录覆盖介绍、编程、进阶、特性、附录与参考。站点使用 VuePress，把章节导航、全文搜索和阅读主题放到同一个地方。
+图也不是装饰。线程层级、执行方式和内存关系，靠一大段文字去解释往往很费劲。保留官方文档中的相关图示，让它们和说明出现在一起，读的时候才能少一点来回翻找。
+不过，排得好看不等于翻得准确。这两件事不能互相代替。
+最容易偷懒的地方，反而最该认真
+术语需要稳定。一个词在前面这样译，到了后面又换一种说法，读者很容易把它当成两个概念。代码、API 名称和限定条件也不能为了中文顺口就顺手改掉。
+尤其是那些“仅当”“可能”“必须”。省掉一个，句子好像更干净了，意思却可能变了。
+因此，中文稿的作用是降低阅读门槛，而不是替官方原文作最终解释。遇到涉及行为保证、平台限制或版本差异的地方，还是应当回到对应版本的 NVIDIA 文档核对。
+一份能继续维护的笔记
+仓库提供了文档开发和构建入口。把内容放在可维护的目录里，比留下一份很长、很难定位的文件更适合后续纠错。
+现在的记录以仓库注明的版本为准，不把它称为永远最新，也不承诺翻译没有错误。这是非官方中文整理。
+学东西已经够累了。能少迷一次路，也算有一点用。
 来源
-项目仓库 · 架构 · 功能状态记录
+中文站点 · 项目与版本说明 · NVIDIA 官方文档
 ]]></content>
       <categories>
         <category>项目</category>
       </categories>
       <tags>
-        <tag>Tauri</tag>
-        <tag>Rust</tag>
-        <tag>Svelte</tag>
-        <tag>桌面工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】南堂界遇：把幻想乡的活动规则搬到网页里</title>
-    <url>//project-nantang.html</url>
-    <content><![CDATA[做活动的时候，总会有一些看起来很简单的规则。
-进区域，做任务，得到贡献，再去抽奖。把它说给别人听，可能几句话就够了；真要放进一个系统里，事情马上就变多了。
-任务是谁完成的？奖励是不是已经发过？管理员修改状态之后，大屏和玩家手机能不能看到同一件事？这些都得落到具体的数据上。
-同一场活动，三个视角
-南堂界遇的公开项目围绕交大东方社的幻想乡活动展开，包含顺序推进的六个区域，以及能量、贡献和加权抽奖等规则。
-玩家关心自己现在能做什么、还剩多少资源。管理员关心任务和发奖状态。展示端则需要把当前进展及时呈现出来。三个界面面对的是同一场活动，却不能简单地把同一张表原样塞给三种人。
-所以界面可以不同，规则和状态却应当有共同的来源。不然大屏已经庆祝结束，手机还说任务没完成，就很难解释了。
-动画可以热闹，记录不能含糊
-项目使用零第三方 npm 依赖的 Node.js 方案。数据使用 JSON 保存，并配有串行事务、原子写入、备份和流水记录。
-听起来不如某些复杂架构威风，但现场真正需要的是能查、能恢复、能说清楚。一次奖励究竟有没有发出去，比动画多转两圈重要得多。
-这套方案面向单实例服务。不能因为一个实例里安排了写入顺序，就认为多个进程同时写同一份文件也自然安全。
-留下什么，不留下什么
-这篇只记录公开的功能与实现思路，不放入活动票码、管理入口细节或实际参与者数据。仓库中的规模设想，也不在这里改写成已经通过现场压力测试的结果。
-我觉得这种项目很像给一场临时出现的小世界做后勤。前面可以尽情胡闹，后面的账却得清楚。这样大家才可以放心继续玩。
-来源
-项目仓库与规则说明
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>东方Project</tag>
-        <tag>Node.js</tag>
-        <tag>活动系统</tag>
+        <tag>系统与性能</tag>
+        <tag>技术文档</tag>
       </tags>
   </entry>
   <entry>
@@ -782,9 +1008,65 @@ DesktopManager 把“整理”先做成了一个单独的层。至少不必为�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>Flask</tag>
-        <tag>校园工具</tag>
+        <tag>Web开发</tag>
+        <tag>工具开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】DesktopManager：桌面上的东西，能不能各归各位</title>
+    <url>//project-desktop-manager.html</url>
+    <content><![CDATA[桌面上有文件，有快捷方式，也有一些暂时不想处理的东西。
+它们待在那里很方便，但方便久了，就会变成另一种不方便。要找的时候得扫一遍；想整理的时候，又担心改动原来的位置之后，之前的路径和习惯都乱了。
+DesktopManager 把“整理”先做成了一个单独的层。至少不必为了给文件分组，就马上把文件搬来搬去。
+整理关系，不急着整理磁盘
+虚拟集合保存的是文件与集合的关联，而不是把原文件实际移动到新目录。桌面索引负责发现和记录对象，集合负责提供另一个观察方式。
+这样做并不意味着磁盘从此就不需要整理了。它只是把“我现在想把这些东西看作一组”和“我要改变它们的实际位置”分开。
+这个区别很小，却能少一点顾虑。
+界面后面也要分层
+项目使用 Tauri 2、Rust、Svelte 5 / TypeScript 和 SQLite。界面经过统一的调用入口进入 Tauri commands，继续交给领域逻辑和存储层；SQL 留在存储模块中，Windows 桌面相关行为则放在专门的适配模块。
+看起来绕了几层，但每层有自己的职责。界面不需要知道一条查询怎么写，数据库也不应该决定一个按钮长什么样。
+仓库还记录了桌面监听、布局快照、工作场景、任务、日历、专注计时及日历导出等功能。它开始不只是一个文件列表，而是在尝试把工作时会一起出现的东西放在同一个地方。
+能跑，和放心使用之间
+这类工具的难点，经常不在演示最顺利的那一条路径。
+文件消失了怎么办？数据库升级失败怎么办？重启之后，刚才的计时还在不在？显示器和 DPI 变了，原来的布局还能不能用？这些问题都比再加一个按钮更实在。
+架构文档里有迁移备份、缺失文件标记等处理；状态记录也区分了自动测试、浏览器检查和真实 Windows 窗口验收。这里按这些公开记录介绍功能，不把所有功能都写成已经逐项实机验证，更不补上没有依据的性能承诺。
+一个桌面工具最终还是得回到日常使用。希望整理完之后，事情真的少一点，而不是又多出一个需要整理的软件。
+来源
+项目仓库 · 架构 · 功能状态记录
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>工具开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】南堂界遇：把幻想乡的活动规则搬到网页里</title>
+    <url>//project-nantang.html</url>
+    <content><![CDATA[做活动的时候，总会有一些看起来很简单的规则。
+进区域，做任务，得到贡献，再去抽奖。把它说给别人听，可能几句话就够了；真要放进一个系统里，事情马上就变多了。
+任务是谁完成的？奖励是不是已经发过？管理员修改状态之后，大屏和玩家手机能不能看到同一件事？这些都得落到具体的数据上。
+同一场活动，三个视角
+南堂界遇的公开项目围绕交大东方社的幻想乡活动展开，包含顺序推进的六个区域，以及能量、贡献和加权抽奖等规则。
+玩家关心自己现在能做什么、还剩多少资源。管理员关心任务和发奖状态。展示端则需要把当前进展及时呈现出来。三个界面面对的是同一场活动，却不能简单地把同一张表原样塞给三种人。
+所以界面可以不同，规则和状态却应当有共同的来源。不然大屏已经庆祝结束，手机还说任务没完成，就很难解释了。
+动画可以热闹，记录不能含糊
+项目使用零第三方 npm 依赖的 Node.js 方案。数据使用 JSON 保存，并配有串行事务、原子写入、备份和流水记录。
+听起来不如某些复杂架构威风，但现场真正需要的是能查、能恢复、能说清楚。一次奖励究竟有没有发出去，比动画多转两圈重要得多。
+这套方案面向单实例服务。不能因为一个实例里安排了写入顺序，就认为多个进程同时写同一份文件也自然安全。
+留下什么，不留下什么
+这篇只记录公开的功能与实现思路，不放入活动票码、管理入口细节或实际参与者数据。仓库中的规模设想，也不在这里改写成已经通过现场压力测试的结果。
+我觉得这种项目很像给一场临时出现的小世界做后勤。前面可以尽情胡闹，后面的账却得清楚。这样大家才可以放心继续玩。
+来源
+项目仓库与规则说明
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Web开发</tag>
+        <tag>游戏开发</tag>
       </tags>
   </entry>
   <entry>
@@ -811,68 +1093,7 @@ DesktopManager 把“整理”先做成了一个单独的层。至少不必为�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>用户脚本</tag>
-        <tag>时间管理</tag>
-        <tag>水源</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】CUDA 中文文档：除了翻译，还得让人找得到</title>
-    <url>//project-cuda-guide.html</url>
-    <content><![CDATA[有时候，学一个东西的阻力并不完全来自它有多难。
-也可能只是想查的那句话埋得太深，几个术语换着名字出现，刚刚看到的图一翻页又找不着了。尤其是 CUDA 这种文档，随便一个细节都能把人从当前章节拉到另一个章节去。
-所以这份中文整理不只是把英文换成中文。至少我希望它能成为一个查得动、读得下去的入口。
-先把路修通
-项目围绕 CUDA Programming Guide Release 13.3 整理，内容目录覆盖介绍、编程、进阶、特性、附录与参考。站点使用 VuePress，把章节导航、全文搜索和阅读主题放到同一个地方。
-图也不是装饰。线程层级、执行方式和内存关系，靠一大段文字去解释往往很费劲。保留官方文档中的相关图示，让它们和说明出现在一起，读的时候才能少一点来回翻找。
-不过，排得好看不等于翻得准确。这两件事不能互相代替。
-最容易偷懒的地方，反而最该认真
-术语需要稳定。一个词在前面这样译，到了后面又换一种说法，读者很容易把它当成两个概念。代码、API 名称和限定条件也不能为了中文顺口就顺手改掉。
-尤其是那些“仅当”“可能”“必须”。省掉一个，句子好像更干净了，意思却可能变了。
-因此，中文稿的作用是降低阅读门槛，而不是替官方原文作最终解释。遇到涉及行为保证、平台限制或版本差异的地方，还是应当回到对应版本的 NVIDIA 文档核对。
-一份能继续维护的笔记
-仓库提供了文档开发和构建入口。把内容放在可维护的目录里，比留下一份很长、很难定位的文件更适合后续纠错。
-现在的记录以仓库注明的版本为准，不把它称为永远最新，也不承诺翻译没有错误。这是非官方中文整理。
-学东西已经够累了。能少迷一次路，也算有一点用。
-来源
-中文站点 · 项目与版本说明 · NVIDIA 官方文档
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>CUDA</tag>
-        <tag>文档</tag>
-        <tag>翻译</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>【暂时AIGC占位】MiniVim：原来光标后面有这么多事情</title>
-    <url>//project-minivim.html</url>
-    <content><![CDATA[平时用编辑器，输入、删除、移动光标，都自然得像呼吸。自己去写的时候才发现，这些东西并不会自动发生。
-一个退格键应该删掉什么？行首按下去会怎样？光标到了屏幕外面，是移动窗口，还是让它消失？问题都不大，但每一个都得有人回答。
-MiniVim 就是这样一个项目。它来自交大 CS1958-01 的课程框架，我的仓库是课程上游的 fork，使用 C++17。这里记一下它的结构，不把教学框架也算成自己从零设计的东西。
-不只是把字放到屏幕上
-项目把事情分给了 Buffer、Window、Command、Renderer、Editor 和 Terminal。文本本身、可见区域、命令、显示和终端交互，分别有各自的位置。
-这个拆分挺重要。屏幕上的第几行，不一定是文件里的第几行；修改了缓冲区，也不等于终端已经把修改画出来了。如果全都混在一起，一个光标问题就很容易牵出一串别的问题。
-仓库里的 Buffer.cpp 和 Editor.cpp 已经有具体实现，可以沿着“按键进入编辑器，再作用到缓冲区”的路径去看。比起直接盯着最终画面，这样更容易定位一件事到底应该在哪一层发生。
-同一个按键，也未必是同一件事
-Normal、Insert 和命令行模式让按键有了不同含义。输入字母，有时是在写字，有时是在下命令。模式不是给界面换一个标签，而是决定输入如何被解释。
-我觉得这种项目有意思的地方，就是逼着人把平时省略掉的前提重新写出来。文件有内容、光标有位置、窗口有范围，操作之后这些状态还得彼此一致。
-否则看起来只错了一个字符，实际上是整套坐标没对上。
-先把基本动作说清楚
-课程提供了基础要求、进阶说明以及终端测试相关工具。能编译和能正确编辑文件是两回事；跑过几个顺手的操作，也不能代表所有边界都对了。
-这篇先记录模块之间的关系，没有重新跑完整套课程测试，也不在这里宣称进阶功能全部完成。以后回头看，至少还能记得那个小小的光标，后面到底站着哪些东西。
-来源
-项目仓库 · 课程框架 · 源码
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>课程项目</tag>
-        <tag>编辑器</tag>
+        <tag>工具开发</tag>
       </tags>
   </entry>
   <entry>
@@ -899,9 +1120,36 @@ Normal、Insert 和命令行模式让按键有了不同含义。输入字母，�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>东方Project</tag>
-        <tag>Node.js</tag>
-        <tag>活动系统</tag>
+        <tag>Web开发</tag>
+        <tag>游戏开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【暂时AIGC占位】MiniVim：原来光标后面有这么多事情</title>
+    <url>//project-minivim.html</url>
+    <content><![CDATA[平时用编辑器，输入、删除、移动光标，都自然得像呼吸。自己去写的时候才发现，这些东西并不会自动发生。
+一个退格键应该删掉什么？行首按下去会怎样？光标到了屏幕外面，是移动窗口，还是让它消失？问题都不大，但每一个都得有人回答。
+MiniVim 就是这样一个项目。它来自交大 CS1958-01 的课程框架，我的仓库是课程上游的 fork，使用 C++17。这里记一下它的结构，不把教学框架也算成自己从零设计的东西。
+不只是把字放到屏幕上
+项目把事情分给了 Buffer、Window、Command、Renderer、Editor 和 Terminal。文本本身、可见区域、命令、显示和终端交互，分别有各自的位置。
+这个拆分挺重要。屏幕上的第几行，不一定是文件里的第几行；修改了缓冲区，也不等于终端已经把修改画出来了。如果全都混在一起，一个光标问题就很容易牵出一串别的问题。
+仓库里的 Buffer.cpp 和 Editor.cpp 已经有具体实现，可以沿着“按键进入编辑器，再作用到缓冲区”的路径去看。比起直接盯着最终画面，这样更容易定位一件事到底应该在哪一层发生。
+同一个按键，也未必是同一件事
+Normal、Insert 和命令行模式让按键有了不同含义。输入字母，有时是在写字，有时是在下命令。模式不是给界面换一个标签，而是决定输入如何被解释。
+我觉得这种项目有意思的地方，就是逼着人把平时省略掉的前提重新写出来。文件有内容、光标有位置、窗口有范围，操作之后这些状态还得彼此一致。
+否则看起来只错了一个字符，实际上是整套坐标没对上。
+先把基本动作说清楚
+课程提供了基础要求、进阶说明以及终端测试相关工具。能编译和能正确编辑文件是两回事；跑过几个顺手的操作，也不能代表所有边界都对了。
+这篇先记录模块之间的关系，没有重新跑完整套课程测试，也不在这里宣称进阶功能全部完成。以后回头看，至少还能记得那个小小的光标，后面到底站着哪些东西。
+来源
+项目仓库 · 课程框架 · 源码
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>编程与算法</tag>
+        <tag>工具开发</tag>
       </tags>
   </entry>
   <entry>
@@ -929,9 +1177,45 @@ chrome.storage.local 让设置不至于随着弹窗关闭就丢掉；页面执�
         <category>项目</category>
       </categories>
       <tags>
-        <tag>JavaScript</tag>
-        <tag>浏览器扩展</tag>
-        <tag>小工具</tag>
+        <tag>工具开发</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>周末杂记</title>
+    <url>//wkend-10-15.html</url>
+    <content><![CDATA[总而言之，一切算是慢慢的好起来了
+我再一次依靠着涵泽湖的晚风，湖上流动的碎金和浮影，以及天上闪烁着的群星，让我的心情恢复到不至于影响工作的状况。
+半期考试还有三周，怎么的也得开始复习了。不过总是感觉自己被困在这最基础的学积分里面，没有办法进行爱好和学习的拓展。
+理想中的我现在应该学习的是Operating system和算法导论，或许加上一门计算机网络和，而不是还得每天抓着竞赛书刷题，有够无聊的。
+不过今天和学科营里面讨论，也算看出来了一点点数学的魅力吧，起码比之前有意思不少。
+本来听说今天要来台风，结果后面没来，可惜了，我还没见过那种十级以上的大风呢。如果不危险的话，其实有点想要体验背靠着大风，躺在风中的感觉。
+啊，唉。有些东西一临到了笔头，又说不出来什么东西。不过我第一篇文章弄出来之后，可能会想一个什么办法随便找个地方实习一下。。？ 毕竟现在也算对学术稍微祛魅了一些了。第一篇论文应该这周末能投了。也算投入了不少心血吧。
+今天晚上突然想到了一个meme
+    / CS \   / 计院 \  /  电院  \ /   工科   \/    医学院  \
+过去一年我在这个金字塔的bottom，通过一年努力，到了这个金字塔的上面
+而现在你抬头一看，我的天啊
+    / ACM\   / John \  / 永强班  \ / Ieee CS   \/    CS       \
+我的天啊，我怎么还在最下边！
+恭喜你到了塔顶！现在你还是在塔底，继续努力吧！ belike:
+没招。像这样要比较就永远比不完了，估计只有我天天那样喊的空悲切一样。呃呃
+呃呃
+/糗大了
+不过讲真平台CS真史完了，感觉不如去年报SE，真的，呃呃，天天又得享受人下人待遇又得和小灯比做题，呃呃。
+其实我现在大概也许就只是一个连半期考试都还没考的普通大一新生罢了（，有啥特殊的。
+额
+不知道写啥，反正愁愁的，莫名其妙的，但是做事情的动力给这股愁愁按住了，所以我并没啥不高兴的。
+就是有点想发电，又不知道咋办，那他妈没啥办法，那就在这扯皮扯一些嘛。
+额
+啊啊啊
+额
+鹅鹅鹅。
+额。
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>生活随笔</tag>
       </tags>
   </entry>
 </search>

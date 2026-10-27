@@ -4,7 +4,7 @@ date: 2026-10-11 12:14:00
 updated: 2026-10-11 12:14:00
 permalink: course-sjtu-hpc.html
 categories: [课程]
-tags: [HPC, C++, CUDA]
+tags: [系统与性能]
 cover: /images/covers/cover-12.webp
 description: 基于公开练习与笔记，整理 Shell、编译构建、语言工具和 GPU 代码之间的联系。
 ---

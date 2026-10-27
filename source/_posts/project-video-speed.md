@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】WebsiteSpeedRun：把视频速度调到自己想�
 date: 2026-10-11 12:04:00
 permalink: project-video-speed.html
 categories: [项目]
-tags: [JavaScript, 浏览器扩展, 小工具]
+tags: [工具开发]
 cover: /images/covers/cover-09.webp
 description: 一个 Manifest V3 视频速度扩展，以及弹窗、页面执行与浏览器存储之间的连接。
 ---

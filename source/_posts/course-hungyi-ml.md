@@ -4,7 +4,7 @@ date: 2026-10-11 12:20:00
 updated: 2026-10-11 12:20:00
 permalink: course-hungyi-ml.html
 categories: [课程]
-tags: [机器学习, PyTorch]
+tags: [人工智能]
 cover: /images/covers/cover-02.webp
 description: 从回归与分类到 Transformer、强化学习和网络压缩，整理公开笔记与作业的复习路线。
 ---

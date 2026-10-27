@@ -6,7 +6,7 @@ updated: 2026-10-24T13:59:21.779Z
 categories:
   - 随笔
 tags:
-  - 生活
+  - 生活随笔
 cover: /images/covers/upload-6e31b393-1413-4e73-8c60-af7d456bccce.webp
 description: ""
 mathjax: false

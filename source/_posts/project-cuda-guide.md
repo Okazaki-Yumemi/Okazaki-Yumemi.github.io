@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】CUDA 中文文档：除了翻译，还得让人找
 date: 2026-10-11 12:11:00
 permalink: project-cuda-guide.html
 categories: [项目]
-tags: [CUDA, 文档, 翻译]
+tags: [系统与性能, 技术文档]
 cover: /images/covers/cover-06.webp
 description: 记录 CUDA Programming Guide 简体中文整理项目，以及术语、章节、图片和检索之间的关系。
 ---

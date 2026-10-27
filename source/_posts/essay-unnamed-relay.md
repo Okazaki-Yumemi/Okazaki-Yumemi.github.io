@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】未定名接力稿：给被世界扔掉的东西�
 date: 2026-10-11 12:23:00
 permalink: essay-unnamed-relay.html
 categories: [随笔]
-tags: [文学创作, 东方Project, 接力小说]
+tags: [文学创作]
 cover: /images/covers/cover-05.webp
 description: 主要围绕多人接力稿中署名 YMG 的第四章，谈摩多罗、逐渐消失的内外，以及不肯说出口的在意。含剧情讨论。
 ---

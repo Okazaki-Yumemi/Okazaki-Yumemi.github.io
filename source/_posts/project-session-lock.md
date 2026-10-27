@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】水源会话锁：给再看一眼加一点阻力"
 date: 2026-10-11 12:07:00
 permalink: project-session-lock.html
 categories: [项目]
-tags: [用户脚本, 时间管理, 水源]
+tags: [工具开发]
 cover: /images/covers/cover-05.webp
 description: 一个在水源网页上设置会话时间的用户脚本，以及软约束能做什么、不能做什么。
 ---

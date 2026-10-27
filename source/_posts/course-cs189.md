@@ -4,7 +4,7 @@ date: 2026-10-11 12:13:00
 updated: 2026-10-11 12:13:00
 permalink: course-cs189.html
 categories: [课程]
-tags: [CS189, 机器学习, 资料整理]
+tags: [人工智能]
 cover: /images/covers/cover-10.webp
 description: 记录 Berkeley Spring 2024 机器学习课程资料的公开来源与阅读方式，区分上游解答和个人学习成果。
 ---

@@ -4,7 +4,7 @@ date: 2026-10-11 12:21:00
 updated: 2026-10-11 12:21:00
 permalink: course-pku-ai-infra.html
 categories: [课程]
-tags: [GPU, CUDA, Triton]
+tags: [人工智能, 系统与性能]
 cover: /images/covers/cover-06.webp
 description: 整理 CUDA、Triton、TileLang 与 Tensor Core 学习中的正确性、内存映射和测量方法。
 ---

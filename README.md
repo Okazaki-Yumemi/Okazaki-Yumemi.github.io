@@ -21,6 +21,7 @@ npm run server
 - 主题覆盖配置：`_config.butterfly.yml`，主题通过 npm 安装，不直接修改 `node_modules`。
 - 图片、GIF、光标和音乐：`images/`；只有 `public-images.json` 明确列出的素材才会生成到站点。新增原图在本地保留，文章使用 `images/covers/` 中去除元数据、压缩后的 WebP 副本。
 - 自定义样式和交互：`source/assets/`。
+- 标签使用宽泛主题：`人工智能`、`系统与性能`、`编程与算法`、`工具开发`、`Web开发`、`博客建设`、`游戏开发`、`技术文档`、`文学创作`、`生活随笔`。每篇通常选 1-2 项，具体课程编号、框架和项目名称保留在标题或正文中，不再单独开标签。`tag-aliases.json` 与 `scripts/tag-redirects.js` 保留旧标签网址：单一主题自动跳转，跨主题的旧标签提供选择，不改变文章地址。
 - 图标字体与图片缩放库：由 `scripts/static-assets.js` 从锁定的 npm 依赖生成并本地托管，许可证随构建输出保留。
 
 旧文章的正文、发布日期与 `post-1.html`、`post-2.html`、`post-3.html` 地址已保留。公式在构建时渲染成 MathJax SVG，代码在构建时高亮，正文不依赖浏览器执行 Markdown 转换。

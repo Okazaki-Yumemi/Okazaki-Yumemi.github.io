@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】空教室雷达：别再一间一间开盲盒了"
 date: 2026-10-11 12:06:00
 permalink: project-classroom-radar.html
 categories: [项目]
-tags: [Flask, Python, 校园工具]
+tags: [工具开发, Web开发]
 cover: /images/covers/cover-03.webp
 description: 从日期、楼栋和节次筛选空教室，重新整理查询逻辑，以及课表空闲与现场空闲的区别。
 ---

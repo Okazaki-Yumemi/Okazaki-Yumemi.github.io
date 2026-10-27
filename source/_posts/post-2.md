@@ -7,7 +7,7 @@ permalink: post-2.html
 categories:
   - 随笔
 tags:
-  - 大学生活
+  - 生活随笔
 cover: /images/bg2.jpg
 mathjax: false
 ---

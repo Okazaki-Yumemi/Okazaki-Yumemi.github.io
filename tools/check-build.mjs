@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { load } from 'cheerio';
+import { slugize } from 'hexo-util';
 
 const root = path.resolve(import.meta.dirname, '..');
 const output = path.join(root, 'public');
@@ -58,6 +59,19 @@ for (const post of readingIndex) {
 }
 assert(homepage('script[src="/assets/tech.js?v=1"][type=module]').length, 'Technical features not injected');
 const allowedRepositories = JSON.parse(await readFile(path.join(root, 'public-sources.json'), 'utf8'));
+const tagAliases = JSON.parse(await readFile(path.join(root, 'tag-aliases.json'), 'utf8'));
+for (const [alias, canonical] of Object.entries(tagAliases)) {
+  if (readingIndex.some(post => post.tags.includes(alias))) continue;
+  const targets = Array.isArray(canonical) ? canonical : [canonical];
+  const redirect = load(await readFile(path.join(output, 'tags', slugize(alias), 'index.html'), 'utf8'));
+  assert.equal(Boolean(redirect('meta[http-equiv="refresh"]').length), targets.length === 1, `Invalid merged-tag redirect: ${alias}`);
+  assert.equal(redirect('a').length, targets.length, `Missing merged-tag choices: ${alias}`);
+  for (const [i, name] of targets.entries()) {
+    const target = redirect('a').eq(i).attr('href');
+    const canonicalPost = readingIndex.find(post => post.tags.includes(name));
+    assert.equal(target, canonicalPost ? encodeURI(canonicalPost.tagPaths[name]) : '/tags/', `Invalid canonical tag: ${alias}`);
+  }
+}
 for (const name of sourcePosts) {
   const source = await readFile(path.join(root, 'source/_posts', name), 'utf8');
   for (const match of source.matchAll(/https:\/\/github\.com\/Okazaki-Yumemi\/([A-Za-z0-9_.-]+)/g)) {

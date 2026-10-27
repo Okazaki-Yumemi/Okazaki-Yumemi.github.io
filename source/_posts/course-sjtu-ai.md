@@ -4,7 +4,7 @@ date: 2026-10-11 12:19:00
 updated: 2026-10-11 12:19:00
 permalink: course-sjtu-ai.html
 categories: [课程]
-tags: [人工智能, SJTU, 学习笔记]
+tags: [人工智能, 编程与算法]
 cover: /images/covers/cover-03.webp
 description: 整理人工智能入门课程的实验、期末复习资料与反诈互动网页项目。
 ---

@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】《幻想乡回访日志》：热闹就在眼前�
 date: 2026-10-11 12:24:00
 permalink: essay-gensokyo-return.html
 categories: [随笔]
-tags: [文学创作, 东方Project, 冈崎梦美]
+tags: [文学创作]
 cover: /images/covers/cover-02.webp
 description: 写冈崎梦美回到幻想乡时，关于角色动机、日志文体和看客位置的一点记录。
 ---

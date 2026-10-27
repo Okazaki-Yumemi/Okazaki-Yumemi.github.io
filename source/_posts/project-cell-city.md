@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】Cell City：把代谢搬进一座会出问题的�
 date: 2026-10-11 12:05:00
 permalink: project-cell-city.html
 categories: [项目]
-tags: [Python, Pygame, 游戏]
+tags: [游戏开发]
 cover: /images/covers/cover-08.webp
 description: 用卡牌、状态变量和剧情关卡组织一个代谢主题桌面游戏，同时保留游戏模型与真实生理的区别。
 ---

@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】给博客搬一次家：Hexo、Butterfly，以及�
 date: 2026-10-11 12:01:00
 permalink: project-blog.html
 categories: [项目]
-tags: [Hexo, Butterfly, 博客]
+tags: [博客建设, Web开发]
 cover: /images/covers/cover-12.webp
 description: 从手写 HTML 迁移到 Hexo 与 Butterfly，保留旧文章和旧地址，并把失去同步的壁纸轮播关掉。
 ---

@@ -3,7 +3,7 @@ title: "【暂时AIGC占位】写完《桃花幽香》之后，花还会再开�
 date: 2026-10-11 12:25:00
 permalink: essay-peach-fragrance.html
 categories: [随笔]
-tags: [文学创作, 东方Project, 桃花幽香]
+tags: [文学创作]
 cover: /images/covers/cover-01.webp
 description: 关于天子与幽香、逐渐失去颜色的花田，以及一句承诺怎样被时间拉长。含少量剧情讨论。
 ---
