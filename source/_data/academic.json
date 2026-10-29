@@ -1,0 +1,79 @@
+{
+  "name": "Peirui Liu",
+  "chineseName": "刘培锐",
+  "role": "Undergraduate Student in Computer Science",
+  "institution": "Shanghai Jiao Tong University",
+  "email": "lpr2333@sjtu.edu.cn",
+  "github": "https://github.com/Okazaki-Yumemi",
+  "cv": null,
+  "statement": "I am an undergraduate student in Computer Science at Shanghai Jiao Tong University. I am interested in efficient language model inference and the systems that support it, with a broader interest in computer systems and architecture.",
+  "interests": [
+    "LLM Inference Systems",
+    "Speculative Decoding",
+    "Mixture-of-Experts Inference and Offloading",
+    "GPU Kernels and Performance Engineering",
+    "Computer Systems and Architecture"
+  ],
+  "manuscripts": [
+    {
+      "title": "Research in progress",
+      "authors": "Peirui Liu, Jiacheng Liu, Wenfeng Wang, Xiaofeng Hou",
+      "status": "Manuscript under review, 2026.",
+      "summary": "Ongoing work on inference methods and systems for large language models. Further details will be shared when appropriate."
+    }
+  ],
+  "projects": [
+    {
+      "name": "CS336",
+      "kind": "Personal course implementation",
+      "tech": "Python · PyTorch · Triton",
+      "summary": "My self-study implementations and notes for Stanford CS336, from tokenization and Transformers to GPU systems, data processing, and alignment. Includes Stanford starter code and course materials.",
+      "status": "Main track completed; some large-scale GPU experiments were not run.",
+      "selected": true
+    },
+    {
+      "name": "YMarkdownG",
+      "kind": "Personal software project",
+      "tech": "TypeScript · React · Electron",
+      "summary": "A desktop Markdown editor with visual, source, split-preview, and reading modes. The repository implements local file editing, image paste, math rendering, and PDF export.",
+      "status": "v0.6 series; Windows tested, macOS/Linux built in CI. Packages are unsigned.",
+      "selected": true
+    },
+    {
+      "name": "NanTangJieYu-V",
+      "kind": "Event software project",
+      "tech": "Node.js · JavaScript · JSON persistence",
+      "summary": "An interactive system for a campus fan event: player registration, region progression, contribution ledgers, administrator controls, and weighted prize draws. Includes a mobile player interface and projection display.",
+      "status": "Implemented with unit and integration tests; designed for approximately 150 participants.",
+      "selected": true
+    },
+    {
+      "name": "SJTU-empty-Classroom-Radar",
+      "kind": "Personal software project",
+      "tech": "Python · Flask · Requests",
+      "summary": "A classroom availability tool combining timetable queries with real-time room data. The public implementation includes building selection, time-range queries, and a web interface.",
+      "status": "Public implementation available; live-service availability depends on upstream data.",
+      "selected": true
+    },
+    {
+      "name": "SJTUHPC2026",
+      "kind": "Training and coursework",
+      "tech": "C · C++ · Shell · CMake",
+      "summary": "My preparation repository for SJTU HPC 2026, containing study materials and programming exercises, including shell scripts and C/C++ build-system practice.",
+      "status": "Training snapshot; no benchmark or competition result claimed.",
+      "selected": false
+    },
+    {
+      "name": "MiniVim",
+      "kind": "Course repository fork",
+      "tech": "C++",
+      "summary": "A fork of the SJTUJohnClass MiniVim course project. Kept here as a coursework reference; the upstream editor and specification are not claimed as my original work.",
+      "status": "Personal implementation scope has not been independently established.",
+      "selected": false
+    }
+  ],
+  "writing": [
+    "deepinfer2.html",
+    "deepinfer1.html"
+  ]
+}
