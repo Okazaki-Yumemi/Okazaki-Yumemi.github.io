@@ -58,3 +58,4 @@ markdown:
     typographer: false
   plugins:
     - markdown-it-mathjax3
+    - name: ./lib/math-delimiters.cjs

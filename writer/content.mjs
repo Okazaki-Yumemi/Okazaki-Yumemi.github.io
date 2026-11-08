@@ -8,6 +8,9 @@ export const SITE = 'https://okazaki-yumemi.github.io';
 export const PREFIX = `https://api.github.com/repos/${OWNER}/${REPO}`;
 export const MAX_BODY = 512 * 1024;
 export const MAX_IMAGE = 2 * 1024 * 1024;
+export const MAX_IMAGES = 12;
+export const MAX_UPLOAD_TOTAL = 12 * 1024 * 1024;
+export const MAX_PUBLISH_REQUEST = 18 * 1024 * 1024;
 
 export class Problem extends Error {
   constructor(status, message) { super(message); this.status = status; }
@@ -36,7 +39,12 @@ export function stringList(value, label) {
   return [...new Set(value.map(item => text(item, 40, label)))];
 }
 export function decode64(value) {
-  try { return Uint8Array.from(atob(value.replaceAll('\n', '')), c => c.charCodeAt(0)); }
+  try {
+    const raw = atob(value.replaceAll('\n', ''));
+    const bytes = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+    return bytes;
+  }
   catch { throw new Problem(400, '文件编码不正确'); }
 }
 export function encode64(bytes) {
@@ -46,16 +54,48 @@ export function encode64(bytes) {
 }
 export const decodeText = value => new TextDecoder('utf-8', { fatal: true }).decode(decode64(value));
 export function validateUpload(upload) {
-  requireValue(upload && typeof upload.data === 'string' && upload.data.length <= Math.ceil(MAX_IMAGE * 4 / 3) + 8, '封面不能超过 2 MB');
+  requireValue(upload && typeof upload.data === 'string' && upload.data.length <= Math.ceil(MAX_IMAGE * 4 / 3) + 8, '每张图片不能超过 2 MB');
   const bytes = decode64(upload.data);
-  requireValue(bytes.length >= 16 && bytes.length <= MAX_IMAGE, '封面大小不合法');
-  requireValue(new TextDecoder().decode(bytes.slice(0, 4)) === 'RIFF' && new TextDecoder().decode(bytes.slice(8, 12)) === 'WEBP', '只接受转换后的 WebP 封面');
+  requireValue(bytes.length >= 16 && bytes.length <= MAX_IMAGE, '图片大小不合法');
+  requireValue(new TextDecoder().decode(bytes.slice(0, 4)) === 'RIFF' && new TextDecoder().decode(bytes.slice(8, 12)) === 'WEBP', '只接受转换后的 WebP 图片');
   const declared = new DataView(bytes.buffer, bytes.byteOffset).getUint32(4, true);
   requireValue(declared + 8 === bytes.length, 'WebP 文件长度不正确');
   return bytes;
 }
 export function approvedImage(name) {
   return typeof name === 'string' && /^(?:covers\/)?[a-zA-Z0-9][a-zA-Z0-9_.-]*\.(?:png|jpe?g|webp|gif)$/i.test(name) && !name.includes('..') && !/cursor-|left-pet|right-pet/.test(name);
+}
+export function prepareImages(input, approved) {
+  text(input.body, MAX_BODY, '正文');
+  const pending = input.images ?? [];
+  requireValue(Array.isArray(pending) && pending.length <= MAX_IMAGES, `正文一次最多上传 ${MAX_IMAGES} 张图片`);
+  const byId = new Map();
+  for (const image of pending) {
+    requireValue(image && typeof image.id === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(image.id), '待上传图片标识不合法');
+    requireValue(!byId.has(image.id), '待上传图片标识重复');
+    byId.set(image.id, image);
+  }
+  const uploads = [], mapping = {};
+  let total = 0;
+  function add(upload) {
+    const bytes = validateUpload(upload);
+    total += bytes.length;
+    requireValue(total <= MAX_UPLOAD_TOTAL, '封面和正文待上传图片合计不能超过 12 MB');
+    const name = `covers/upload-${crypto.randomUUID()}.webp`;
+    uploads.push({ name, bytes });
+    return `/images/${name}`;
+  }
+  let cover = input.cover;
+  if (input.upload) cover = add(input.upload);
+  else requireValue(typeof cover === 'string' && cover.startsWith('/images/') && approvedImage(cover.slice(8)) && approved.includes(cover.slice(8)), '请选择仓库中的已发布封面');
+  const body = input.body.replace(/\/__writer_images\/([^\s)"'<>\]]+)/g, (placeholder, filename) => {
+    const id = filename.endsWith('.webp') ? filename.slice(0, -5) : '';
+    requireValue(byId.has(id), '正文中的待上传图片缺失，请重新选择图片或恢复包含图片的本机草稿');
+    if (!mapping[id]) mapping[id] = add(byId.get(id));
+    return mapping[id];
+  });
+  requireValue(!body.includes('/__writer_images/'), '正文中的待上传图片地址不完整，请重新选择图片');
+  return { body, cover, uploads, mapping, images: [...new Set([...approved, ...uploads.map(image => image.name)])] };
 }
 export function makePost(input, previous, cover, now = new Date()) {
   const title = text(input.title, 180, '标题');

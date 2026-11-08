@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createWorker, seal, unseal } from '../worker.mjs';
-import { OWNER, OWNER_ID, REPO_ID, PREFIX, postName, encode64, splitPost, makePost, validateUpload, approvedImage } from '../content.mjs';
+import { OWNER, OWNER_ID, REPO_ID, PREFIX, MAX_PUBLISH_REQUEST, postName, encode64, splitPost, makePost, validateUpload, approvedImage, prepareImages } from '../content.mjs';
 
 const env = { PUBLIC_ORIGIN: 'https://writer.example', GITHUB_CLIENT_ID: 'client', GITHUB_CLIENT_SECRET: 'not-a-real-secret', SESSION_SECRET: 'a'.repeat(64) };
 const context = 'blog-writer:https://writer.example:session';
@@ -188,6 +188,93 @@ test('cover, whitelist and post are committed atomically', async () => {
   const tree = calls.find(x => x.url.endsWith('/git/trees')).parsed.tree;
   assert.equal(tree.length, 3); assert(tree[0].path.startsWith('images/covers/upload-')); assert.equal(tree[1].path, 'public-images.json'); assert.equal(tree[2].path, 'source/_posts/new-note.md');
   assert.equal(calls.filter(x => x.url.endsWith('/git/commits')).length, 1);
+});
+
+function webp(size = 20) {
+  const bytes = new Uint8Array(size);
+  bytes.set(new TextEncoder().encode('RIFF'));
+  new DataView(bytes.buffer).setUint32(4, size - 8, true);
+  bytes.set(new TextEncoder().encode('WEBPVP8 '), 8);
+  return { data: encode64(bytes) };
+}
+const firstImage = '11111111-1111-4111-8111-111111111111';
+const secondImage = '22222222-2222-4222-8222-222222222222';
+const pendingPath = id => `/__writer_images/${id}.webp`;
+
+test('multiple body images, cover, whitelist and rewritten post share one commit', async () => {
+  const { worker, calls } = mock();
+  const body = `![图一](${pendingPath(firstImage)})\n\n![图二](${pendingPath(secondImage)})\n\n![再次引用](${pendingPath(firstImage)})`;
+  const result = await worker.fetch(request('/api/publish', { ...base, body, upload: webp(), images: [{ id: firstImage, ...webp() }, { id: secondImage, ...webp() }] }), env);
+  assert.equal(result.status, 201, await result.clone().text());
+  const saved = await result.json();
+  const tree = calls.find(call => call.url.endsWith('/git/trees')).parsed.tree;
+  const paths = tree.map(item => item.path);
+  assert.equal(saved.postSha, tree.find(item => item.path === 'source/_posts/new-note.md').sha);
+  assert.equal(saved.cover, splitPost(saved.content).metadata.cover);
+  assert.equal(paths.filter(path => path.startsWith('images/covers/upload-')).length, 3);
+  assert.equal(paths.filter(path => path === 'public-images.json').length, 1);
+  assert.equal(paths.filter(path => path.startsWith('source/_posts/')).length, 1);
+  assert.equal(calls.filter(call => call.url.endsWith('/git/commits')).length, 1);
+  assert.equal(calls.find(call => call.url.endsWith('/git/refs/heads/main')).parsed.force, false);
+  assert.deepEqual(Object.keys(saved.images), [firstImage, secondImage]);
+  assert.equal((saved.content.match(new RegExp(saved.images[firstImage], 'g')) || []).length, 2);
+  assert(!saved.content.includes('/__writer_images/'));
+  const blobs = calls.filter(call => call.url.endsWith('/git/blobs')).map(call => call.parsed);
+  const whitelist = JSON.parse(blobs.find(blob => blob.encoding === 'utf-8' && blob.content.startsWith('[')).content);
+  for (const path of paths.filter(path => path.startsWith('images/'))) assert(whitelist.includes(path.slice(7)));
+  assert.equal(blobs.filter(blob => blob.encoding === 'base64').length, 3);
+});
+
+test('unused body uploads are not committed', async () => {
+  const { worker, calls } = mock();
+  const result = await worker.fetch(request('/api/publish', { ...base, images: [{ id: firstImage, ...webp() }] }), env);
+  assert.equal(result.status, 201, await result.clone().text());
+  assert.deepEqual(calls.find(call => call.url.endsWith('/git/trees')).parsed.tree.map(item => item.path), ['source/_posts/new-note.md']);
+  assert.deepEqual((await result.json()).images, {});
+});
+
+for (const value of [
+  { body: `![图](${pendingPath(firstImage)})` },
+  { body: '![图](/__writer_images/../private.webp)', images: [{ id: '../private', ...webp() }] },
+  { images: [{ id: firstImage, ...webp() }, { id: firstImage, ...webp() }] },
+  { body: `![图](${pendingPath(firstImage)})`, images: [{ id: firstImage, data: btoa('<svg></svg>') }] },
+  { images: 'invalid' },
+  { body: '![图](/__writer_images/)' }
+]) {
+  test('invalid or missing pending body image fails before any Git write ' + JSON.stringify(value).slice(0, 100), async () => {
+    const { worker, calls } = mock();
+    assert.equal((await worker.fetch(request('/api/publish', { ...base, ...value }), env)).status, 400);
+    assert(!calls.some(call => call.method === 'POST' || call.method === 'PATCH'));
+  });
+}
+
+test('local, external and HTML image references retain their existing syntax', () => {
+  const body = '![旧图片](/images/bg1.png)\n![外链](https://example.com/image.png)\n<img src="/images/bg1.png" alt="旧 HTML">';
+  const result = prepareImages({ ...base, body }, ['bg1.png']);
+  assert.equal(result.body, body);
+  assert.equal(result.uploads.length, 0);
+});
+
+test('multiple images exceeding the former 4 MB JSON cap can publish', async () => {
+  const { worker } = mock();
+  const upload = webp(1600 * 1024);
+  const result = await worker.fetch(request('/api/publish', { ...base, body: `![1](${pendingPath(firstImage)})\n![2](${pendingPath(secondImage)})`, images: [{ id: firstImage, ...upload }, { id: secondImage, ...upload }] }), env);
+  assert.equal(result.status, 201, await result.clone().text());
+});
+
+test('body image count, per-image size and combined cover/body size have bounds', () => {
+  const ids = Array.from({ length: 13 }, (_, i) => `${String(i).padStart(8, '0')}-1111-4111-8111-111111111111`);
+  assert.throws(() => prepareImages({ ...base, images: ids.map(id => ({ id, ...webp() })) }, ['bg1.png']), /最多/);
+  assert.throws(() => prepareImages({ ...base, body: pendingPath(firstImage), images: [{ id: firstImage, ...webp(2 * 1024 * 1024 + 1) }] }, ['bg1.png']), /大小|超过/);
+  const large = webp(2 * 1024 * 1024);
+  assert.throws(() => prepareImages({ ...base, upload: large, body: ids.slice(0, 6).map(pendingPath).join('\n'), images: ids.slice(0, 6).map(id => ({ id, ...large })) }, ['bg1.png']), /合计/);
+});
+
+test('publish JSON is bounded before any Git write', async () => {
+  const { worker, calls } = mock();
+  const result = await worker.fetch(request('/api/publish', { ...base, padding: 'x'.repeat(MAX_PUBLISH_REQUEST) }), env);
+  assert.equal(result.status, 413);
+  assert(!calls.some(call => call.method === 'POST' || call.method === 'PATCH'));
 });
 test('reserved URLs and empty content are rejected', () => {
   for (const value of [{ slug: 'index' }, { slug: '../x' }, { body: '' }, { title: '' }, { title: 'a\nb' }]) assert.throws(() => makePost({ ...base, ...value }, null, base.cover));

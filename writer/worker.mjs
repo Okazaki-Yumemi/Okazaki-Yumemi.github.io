@@ -1,4 +1,4 @@
-import { OWNER, REPO, OWNER_ID, REPO_ID, SITE, PREFIX, Problem, requireValue, postName, splitPost, decodeText, encode64, validateUpload, approvedImage, makePost } from './content.mjs';
+import { OWNER, REPO, OWNER_ID, REPO_ID, SITE, PREFIX, MAX_PUBLISH_REQUEST, Problem, requireValue, postName, splitPost, decodeText, encode64, approvedImage, prepareImages, makePost } from './content.mjs';
 import { createTraffic } from './traffic.mjs';
 
 const encoder = new TextEncoder();
@@ -7,7 +7,7 @@ const OAUTH = '__Host-blog-oauth';
 const security = {
   'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data: https:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://github.com"
+  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' blob: data: https:; connect-src 'self'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self' https://github.com"
 };
 const json = (value, status = 200, headers = {}) => new Response(JSON.stringify(value), { status, headers: { ...security, 'Content-Type': 'application/json; charset=utf-8', ...headers } });
 const random = () => base64url(crypto.getRandomValues(new Uint8Array(32)));
@@ -96,6 +96,7 @@ export function createWorker(upstream = fetch) {
     return result;
   }
   async function publish(input, session) {
+    requireValue(input && typeof input === 'object' && !Array.isArray(input), '发布内容格式不正确');
     const name = postName(input.name);
     const head = await github('/git/ref/heads/main', session.token);
     requireValue(head?.object?.sha, '找不到博客分支', 502);
@@ -110,19 +111,10 @@ export function createWorker(upstream = fetch) {
     const imagesFile = await fetchFile('public-images.json', session.token, headSha);
     const images = JSON.parse(decodeText(imagesFile.content));
     requireValue(Array.isArray(images), '图片白名单格式不正确', 502);
-    let cover = input.cover;
-    const changes = [];
-    if (input.upload) {
-      const bytes = validateUpload(input.upload);
-      const image = `covers/upload-${crypto.randomUUID()}.webp`;
-      changes.push({ path: `images/${image}`, content: encode64(bytes), encoding: 'base64' });
-      images.push(image);
-      changes.push({ path: 'public-images.json', content: JSON.stringify(images, null, 2) + '\n', encoding: 'utf-8' });
-      cover = `/images/${image}`;
-    } else {
-      requireValue(typeof cover === 'string' && cover.startsWith('/images/') && approvedImage(cover.slice(8)) && images.includes(cover.slice(8)), '请选择仓库中的已发布封面');
-    }
-    const content = makePost(input, previous, cover);
+    const prepared = prepareImages(input, images);
+    const changes = prepared.uploads.map(image => ({ path: `images/${image.name}`, content: encode64(image.bytes), encoding: 'base64' }));
+    if (prepared.uploads.length) changes.push({ path: 'public-images.json', content: JSON.stringify(prepared.images, null, 2) + '\n', encoding: 'utf-8' });
+    const content = makePost({ ...input, body: prepared.body }, previous, prepared.cover);
     const mentioned = [...content.matchAll(/https:\/\/github\.com\/Okazaki-Yumemi\/([A-Za-z0-9_.-]+)/g)].map(match => match[1]);
     if (mentioned.length) {
       const allowed = JSON.parse(decodeText((await fetchFile('public-sources.json', session.token, headSha)).content));
@@ -139,7 +131,8 @@ export function createWorker(upstream = fetch) {
     const commit = await github('/git/commits', session.token, 'POST', { message: `${existing ? 'Update' : 'Publish'} post: ${input.title.trim()}`, tree: newTree.sha, parents: [headSha] });
     const updated = await github('/git/refs/heads/main', session.token, 'PATCH', { sha: commit.sha, force: false });
     requireValue(updated?.object?.sha === commit.sha, '提交尚未写入分支，请重新加载仓库确认', 502);
-    return { sha: commit.sha, name, content, url: `${SITE}/${previous?.metadata.permalink || `${input.slug}.html`}`, commitUrl: `https://github.com/${OWNER}/${REPO}/commit/${commit.sha}` };
+    const postSha = tree.find(entry => entry.path === `source/_posts/${name}`).sha;
+    return { sha: commit.sha, postSha, name, content, cover: prepared.cover, images: prepared.mapping, url: `${SITE}/${previous?.metadata.permalink || `${input.slug}.html`}`, commitUrl: `https://github.com/${OWNER}/${REPO}/commit/${commit.sha}` };
   }
   return {
     async scheduled(event, env, ctx) { ctx.waitUntil(traffic.cleanup(env)); },
@@ -227,7 +220,7 @@ export function createWorker(upstream = fetch) {
           const list = JSON.parse(decodeText((await fetchFile('public-images.json', session.token)).content));
           return json(list.filter(approvedImage).map(name => ({ name, path: `/images/${name}`, url: `${SITE}/images/${name}` })));
         }
-        if (url.pathname === '/api/publish' && request.method === 'POST') return json(await publish(await readJson(request), session), 201);
+        if (url.pathname === '/api/publish' && request.method === 'POST') return json(await publish(await readJson(request, MAX_PUBLISH_REQUEST), session), 201);
         if (url.pathname === '/api/status' && request.method === 'GET') {
           const sha = url.searchParams.get('sha');
           requireValue(/^[0-9a-f]{40}$/.test(sha || ''), '提交编号不正确');

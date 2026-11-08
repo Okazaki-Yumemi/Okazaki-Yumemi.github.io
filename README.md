@@ -24,7 +24,7 @@ npm run server
 - 标签使用宽泛主题：`人工智能`、`系统与性能`、`编程与算法`、`工具开发`、`Web开发`、`博客建设`、`游戏开发`、`技术文档`、`文学创作`、`生活随笔`。每篇通常选 1-2 项，具体课程编号、框架和项目名称保留在标题或正文中，不再单独开标签。`tag-aliases.json` 与 `scripts/tag-redirects.js` 保留旧标签网址：单一主题自动跳转，跨主题的旧标签提供选择，不改变文章地址。
 - 图标字体与图片缩放库：由 `scripts/static-assets.js` 从锁定的 npm 依赖生成并本地托管，许可证随构建输出保留。
 
-旧文章的正文、发布日期与 `post-1.html`、`post-2.html`、`post-3.html` 地址已保留。公式在构建时渲染成 MathJax SVG，代码在构建时高亮，正文不依赖浏览器执行 Markdown 转换。
+旧文章的正文、发布日期与 `post-1.html`、`post-2.html`、`post-3.html` 地址已保留。公式在构建时渲染成 MathJax SVG，支持 `$…$`、`$$…$$`、`\(...\)` 和 `\[…\]`；写作后台使用相同的公式规则自动预览。代码在构建时高亮，正文不依赖浏览器执行 Markdown 转换。
 
 ## 技术阅读体验
 
@@ -38,7 +38,7 @@ npm run server
 
 ### 网页写作
 
-从导航中的“写作”进入 Cloudflare 写作后台，GitHub 登录后可新建或编辑文章、实时预览 Markdown、选择或上传封面，并直接发布。只允许作者账号，GitHub App 只安装在本博客仓库。草稿保存在当前浏览器，发布才会写入公开仓库。部署与权限细节见 [writer/README.md](writer/README.md)。
+从导航中的“写作”进入 Cloudflare 写作后台，GitHub 登录后可新建或编辑文章、实时预览 Markdown 和公式、选择或上传封面，并直接发布。正文工具栏的图片按钮支持仓库选图、HTTPS 外链和多图上传，也支持粘贴或拖入图片。只允许作者账号，GitHub App 只安装在本博客仓库。草稿和待上传图片保存在当前浏览器，发布才会写入公开仓库。部署与权限细节见 [writer/README.md](writer/README.md)。
 
 网页发布使用 GitHub Actions 自动生成和部署，不需要本地生成 HTML 或手工 push。以下命令保留为本地维护入口。
 
