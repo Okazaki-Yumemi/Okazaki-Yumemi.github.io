@@ -1,19 +1,182 @@
 'use strict';
+
 const fs = require('node:fs');
 const path = require('node:path');
-const e = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-hexo.extend.generator.register('academic', function(locals) {
- const d = JSON.parse(fs.readFileSync(path.join(hexo.base_dir,'source/_data/academic.json'),'utf8'));
- const nav = [['Home',''],['Research','manuscripts/'],['Projects','projects/'],['Writing','writing/'],['Contact','contact/']];
- const paper = () => d.manuscripts.map(p=>`<article class="paper"><div class="eyebrow">MANUSCRIPT · 2026</div><h3>${e(p.title)}</h3><p class="authors">${e(p.authors)}</p><p class="status">${e(p.status)}</p><p>${e(p.summary)}</p></article>`).join('');
- const projects = all => `<div class="projects">${d.projects.filter(p=>all||p.selected).map(p=>`<article><div class="eyebrow">${e(p.kind)}</div><h3><a href="https://github.com/Okazaki-Yumemi/${e(p.name)}">${e(p.name)} <span aria-hidden="true">↗</span></a></h3><p>${e(p.summary)}</p><p class="tech">${e(p.tech)}</p><p class="muted">${e(p.status)}</p></article>`).join('')}</div>`;
- const writing = () => d.writing.map(url=> {const post=locals.posts.toArray().find(p=>(p.path===url || p.permalink?.endsWith(url)));if(!post)throw Error('Missing academic writing: '+url);return `<article class="note"><time>${post.date.format('YYYY-MM-DD')}</time><div><h3><a href="/${e(url)}">${e(post.title)}</a></h3><span class="muted">Reading & implementation notes · Chinese / English</span></div><span aria-hidden="true">↗</span></article>`}).join('');
- const contact = () => `<p>For research correspondence, please email <a href="mailto:${e(d.email)}">${e(d.email)}</a>.</p><p><a href="${e(d.github)}">GitHub / Okazaki-Yumemi ↗</a>${d.cv?` · <a href="${e(d.cv)}">Download CV (PDF)</a>`:''}</p>`;
- const section=(id,title,body,more='')=>`<section id="${id}"><div class="section-heading"><h2>${title}</h2>${more}</div>${body}</section>`;
- const more=(url,label)=>`<a class="more" href="/research/${url}/">${label} →</a>`;
- const hero = `<section class="hero"><div><div class="eyebrow">COMPUTER SCIENCE · SJTU</div><h1>${e(d.name)} <span lang="zh-CN">${e(d.chineseName)}</span></h1><p class="identity">${e(d.role)}<br>${e(d.institution)}</p><p class="statement">${e(d.statement)}</p><div class="contact-links"><a href="${e(d.github)}">GitHub ↗</a><a href="mailto:${e(d.email)}">Email ↗</a>${d.cv?`<a href="${e(d.cv)}">CV ↓</a>`:''}</div></div><img src="/assets/research/portrait.png" width="1086" height="1448" alt="Portrait of Peirui Liu"></section><div class="interests"><h2>Research interests</h2><ul>${d.interests.map(i=>`<li>${e(i)}</li>`).join('')}</ul></div>`;
- const home = hero+section('research','Selected Research',paper(),more('manuscripts','All research'))+section('projects','Selected Projects',projects(false),more('projects','All projects'))+section('writing','Recent Writing',writing(),more('writing','All selected notes'));
- return nav.map(([label,route])=>{const content=route==='manuscripts/'?section('research','Research / Manuscripts',paper()):route==='projects/'?section('projects','Projects',projects(true)):route==='writing/'?section('writing','Writing / Notes',writing()):route==='contact/'?section('contact','Contact',contact()):home;
- const title=label==='Home'?`${d.name} — Research`:`${label} — ${d.name}`;const canonical=hexo.config.url+'/research/'+route;
- return {path:'research/'+route+'index.html',data:`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${e(title)}</title><meta name="description" content="${e(d.statement)}"><meta name="author" content="${e(d.name)}"><link rel="canonical" href="${e(canonical)}"><meta property="og:title" content="${e(title)}"><meta property="og:description" content="${e(d.statement)}"><meta property="og:type" content="website"><meta property="og:url" content="${e(canonical)}"><meta property="og:image" content="${hexo.config.url}/assets/research/portrait.png"><link rel="icon" href="${e(hexo.theme.config.favicon)}"><link rel="stylesheet" href="/assets/research/academic.css"><script src="/assets/research/theme.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="/research/">Peirui Liu<span> / Academic</span></a><nav aria-label="Academic navigation">${nav.map(([n,r])=>`<a ${label===n?'aria-current="page"':''} href="/research/${r}">${n}</a>`).join('')}<button id="theme" aria-label="Toggle dark mode">◐</button></nav></header><main id="main">${content}</main><footer><span>© 2026 ${e(d.name)} · Shanghai Jiao Tong University</span><a href="mailto:${e(d.email)}">${e(d.email)}</a></footer></body></html>`};});
+
+const base = '/research/';
+const assets = '/assets/research/';
+const portrait = assets + 'portrait.jpg';
+const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+}[char]));
+
+function renderSection(id, title, content, action = '') {
+  return `<section id="${id}" aria-labelledby="${id}-title">
+    <div class="section-heading">
+      <h2 id="${id}-title">${escapeHtml(title)}</h2>
+      ${action}
+    </div>
+    ${content}
+  </section>`;
+}
+
+function renderProfile(profile) {
+  const { lab, advisors } = profile;
+  const advisorList = advisors.map(advisor => {
+    const name = escapeHtml(advisor.name);
+    const link = advisor.url ? `<a href="${escapeHtml(advisor.url)}">${name}</a>` : name;
+    return `<li>${link}</li>`;
+  }).join('');
+
+  return `<aside class="profile" aria-label="Profile">
+    <img class="portrait" src="${portrait}" width="500" height="500"
+      alt="Portrait of ${escapeHtml(profile.name)}">
+    <div class="profile-body">
+      <h1>${escapeHtml(profile.name)} <span lang="zh-CN">${escapeHtml(profile.chineseName)}</span></h1>
+      <p class="role">${escapeHtml(profile.role)}</p>
+      <p class="affiliation">${escapeHtml(profile.institution)}</p>
+      <ul class="profile-links">
+        <li><a href="mailto:${escapeHtml(profile.email)}">Email</a></li>
+        <li><a href="${escapeHtml(profile.github)}">GitHub <span aria-hidden="true">↗</span></a></li>
+        ${profile.cv ? `<li><a href="${escapeHtml(profile.cv)}">CV (PDF)</a></li>` : ''}
+      </ul>
+    </div>
+    <div class="affiliations">
+      <a class="lab" href="${escapeHtml(lab.url)}">
+        <img class="lab-emblem" src="${escapeHtml(lab.emblem)}" width="350" height="350" alt="">
+        <span><strong>${escapeHtml(lab.shortName)}</strong>
+        <span class="lab-name">${escapeHtml(lab.name)}</span></span>
+      </a>
+      <p class="lab-role">${escapeHtml(lab.role)}</p>
+      <div class="advisors">
+        <h2>Advisors</h2>
+        <ul>${advisorList}</ul>
+      </div>
+    </div>
+  </aside>`;
+}
+
+function renderManuscripts(manuscripts) {
+  return manuscripts.map(paper => `<article class="paper">
+    <h3>${escapeHtml(paper.title)}</h3>
+    <p class="authors">${escapeHtml(paper.authors)}</p>
+    <p class="status">${escapeHtml(paper.status)}</p>
+    <p>${escapeHtml(paper.summary)}</p>
+  </article>`).join('');
+}
+
+function renderProjects(projects, github) {
+  return `<div class="projects">${projects.map(project => `<article>
+    <div class="project-heading">
+      <h3><a href="${escapeHtml(github)}/${escapeHtml(encodeURIComponent(project.name))}">${escapeHtml(project.name)}
+        <span aria-hidden="true">↗</span></a></h3>
+      <span class="project-kind">${escapeHtml(project.kind)}</span>
+    </div>
+    <p>${escapeHtml(project.summary)}</p>
+    <p class="project-meta">${escapeHtml(project.tech)}<br>${escapeHtml(project.status)}</p>
+  </article>`).join('')}</div>`;
+}
+
+function renderWriting(permalinks, posts) {
+  const published = new Map(posts.filter(post => post.published).map(post => [
+    new URL(post.permalink).pathname, post
+  ]));
+  return `<div class="writing-list">${permalinks.map(permalink => {
+    const href = '/' + permalink;
+    const post = published.get(href);
+    if (!post) throw new Error('Missing academic writing: ' + permalink);
+    const date = post.date.format('YYYY-MM-DD');
+    return `<article class="note">
+      <time datetime="${date}">${date}</time>
+      <h3><a href="${escapeHtml(href)}">${escapeHtml(post.title)}</a></h3>
+    </article>`;
+  }).join('')}</div>`;
+}
+
+function renderContact(profile) {
+  return `<dl class="contact-list">
+    <dt>Email</dt><dd><a href="mailto:${escapeHtml(profile.email)}">${escapeHtml(profile.email)}</a></dd>
+    <dt>GitHub</dt><dd><a href="${escapeHtml(profile.github)}">@${escapeHtml(new URL(profile.github).pathname.slice(1))}</a></dd>
+  </dl>`;
+}
+
+hexo.extend.generator.register('academic', function (locals) {
+  const profile = JSON.parse(fs.readFileSync(path.join(hexo.source_dir, '_data/academic.json'), 'utf8'));
+  const nav = [
+    ['About', 'about'],
+    ['Research', 'research'],
+    ['Projects', 'projects'],
+    ['Writing', 'writing'],
+    ['Contact', 'contact']
+  ];
+  const research = renderSection('research', 'Research Interests',
+    `<ul class="interests">${profile.interests.map(interest => `<li>${escapeHtml(interest)}</li>`).join('')}</ul>`);
+  const manuscripts = renderSection('manuscripts', 'Manuscripts', renderManuscripts(profile.manuscripts));
+  const projects = renderSection('projects', 'Projects', renderProjects(profile.projects, profile.github));
+  const writing = renderSection('writing', 'Writing', renderWriting(profile.writing, locals.posts.toArray()));
+  const contact = renderSection('contact', 'Contact', renderContact(profile));
+  const about = renderSection('about', 'About Me', `<p>${escapeHtml(profile.statement)}</p>`);
+  const selected = renderSection('projects', 'Selected Projects',
+    renderProjects(profile.projects.filter(project => project.selected), profile.github),
+    `<a class="section-link" href="${base}projects/">All projects <span aria-hidden="true">→</span></a>`);
+
+  const pages = [
+    { slug: '', title: `${profile.name} | Academic Homepage`, content: about + research + manuscripts + selected + writing + contact },
+    { slug: 'manuscripts/', title: `Manuscripts | ${profile.name}`, content: manuscripts },
+    { slug: 'projects/', title: `Projects | ${profile.name}`, content: projects },
+    { slug: 'writing/', title: `Writing | ${profile.name}`, content: writing },
+    { slug: 'contact/', title: `Contact | ${profile.name}`, content: contact }
+  ];
+
+  return pages.map(({ slug, title, content }) => {
+    const canonical = new URL(base + slug, hexo.config.url).href;
+    const navigation = nav.map(([label, anchor]) => {
+      const href = slug ? base + '#' + anchor : '#' + anchor;
+      return `<a href="${href}">${label}</a>`;
+    }).join('');
+    return {
+      path: (base + slug).slice(1) + 'index.html',
+      data: `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(profile.statement)}">
+  <meta name="author" content="${escapeHtml(profile.name)}">
+  <link rel="canonical" href="${escapeHtml(canonical)}">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(profile.statement)}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${escapeHtml(canonical)}">
+  <meta property="og:image" content="${escapeHtml(new URL(portrait, hexo.config.url).href)}">
+  <link rel="icon" href="${escapeHtml(hexo.theme.config.favicon)}">
+  <link rel="stylesheet" href="${assets}academic.css">
+  <script src="${assets}theme.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="wordmark" href="${base}">${escapeHtml(profile.name)}</a>
+      <nav aria-label="Academic navigation">${navigation}</nav>
+      <button id="theme" class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" hidden>
+        <span aria-hidden="true">◐</span>
+      </button>
+    </div>
+  </header>
+  <div class="layout">
+    ${renderProfile(profile)}
+    <main id="main">
+      ${content}
+      <footer>
+        <span>${escapeHtml(profile.name)} · ${escapeHtml(profile.institution)}</span>
+        <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>`
+    };
+  });
 });

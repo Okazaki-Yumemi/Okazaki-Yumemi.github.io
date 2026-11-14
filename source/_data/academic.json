@@ -3,10 +3,22 @@
   "chineseName": "刘培锐",
   "role": "Undergraduate Student in Computer Science",
   "institution": "Shanghai Jiao Tong University",
+  "lab": {
+    "name": "Sustainable Architecture and Intelligence Laboratory",
+    "shortName": "SAIL",
+    "role": "Undergraduate Research Assistant",
+    "url": "https://www.cs.sjtu.edu.cn/sail/",
+    "emblem": "/assets/research/sjtu-emblem.png"
+  },
+  "advisors": [
+    { "name": "Xiaofeng Hou", "url": "https://xfhelen.github.io/" },
+    { "name": "Jiacheng Liu", "url": "https://gift.sjtu.edu.cn/en/faculty/45952" },
+    { "name": "Chao Li", "url": "https://cs.sjtu.edu.cn/~lichao/" }
+  ],
   "email": "lpr2333@sjtu.edu.cn",
   "github": "https://github.com/Okazaki-Yumemi",
   "cv": null,
-  "statement": "I am an undergraduate student in Computer Science at Shanghai Jiao Tong University. I am interested in efficient language model inference and the systems that support it, with a broader interest in computer systems and architecture.",
+  "statement": "I study computer science at Shanghai Jiao Tong University and work as an undergraduate research assistant at SAIL. I am interested in efficient language model inference, computer systems, and architecture.",
   "interests": [
     "LLM Inference Systems",
     "Speculative Decoding",
